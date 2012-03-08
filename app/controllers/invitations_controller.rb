@@ -42,6 +42,16 @@ class InvitationsController < ApplicationController
     end
   end
 
+  def search
+    @project = Project.find_by_url params[:project_id]
+    @users = User.search params[:search]
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @users }
+    end
+  end
+
   # GET /invitations/1/accept
   # GET /invitations/1/accept.json
   def accept

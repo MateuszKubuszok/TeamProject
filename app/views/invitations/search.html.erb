@@ -1,0 +1,19 @@
+<h1>Find new team members for project <%= link_to @project.name, project_path(@project.url_name) %></h1>
+
+<%= render 'form' %>
+<table>
+  <tr>
+    <th>User</th>
+    <th>E-mail</th>
+    <th></th>
+  </tr>
+  <% @users.each do |user| %>
+  <tr>
+    <td><%= link_to user.name, user_path(user.url_name) %></td>
+    <td><%= mail_to user.email %></td>
+    <td><%= @project.users.include?(user) ? "Member" : @project.possible_users.include?(user) ? "Invited" : link_to("Invite", project_invitations_path(@project.url_name, user.url_name)) %></td>
+  </tr>
+  <% end %>
+</table>
+
+<%= link_to 'Back', project_path(@project.url_name) %>

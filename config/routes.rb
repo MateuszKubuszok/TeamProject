@@ -3,6 +3,8 @@ TeamProject::Application.routes.draw do
     get     'accept',         on: :member
     get     'to_project/:project_id/:user_id',
                               on: :collection, action: :new_to_project, as: :project
+    get     'search/:project_id',
+                              on: :collection, action: :search,         as: :search
   end
 
   resources :projects do

@@ -28,5 +28,5 @@
 
 <% if current_user && meet_requirements?(:manage_users) %>
 <%= link_to 'Register new user', new_user_path %>
-<% end  %>
+<% end %>
 <%= paginate @users, params: { action: 'index', controller: 'users' } %>

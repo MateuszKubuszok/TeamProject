@@ -41,6 +41,14 @@ class User < ActiveRecord::Base
     url_id.to_i.zero? ? User.find_by_url_name(url_id) : User.find(url_id)
   end
 
+  # Proste wyszukiwanie użytkownika po nazwie lub e-mailu.
+  #
+  # @param  [string]  name  identyfikator po którym wyszukujemy
+  # @return [array]         tablica użytkowników spełniających kryteria
+  def self.search name
+    where('name LIKE ? OR url_name LIKE ? OR email LIKE ?', "#{name}", "#{name}", "#{name}")
+  end
+
   # Określa, czy użytkownik ma jakiekolwiek uprawnienia administratora.
   #
   # @return [boolean] true, jeśli użytkownik jest adminem

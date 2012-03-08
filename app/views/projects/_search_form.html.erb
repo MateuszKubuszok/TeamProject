@@ -1,0 +1,6 @@
+<%= form_tag search_invitations_path(@project.url_name), method: :get do %>
+  <p>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag "Search" %>
+  </p>
+<% end %>

@@ -1,5 +1,7 @@
 class Project < ActiveRecord::Base
-  has_many  :team_invitations,           dependent:      :destroy
+  has_many  :team_invitations,            dependent:      :destroy
+  has_many  :possible_users,              source:         :user,
+                                          through:        :team_invitations
   has_many  :user_project_relationships,  dependent:      :destroy
   has_many  :users,                       through:        :user_project_relationships,
                                           dependent:      :destroy

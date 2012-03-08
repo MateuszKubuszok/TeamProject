@@ -1,7 +1,7 @@
-<%= form_for(@upr, url: update_member_project_path(@project.url_name, @user.url_name)) do |f| %>
+<%= form_for(@upr, url: update_member_project_path(@upr.project.url_name, @upr.user.url_name)) do |f| %>
   <% if @upr.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@project.errors.count, "error") %> prohibited this member from being saved:</h2>
+      <h2><%= pluralize(@upr.errors.count, "error") %> prohibited this member from being saved:</h2>
 
       <ul>
       <% @upr.errors.full_messages.each do |msg| %>
