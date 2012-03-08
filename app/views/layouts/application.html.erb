@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Landlords</title>
+  <%= stylesheet_link_tag    "application" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <div id="nav">
+  <% if current_user %>
+    <%= link_to "Logged as #{current_user.name}", user_path(current_user.url_name) %> |
+    <%= link_to "Edit Profile", edit_user_path(current_user.url_name) %> |
+    <%= link_to 'My Projects', my_projects_path %> |
+    <%= link_to "Invitations (#{current_user.team_invitations.count})", invitations_path %> |
+    <%= link_to "Logout", :logout %>
+  <% else %>
+    <%= link_to "Register", "users/new" %> |
+    <%= link_to "Login", :login %>
+  <% end %>
+  </div>
+  <p id="notice"><%= notice %></p>
+
+<%= yield %>
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+<p>
+  <b>Name:</b>
+  <%= @project.name %>
+</p>
+
+<p>
+  <b>Short description:</b>
+  <%= @project.short_description %>
+</p>
+
+<p>
+  <b>Full description:</b>
+  <%= @project.description %>
+</p>
+
+<table>
+  <tr>
+    <th>user</th>
+    <th>e-mail</th>
+    <% UserProjectRelationship.symbols(:privilege_types).each do |privilege| %>
+    <% name = privilege.to_s; name["_"]=" " %>
+    <th><%= name %></th>
+    <% end %>
+    <% if meet_team_requirements?(:manage_team) %>
+    <th></th>
+    <th></th>
+    <% end %>
+  </tr>
+  <% @project.users.each do |user| %>
+  <% upr = @project.privileges_for user.id %>
+  <tr>
+    <td><%= link_to user.name, user_path(user.url_name) %></td>
+    <td><%= mail_to user.email %></td>
+    <% UserProjectRelationship.symbols(:privilege_types).each do |privilege| %>
+    <% name = privilege.to_s; name["_"]=" " %>
+    <td><%= upr.send(privilege) ? "granted" : "denied" %></td>
+    <% end %>
+    <% if meet_team_requirements?(:manage_team) %>
+    <td><%= link_to 'Change permissions', edit_member_project_path(@project.url_name, user.url_name) %></td>
+    <td><%= link_to 'Remove from project', remove_member_project_path(@project.url_name, user.url_name), confirm: "Are you sure?", method: :delete %></td>
+    <% end %>
+  </tr>
+  <% end %>
+</table>
+
+<%= link_to 'Edit', edit_project_path(@project.url_name) %> |
+<%= link_to 'Back', projects_path %>

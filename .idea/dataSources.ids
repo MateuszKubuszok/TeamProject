@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><component name="dataSourceStorage">
+  <data-source source="LOCAL" name="Rails teamproject: test" product="" version="" jdbc-version="" driver-name="" driver-version="" uuid="a182f6e7-2253-4a30-9aa2-a428464c7f12">
+    <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+    <jdbc-url>jdbc:mysql://127.0.0.1/db/test.mysql2</jdbc-url>
+    <libraries>
+      <library>
+        <url>file://$USER_HOME$/.RubyMine40/config/jdbc-drivers/mysql-connector-license.txt</url>
+      </library>
+      <library>
+        <url>jar://$USER_HOME$/.RubyMine40/config/jdbc-drivers/mysql-connector-java-5.1.18-bin.jar!/</url>
+      </library>
+    </libraries>
+  </data-source>
+  <data-source source="LOCAL" name="Rails teamproject: production" product="" version="" jdbc-version="" driver-name="" driver-version="" uuid="133dedfd-e1df-4918-865d-97a5bb204654">
+    <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+    <jdbc-url>jdbc:mysql://127.0.0.1/db/production.mysql2</jdbc-url>
+    <libraries>
+      <library>
+        <url>file://$USER_HOME$/.RubyMine40/config/jdbc-drivers/mysql-connector-license.txt</url>
+      </library>
+      <library>
+        <url>jar://$USER_HOME$/.RubyMine40/config/jdbc-drivers/mysql-connector-java-5.1.18-bin.jar!/</url>
+      </library>
+    </libraries>
+  </data-source>
+  <data-source source="LOCAL" name="Rails teamproject: development" product="" version="" jdbc-version="" driver-name="" driver-version="" uuid="bad79edc-2a4d-4eed-b69f-d1e4efd05ac9">
+    <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+    <jdbc-url>jdbc:mysql://127.0.0.1/db/development.mysql2</jdbc-url>
+    <libraries>
+      <library>
+        <url>file://$USER_HOME$/.RubyMine40/config/jdbc-drivers/mysql-connector-license.txt</url>
+      </library>
+      <library>
+        <url>jar://$USER_HOME$/.RubyMine40/config/jdbc-drivers/mysql-connector-java-5.1.18-bin.jar!/</url>
+      </library>
+    </libraries>
+  </data-source>
+</component>

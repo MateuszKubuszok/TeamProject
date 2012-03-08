@@ -1,0 +1,39 @@
+<p>
+  <b>Username:</b>
+  <%= @user.name %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%= @user.email %>
+</p>
+
+<% if meet_requirements?(:manage_privileges) %>
+  <% User.symbols(:privilege_types).each do |privilege| %>
+      <% name = privilege.to_s; name["_"]=" " %>
+      <p>
+        <b><%= name %></b>
+        <%= @user.send(privilege) ? "granted" : "denied" %>
+      </p>
+   <% end %>
+<% end %>
+
+<p><%= @user.name %>'s projects</p>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Short description</th>
+  </tr>
+  <% @user.projects.each do |project| %>
+  <tr>
+    <td><%= link_to project.name, project_path(project.url_name) %></td>
+    <td><%= project.short_description %></td>
+  </tr>
+  <% end %>
+</table>
+
+
+<% if meet_requirements? :manage_users || owner? %>
+<%= link_to 'Edit', edit_user_path(@user.url_name) %> |
+<% end %>
+<%= link_to 'Back', users_path %>

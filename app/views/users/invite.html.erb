@@ -1,0 +1,17 @@
+<h1>Invite user <%= @user.name %> to project:</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Short description</th>
+    <th></th>
+  </tr>
+
+<% @projects.each do |project| %>
+  <tr>
+    <td><%= allowed_to_see?(project) ? project.name : link_to(project.name, project_path(project.url_name)) %></td>
+    <td><%= project.short_description %></td>
+    <td><%= link_to 'Invite', project_invitations_path(project.url_name, @user.url_name) %></td>
+  </tr>
+<% end %>
+</table>

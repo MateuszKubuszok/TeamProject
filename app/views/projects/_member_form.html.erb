@@ -1,0 +1,23 @@
+<%= form_for(@upr, url: update_member_project_path(@project.url_name, @user.url_name)) do |f| %>
+  <% if @upr.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@project.errors.count, "error") %> prohibited this member from being saved:</h2>
+
+      <ul>
+      <% @upr.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% UserProjectRelationship.symbols(:privilege_types).each do |privilege| %>
+  <div class="field">
+    <%= f.label privilege %><br />
+    <%= f.check_box privilege %>
+  </div>
+  <% end %>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

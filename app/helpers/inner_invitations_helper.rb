@@ -1,0 +1,2 @@
+module InnerInvitationsHelper
+end

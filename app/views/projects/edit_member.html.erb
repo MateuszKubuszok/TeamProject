@@ -1,0 +1,5 @@
+<h1>Editing <%= link_to @project.name, project_path(@project.url_name) %> project's member <%= link_to @user.name, user_path(@user.url_name) %></h1>
+
+<%= render 'member_form' %>
+
+<%= link_to 'Back', project_path(@project.url_name) %>

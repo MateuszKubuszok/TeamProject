@@ -1,0 +1,20 @@
+<h1>Listing invitations to projects</h1>
+
+<table>
+  <tr>
+    <th>Project</th>
+    <th>Short description</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @invitations.each do |invitation| %>
+  <tr>
+    <td><%= allowed_to_see?(invitation.project) ? invitation.project.name : link_to(invitation.project.name, project_path(invitation.project.url_name)) %></td>
+    <td><%= invitation.project.short_description %></td>
+    <td><%= link_to 'Accept', accept_invitation_path(invitation) %></td>
+    <td><%= link_to 'Refuse', invitation_path(invitation), confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
