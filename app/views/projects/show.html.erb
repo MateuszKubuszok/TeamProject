@@ -14,8 +14,19 @@
 </p>
 
 <p>
+  <b>Tags:</b>
+  <% @project.tags.each do |tag| %>
+      <%= link_to tag.name, tag_path(tag.name) %>
+  <% end %>
+</p>
+
+<p>
   <b>Invite new member:</b>
   <%= render 'search_form' %>
+</p>
+
+<p>
+  <b>Team members:</b>
 </p>
 
 <table>
@@ -47,6 +58,34 @@
   </tr>
   <% end %>
 </table>
+
+<p>
+  <b>Milestones:</b>
+</p>
+
+<table>
+  <tr>
+    <th>Name:</th>
+    <% if meet_team_requirements?(:manage_milestones) %>
+    <th></th>
+    <th></th>
+    <% end %>
+  </tr>
+  <% @project.milestones.each do |milestone| %>
+  <tr>
+    <td><%= link_to milestone.name, project_milestone_path(@project.url_name, milestone.id) %></td>
+    <% if meet_team_requirements?(:manage_milestones) %>
+    <td><%= link_to "Edit", project_milestone_path(@project.url_name, milestone.id) %></td>
+    <td><%= link_to "Destroy", project_milestone_path(@project.url_name, milestone.id), confirm: "Are your sure?", method: :delete %></td>
+    <% end %>
+  </tr>
+  <% end %>
+</table>
+
+<%= link_to "New milestone", new_project_milestone_path(@project.url_name) %> |
+<%= link_to "New ticket", new_ticket_project_path(@project.url_name) %>
+
+<br />
 
 <%= link_to 'Edit', edit_project_path(@project.url_name) %> |
 <%= link_to 'Back', projects_path %>

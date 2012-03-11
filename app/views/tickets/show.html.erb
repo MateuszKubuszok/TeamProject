@@ -1,0 +1,38 @@
+<p>
+  <b>Name:</b>
+  <%= @ticket.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @ticket.description %>
+</p>
+
+<p>
+  <b>Milestone:</b>
+  <%= link_to @ticket.milestone.name, project_milestone_path(@ticket.milestone.id) %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @ticket.status %>
+</p>
+
+<p>
+  <b>Priority:</b>
+  <%= @ticket.priority %>
+</p>
+
+<p>
+  <b>Responsible:</b>
+  <%= link_to @ticket.user.name, user_path(@ticket.user.url_name) %>
+</p>
+
+<p>
+  <b>Deadline:</b>
+  <%= @ticket.deadline %>
+</p>
+
+
+<%= link_to 'Edit', edit_project_milestone_ticket_path(@project.url_name, @milestone.id, @ticket.id) %> |
+<%= link_to 'Back', project_milestone_tickets_path(@project.url_name, @milestone.id) %>

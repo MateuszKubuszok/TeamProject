@@ -1,7 +1,6 @@
 class InvitationsController < ApplicationController
   admin_requirements              :manage_projects
   before_filter :require_user
-  before_filter :require_access,  only: [ :new ]
 
   before_filter :load_invitation, only: [ :accept, :destroy ]
 
@@ -42,6 +41,8 @@ class InvitationsController < ApplicationController
     end
   end
 
+  # GET /invitations/search/1
+  # GET /invitations/search/1.json
   def search
     @project = Project.find_by_url params[:project_id]
     @users = User.search params[:search]
@@ -79,13 +80,7 @@ class InvitationsController < ApplicationController
   # Pobiera zaproszenie.
   def load_invitation
     begin
-      @invitation = TeamInvitation.find(params[:id])
-      unless @invitation.user_id.equal?(current_user.id) || meet_requirements?(:manage_projects)
-        respond_to do |format|
-          format.html { redirect_to(homepage_path, :notice => "You cannot respond to other users' invitations!") }
-          format.json { head :unauthorized }
-        end
-      end
+      @invitation = meet_requirements?(:manage_projects) ? TeamInvitation.find_by_id(params[:id]) : TeamInvitation.find_by_id_and_user_id(params[:id], params[:user_id])
     rescue ActiveRecord::RecordNotFound
       respond_to do |format|
         format.html { redirect_to(homepage_path, :notice => "#{$!}") }

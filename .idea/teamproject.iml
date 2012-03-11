@@ -24,6 +24,7 @@
     <orderEntry type="library" scope="PROVIDED" name="activerecord (v3.1.0, RVM: ruby-1.9.2-p290) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="activeresource (v3.1.0, RVM: ruby-1.9.2-p290) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="activesupport (v3.1.0, RVM: ruby-1.9.2-p290) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="acts-as-taggable-on (v2.2.2, RVM: ruby-1.9.2-p290) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="annotate (v2.4.1.beta1, RVM: ruby-1.9.2-p290) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="ansi (v1.3.0, RVM: ruby-1.9.2-p290) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="archive-tar-minitar (v0.5.2, RVM: ruby-1.9.2-p290) [gem]" level="application" />

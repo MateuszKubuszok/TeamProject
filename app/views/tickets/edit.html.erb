@@ -1,0 +1,6 @@
+<h1>Editing ticket</h1>
+
+<%= render 'form' %>
+
+<%= link_to 'Show', project_milestone_ticket_path(@project.url_name, @milestone.id, @ticket.id) %> |
+<%= link_to 'Back', project_milestone_tickets_path(@project.url_name, @milestone.id) %>

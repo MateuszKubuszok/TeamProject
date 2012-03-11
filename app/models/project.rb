@@ -1,4 +1,6 @@
 class Project < ActiveRecord::Base
+  acts_as_taggable
+
   has_many  :team_invitations,            dependent:      :destroy
   has_many  :possible_users,              source:         :user,
                                           through:        :team_invitations

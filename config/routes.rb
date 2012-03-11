@@ -1,4 +1,11 @@
 TeamProject::Application.routes.draw do
+  resources :users do
+    get     'invite',         on: :member
+    get     'page/:page',     on: :collection, action: :index
+  end
+
+  resources :user_sessions, only: [ :new, :create, :destroy ]
+
   resources :invitations, only: [ :index, :destroy ] do
     get     'accept',         on: :member
     get     'to_project/:project_id/:user_id',
@@ -8,19 +15,21 @@ TeamProject::Application.routes.draw do
   end
 
   resources :projects do
+    resources :milestones do
+      resources :tickets
+    end
     get     'my',             on: :collection
     get     'my/:page',       on: :collection, action: :my
     get     'page/:page',     on: :collection, action: :index
+    get     'new_ticket',     on: :member,     action: :new,            as: :new_ticket,     controller: :tickets
     put     ':user_id',       on: :member,     action: :update_member,  as: :update_member
     get     ':user_id/edit',  on: :member,     action: :edit_member,    as: :edit_member
     delete  ':user_id',       on: :member,     action: :remove_member,  as: :remove_member
   end
 
-  resources :users do
-    get     'invite',         on: :member
-    get     'page/:page',     on: :collection, action: :index
+  resources :tags, only: [:index, :show ] do
+    get     'page/:page',     on: :member,     action: :show
   end
-  resources :user_sessions, :only => [ :new, :create, :destroy ]
 
   match 'register'  => 'users#new',             as: :register
   match 'login'     => 'user_sessions#new',     as: :login

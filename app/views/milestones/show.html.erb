@@ -1,0 +1,43 @@
+<p>
+  <b>Name:</b>
+  <%= @milestone.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @milestone.description %>
+</p>
+
+<p>
+  <b>Tickets:</b>
+</p>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Status</th>
+    <th>Priority</th>
+    <th>Responsible</th>
+    <th>Deadline</th>
+    <% if meet_team_requirements?(:manage_tickets) %>
+    <th></th>
+    <th></th>
+    <% end %>
+  </tr>
+  <% @milestone.tickets.each do |ticket| %>
+  <tr>
+    <td><%= link_to ticket.name, project_milestone_ticket(@project.url_name, @milestone.id, ticket.id) %></td>
+    <td><%= ticket.status %></td>
+    <td><%= ticket.priority %></td>
+    <td><%= ticket.user ? link_to(ticket.user.url_name, user_path(ticket.user.url_name)) : "none" %></td>
+    <td><%= ticket.deadline %></td>
+  </tr>
+  <% end %>
+</table>
+
+<%= link_to "New ticket", new_project_milestone_ticket_path(@project.url_name, @milestone.id) %>
+
+<br />
+
+<%= link_to 'Edit', edit_project_milestone_path(@project.url_name, @milestone.id) %> |
+<%= link_to 'Back', project_path(@project.url_name) %>

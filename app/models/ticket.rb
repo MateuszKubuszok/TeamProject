@@ -23,8 +23,9 @@ class Ticket < ActiveRecord::Base
   belongs_to  :milestone
   belongs_to  :user
 
-  validates   :name,    presence:   true
-  validates   :status,  presence:   true
+  validates   :name,      presence:   true
+  validates   :status,    presence:   true
+  validates   :priority,  presence:   true
 end
 # == Schema Information
 #

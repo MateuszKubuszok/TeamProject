@@ -1,5 +1,11 @@
-<h1>Listing projects</h1>
+<p>
+  <b>Name:</b>
+  <%= params[:id] %>
+</p>
 
+<p>
+  <b>Projects:</b>
+</p>
 <table>
   <tr>
     <th>Name</th>
@@ -9,7 +15,7 @@
     <th></th>
   </tr>
 
-<% @projects.each do |project| %>
+  <% @projects.each do |project| %>
   <tr>
     <td><%= allowed_to_see?(project) ? link_to(project.name, project_path(project.url_name)) : project.name %></td>
     <td><%= project.short_description %></td>
@@ -17,16 +23,16 @@
       <%= link_to tag.name, tag_path(tag.name) %>
     <% end %></td>
     <td><% if meet_requirements?(:manage_projects) || meet_team_requirements?({any: [:manage_project, :manage_team ]}, project) %>
-        <%= link_to 'Edit', edit_project_path(project.url_name) %>
+       <%= link_to 'Edit', edit_project_path(project.url_name) %>
     <% end %></td>
     <td><% if meet_requirements?(:manage_projects) || meet_team_requirements?(:manage_project, project) %>
-    <%= link_to 'Destroy', project_path(project.url_name), confirm: 'Are you sure?', method: :delete %>
+      <%= link_to 'Destroy', project_path(project.url_name), confirm: 'Are you sure?', method: :delete %>
     <% end %></td>
-  </tr>
-<% end %>
+    </tr>
+  <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Project', new_project_path %>
-<%= paginate @projects, params: { action: 'index', controller: 'projects' } %>
+<%= paginate @projects, params: { action: 'show', controller: 'tags' } %>
+<%= link_to 'Back', tags_path %>

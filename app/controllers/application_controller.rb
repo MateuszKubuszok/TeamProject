@@ -81,9 +81,6 @@ class ApplicationController < ActionController::Base
   # @param  [Project] project sprawdzany projekt
   # @return [boolean]         true, jeśli użytkownik ma dostęp
   def allowed_to_see? project=current_project
-    puts "   users"+YAML.dump(project.users)
-    puts "   proj"+YAML.dump(project)
-    puts "asd"+(project.users.include?(current_user)).to_s
     !project.blank? && (!project.private? || (current_user && current_user.admin?) || project.users.include?(current_user))
   end
 

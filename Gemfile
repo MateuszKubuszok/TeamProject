@@ -22,6 +22,7 @@ gem 'jquery-rails'                              # Wsparcie dla JQuery w Railsach
 gem 'kaminari'                                  # Stronnicowanie indeksów
 gem 'nested_form'                               # Formularze dla zagnieżdżonych modeli
 gem 'therubyracer'                              # Interpreter V8 JS w Rubym
+gem 'acts-as-taggable-on', '~> 2.2.2'           # Tagowanie
 
 # Use unicorn as the web server
 # gem 'unicorn'

@@ -1,0 +1,45 @@
+<%= form_for([@project, @milestone, @ticket]) do |f| %>
+  <% if @ticket.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ticket.errors.count, "error") %> prohibited this ticket from being saved:</h2>
+
+      <ul>
+      <% @ticket.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_field :description %>
+  </div>
+  <div class="field">
+    <%= f.label :status %><br />
+    <%= f.select :status, Ticket.symbols(:status_types) %>
+  </div>
+  <div class="field">
+    <%= f.label :priority %><br />
+    <%= f.select :priority, Ticket.symbols(:priority_types) %>
+  </div>
+  <div class="field">
+    <%= f.label :milestone_id, "Milestone" %><br />
+    <%= f.select :milestone_id, @select_milestone %>
+  </div>
+  <div class="field">
+    <%= f.label :user_id, "Responsible" %><br />
+    <%= f.select :user_id, @select_user %>
+  </div>
+  <div class="field">
+    <%= f.label :deadline %><br />
+    <%= f.date_select :deadline %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
