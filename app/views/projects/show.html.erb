@@ -21,6 +21,10 @@
 </p>
 
 <p>
+  <b><%= link_to "Bugtracker", project_bugs_path(@project.url_name) %></b>
+</p>
+
+<p>
   <b>Invite new member:</b>
   <%= render 'search_form' %>
 </p>

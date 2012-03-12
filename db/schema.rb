@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120312004214) do
+ActiveRecord::Schema.define(:version => 20120312013853) do
 
   create_table "bugs", :force => true do |t|
     t.integer  "project_id"
@@ -21,6 +21,26 @@ ActiveRecord::Schema.define(:version => 20120312004214) do
     t.string   "short_description"
     t.text     "description"
     t.text     "commentary"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "forum_threads", :force => true do |t|
+    t.integer  "forum_id"
+    t.string   "title"
+    t.text     "content"
+    t.integer  "user_id"
+    t.integer  "edited_by"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "forums", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.integer  "forum_id"
+    t.integer  "project_id"
+    t.boolean  "private"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -39,6 +59,16 @@ ActiveRecord::Schema.define(:version => 20120312004214) do
     t.string   "short_description"
     t.text     "description"
     t.boolean  "private"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "responses", :force => true do |t|
+    t.integer  "forum_thread_id"
+    t.string   "title"
+    t.text     "content"
+    t.integer  "user_id"
+    t.integer  "edited_by"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

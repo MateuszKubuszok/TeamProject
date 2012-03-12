@@ -29,3 +29,19 @@ class Bug < ActiveRecord::Base
 
   belongs_to :project
 end
+# == Schema Information
+#
+# Table name: bugs
+#
+#  id                :integer(4)      not null, primary key
+#  project_id        :integer(4)
+#  status_id         :integer(4)
+#  type_id           :integer(4)
+#  priority_id       :integer(4)
+#  short_description :string(255)
+#  description       :text
+#  commentary        :text
+#  created_at        :datetime
+#  updated_at        :datetime
+#
+

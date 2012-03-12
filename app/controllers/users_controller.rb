@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   admin_requirements                    any:  [ :manage_privileges, :manage_users ]
   before_filter       :require_access,  only: [ :edit, :update, :destroy ]
+  before_filter       :require_user,    only: [ :invite ]
   before_filter       :require_no_user, only: [ :new, :create ]
 
   before_filter       :load_user,       only: [ :show, :edit, :update, :destroy, :invite ]

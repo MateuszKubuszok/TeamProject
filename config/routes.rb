@@ -32,6 +32,14 @@ TeamProject::Application.routes.draw do
     get     'page/:page',     on: :member,     action: :show
   end
 
+  resources :forums do
+    resources :forum_threads do
+      resources :responses
+    end
+    get     'new_for/:forum_id',
+                              on: :collection, action: :new,            as: :new_for
+  end
+
   match 'register'  => 'users#new',             as: :register
   match 'login'     => 'user_sessions#new',     as: :login
   match 'logout'    => 'user_sessions#destroy', as: :logout

@@ -5,7 +5,8 @@ class User < ActiveRecord::Base
   define_symbols :privilege_types, [
     :manage_privileges,
     :manage_users,
-    :manage_projects
+    :manage_projects,
+    :manage_forums
   ]
 
   has_many  :team_invitations,            dependent:      :destroy

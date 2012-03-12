@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Landlords</title>
+  <title>Team project</title>
   <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
@@ -9,15 +9,21 @@
 <body>
   <div id="nav">
   <% if current_user %>
-    <%= link_to "Logged as #{current_user.name}", user_path(current_user.url_name) %> |
+    <%= link_to "Logged as #{current_user.login}", user_path(current_user.url_name) %> |
     <%= link_to "Edit Profile", edit_user_path(current_user.url_name) %> |
     <%= link_to 'My Projects', my_projects_path %> |
     <%= link_to "Invitations (#{current_user.team_invitations.count})", invitations_path %> |
     <%= link_to "Logout", :logout %>
   <% else %>
-    <%= link_to "Register", "users/new" %> |
+    <%= link_to "Register", :register %> |
     <%= link_to "Login", :login %>
   <% end %>
+  </div>
+  <div>
+    <%= link_to "Home", homepage_path %> |
+    <%= link_to "Users", users_path %> |
+    <%= link_to "Projects", projects_path %> |
+    <%= link_to "Forums", forums_path %>
   </div>
   <p id="notice"><%= notice %></p>
 

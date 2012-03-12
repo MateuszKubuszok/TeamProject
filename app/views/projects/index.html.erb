@@ -7,6 +7,7 @@
     <th>Tags</th>
     <th></th>
     <th></th>
+    <th></th>
   </tr>
 
 <% @projects.each do |project| %>
@@ -16,6 +17,7 @@
     <td><% project.tags.each do |tag| %>
       <%= link_to tag.name, tag_path(tag.name) %>
     <% end %></td>
+    <td><%= allowed_to_see?(project) ? link_to("bugtracker", project_bugs_path(project.url_name)) : '' %></td>
     <td><% if meet_requirements?(:manage_projects) || meet_team_requirements?({any: [:manage_project, :manage_team ]}, project) %>
         <%= link_to 'Edit', edit_project_path(project.url_name) %>
     <% end %></td>

@@ -9,6 +9,7 @@ class Project < ActiveRecord::Base
                                           dependent:      :destroy
   has_many  :milestones,                  dependent:      :destroy
   has_many  :bugs,                        dependent:      :destroy
+  has_many  :forums
 
   validates :name,                        presence:       true
   validates :url_name,                    presence:       true,

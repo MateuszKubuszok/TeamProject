@@ -2,5 +2,5 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @bug %> |
-<%= link_to 'Back', bugs_path %>
+<%= link_to 'Show', project_bug_(@project.url_name, @bug.id) %> |
+<%= link_to 'Back', project_bugs_path(@project.url_name) %>
