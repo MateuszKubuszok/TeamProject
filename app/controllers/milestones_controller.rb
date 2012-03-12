@@ -88,25 +88,21 @@ class MilestonesController < ApplicationController
 
   # pobiera projekt
   def load_project
-    begin
-      @project = Project.find_by_url params[:project_id]
-    rescue ActiveRecord::RecordNotFound
-      respond_to do |format|
-        format.html { redirect_to(homepage_path, :notice => "#{$!}") }
-        format.json { head :not_found }
-      end
+    @project = Project.find_by_url params[:project_id]
+  rescue ActiveRecord::RecordNotFound
+    respond_to do |format|
+      format.html { redirect_to(homepage_path, :notice => "#{$!}") }
+      format.json { head :not_found }
     end
   end
 
   # pobiera milestone
   def load_milestone
-    begin
-      @milestone = Milestone.find_by_id_and_project_id params[:id], @project.id
-    rescue ActiveRecord::RecordNotFound
-      respond_to do |format|
-        format.html { redirect_to(project_path(@project.url_name), :notice => "#{$!}") }
-        format.json { head :not_found }
-      end
+    @milestone = Milestone.find_by_id_and_project_id params[:id], @project.id
+  rescue ActiveRecord::RecordNotFound
+    respond_to do |format|
+      format.html { redirect_to(project_path(@project.url_name), :notice => "#{$!}") }
+      format.json { head :not_found }
     end
   end
 end

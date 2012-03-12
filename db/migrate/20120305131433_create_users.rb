@@ -8,7 +8,8 @@ class CreateUsers < ActiveRecord::Migration
       t.string :password_salt
       t.string :email
       t.string :name
-      t.string :about_me
+      t.string :surname
+      t.text :about_me
       t.integer :privileges
       t.string :persistence_token
       t.string :single_access_token

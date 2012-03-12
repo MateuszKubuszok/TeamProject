@@ -3,13 +3,13 @@
 <%= render 'form' %>
 <table>
   <tr>
-    <th>User</th>
+    <th>Username</th>
     <th>E-mail</th>
     <th></th>
   </tr>
   <% @users.each do |user| %>
   <tr>
-    <td><%= link_to user.name, user_path(user.url_name) %></td>
+    <td><%= link_to user.login, user_path(user.url_name) %></td>
     <td><%= mail_to user.email %></td>
     <td><%= @project.users.include?(user) ? "Member" : @project.possible_users.include?(user) ? "Invited" : link_to("Invite", project_invitations_path(@project.url_name, user.url_name)) %></td>
   </tr>

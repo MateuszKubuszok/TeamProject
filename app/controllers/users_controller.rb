@@ -97,21 +97,18 @@ class UsersController < ApplicationController
 
   # Pobiera użytkownika.
   def load_user
-    begin
-      @user = User.find_by_url params[:id]
-    rescue ActiveRecord::RecordNotFound
-      respond_to do |format|
-        format.html { redirect_to(homepage_path, :notice => "#{$!}") }
-        format.json { head :not_found }
-      end
+    @user = User.find_by_url params[:id]
+  rescue ActiveRecord::RecordNotFound
+    respond_to do |format|
+      format.html { redirect_to(homepage_path, :notice => "#{$!}") }
+      format.json { head :not_found }
     end
   end
 
   # Usuwa z params[:user] uprawnienia administratora, jeśli wysyłający je użytkownik nie jest administratorem.
   def secure_received
-    if params[:user]
-      unless meet_requirements? :manage_privileges
-        [
+    unless meet_requirements? :manage_privileges
+      [
           :crypted_password,
           :password_salt,
           :premium_until,
@@ -121,9 +118,8 @@ class UsersController < ApplicationController
           :perishable_token,
           :last_login_at,
           :last_request_at
-        ].each { |attribute| params[:hero].delete attribute if params[:user][attribute] }
-        User.symbols(:privilege_types).each { |privilege| params[:user][privilege] = "0" if params[:user][privilege] }
-      end
-    end
+      ].each { |attribute| params[:user].delete attribute if params[:user][attribute] }
+      User.symbols(:privilege_types).each { |privilege| params[:user][privilege] = "0" if params[:user][privilege] }
+    end if params[:user]
   end
 end

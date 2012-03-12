@@ -79,13 +79,11 @@ class InvitationsController < ApplicationController
 
   # Pobiera zaproszenie.
   def load_invitation
-    begin
-      @invitation = meet_requirements?(:manage_projects) ? TeamInvitation.find_by_id(params[:id]) : TeamInvitation.find_by_id_and_user_id(params[:id], params[:user_id])
-    rescue ActiveRecord::RecordNotFound
-      respond_to do |format|
-        format.html { redirect_to(homepage_path, :notice => "#{$!}") }
-        format.json { head :not_found }
-      end
+    @invitation = meet_requirements?(:manage_projects) ? TeamInvitation.find_by_id(params[:id]) : TeamInvitation.find_by_id_and_user_id(params[:id], params[:user_id])
+  rescue ActiveRecord::RecordNotFound
+    respond_to do |format|
+      format.html { redirect_to(homepage_path, :notice => "#{$!}") }
+      format.json { head :not_found }
     end
   end
 end

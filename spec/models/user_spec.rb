@@ -14,7 +14,8 @@ end
 #  password_salt       :string(255)
 #  email               :string(255)
 #  name                :string(255)
-#  about_me            :string(255)
+#  surname             :string(255)
+#  about_me            :text
 #  privileges          :integer(4)
 #  persistence_token   :string(255)
 #  single_access_token :string(255)

@@ -94,43 +94,37 @@ class TicketsController < ApplicationController
 
   # pobiera projekt
   def load_project
-    begin
-      @project = Project.find_by_url params[:project_id]
-    rescue ActiveRecord::RecordNotFound
-      respond_to do |format|
-        format.html { redirect_to(homepage_path, :notice => "#{$!}") }
-        format.json { head :not_found }
-      end
+    @project = Project.find_by_url params[:project_id]
+  rescue ActiveRecord::RecordNotFound
+    respond_to do |format|
+      format.html { redirect_to(homepage_path, :notice => "#{$!}") }
+      format.json { head :not_found }
     end
   end
 
   # pobiera milestone
   def load_milestone
-    begin
-      @milestone = Milestone.find_by_id_and_project_id params[:milestone_id], @project.id
-    rescue ActiveRecord::RecordNotFound
-      respond_to do |format|
-        format.html { redirect_to(project_path(@project.url_name), :notice => "#{$!}") }
-        format.json { head :not_found }
-      end
+    @milestone = Milestone.find_by_id_and_project_id params[:milestone_id], @project.id
+  rescue ActiveRecord::RecordNotFound
+    respond_to do |format|
+      format.html { redirect_to(project_path(@project.url_name), :notice => "#{$!}") }
+      format.json { head :not_found }
     end
   end
 
   # pobiera ticket
   def load_ticket
-    begin
-      @ticket = Ticket.find_by_id_and_milestone_id params[:id], params[:milestone_id]
-    rescue ActiveRecord::RecordNotFound
-      respond_to do |format|
-        format.html { redirect_to(project_milestone_path(@project.url_name, @milestone.id), :notice => "#{$!}") }
-        format.json { head :not_found }
-      end
+    @ticket = Ticket.find_by_id_and_milestone_id params[:id], params[:milestone_id]
+  rescue ActiveRecord::RecordNotFound
+    respond_to do |format|
+      format.html { redirect_to(project_milestone_path(@project.url_name, @milestone.id), :notice => "#{$!}") }
+      format.json { head :not_found }
     end
   end
 
   def prepare_select
     @select_user = []
-    @project.users.each { |user| @select_user << [user.name+(user.id.eql?(current_user.id) ? " (me)" : ""), user.id] }
+    @project.users.each { |user| @select_user << [user.login+(user.id.eql?(current_user.id) ? " (me)" : ""), user.id] }
 
     @select_milestone = []
     @project.milestones.each { |milestone| @select_milestone << [milestone.name, milestone.id] }

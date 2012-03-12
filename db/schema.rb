@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(:version => 20120308133432) do
 
   create_table "milestones", :force => true do |t|
     t.string   "name"
-    t.string   "description"
+    t.text     "description"
     t.integer  "project_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(:version => 20120308133432) do
     t.string   "url_name"
     t.string   "name"
     t.string   "short_description"
-    t.string   "description"
+    t.text     "description"
     t.boolean  "private"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -82,7 +82,8 @@ ActiveRecord::Schema.define(:version => 20120308133432) do
     t.string   "password_salt"
     t.string   "email"
     t.string   "name"
-    t.string   "about_me"
+    t.string   "surname"
+    t.text     "about_me"
     t.integer  "privileges"
     t.string   "persistence_token"
     t.string   "single_access_token"

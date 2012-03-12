@@ -5,7 +5,7 @@ class CreateProjects < ActiveRecord::Migration
       t.string :url_name
       t.string :name
       t.string :short_description
-      t.string :description
+      t.text :description
       t.boolean :private
 
       t.timestamps

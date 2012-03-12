@@ -7,6 +7,7 @@ class ProjectsController < ApplicationController
 
   before_filter :load_project,          only: [ :show, :edit, :update, :destroy, :edit_member, :update_member, :remove_member ]
   before_filter :load_user,             only: [ :edit_member, :update_member, :remove_member ]
+  before_filter :secure_received,       only: [ :update_member ]
 
   # GET /projects
   # GET /projects.json
@@ -134,20 +135,23 @@ class ProjectsController < ApplicationController
 
   # Pobiera użytkownika.
   def load_user
-    begin
-      @user = User.find_by_url params[:user_id]
-      @upr = UserProjectRelationship.find_by_project_id_and_user_id @project.id, @user.id
-      if @upr.blank?
-        respond_to do |format|
-          format.html { redirect_to(project_path(@project.url_name), :notice => "You cannot remove user from project if he isn't part of it!'") }
-          format.json { head :unprocessable_entity }
-        end
-      end
-    rescue ActiveRecord::RecordNotFound
+    @user = User.find_by_url params[:user_id]
+    @upr = UserProjectRelationship.find_by_project_id_and_user_id @project.id, @user.id
+    if @upr.blank?
       respond_to do |format|
-        format.html { redirect_to(project_path(@project.url_name), :notice => "#{$!}") }
-        format.json { head :not_found }
+        format.html { redirect_to(project_path(@project.url_name), :notice => "You cannot remove user from project if he isn't part of it!'") }
+        format.json { head :unprocessable_entity }
       end
     end
+  rescue ActiveRecord::RecordNotFound
+    respond_to do |format|
+      format.html { redirect_to(project_path(@project.url_name), :notice => "#{$!}") }
+      format.json { head :not_found }
+    end
+  end
+
+  # Usuwa z params[:user_project_relationship] uprawnienia administratora, jeśli wysyłający je użytkownik nie jest administratorem.
+  def secure_received
+    UserProjectRelationship.symbols(:privilege_types).each { |privilege| params[:user_project_relationship][privilege] = "0" if params[:user][privilege] } unless meet_team_requirements? :manage_team if params[:user_project_relationship]
   end
 end

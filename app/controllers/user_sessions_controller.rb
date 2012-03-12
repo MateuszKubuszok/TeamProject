@@ -22,8 +22,6 @@ class UserSessionsController < ApplicationController
   def create
     @user_session = UserSession.new(params[:user_session])
 
-    puts YAML.dump(params[:user_session])
-
     respond_to do |format|
       if @user_session.save
         format.html { redirect_to(redirect_back_or_default(:users), :notice => 'Login Successful!') }

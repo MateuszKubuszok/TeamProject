@@ -39,12 +39,10 @@ class Project < ActiveRecord::Base
   # @param  [integer] user_id id użytkownika
   # @return [boolean]
   def save_for user_id
-    begin
-      save_for! user_id
-      true
-    rescue ActiveRecord::RecordInvalid
-      false
-    end
+    save_for! user_id
+    true
+  rescue ActiveRecord::RecordInvalid
+    false
   end
 
   # Zapisuje projekt i tworzy dowiązanie dla użytkownika tworzącego projekt.
@@ -73,7 +71,7 @@ end
 #  url_name          :string(255)
 #  name              :string(255)
 #  short_description :string(255)
-#  description       :string(255)
+#  description       :text
 #  private           :boolean(1)
 #  created_at        :datetime
 #  updated_at        :datetime

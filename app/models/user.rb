@@ -24,9 +24,7 @@ class User < ActiveRecord::Base
                                                           }
 
   # Łączy model User z modelem sesji UserSession.
-  acts_as_authentic do
-    login_field :name
-  end
+  acts_as_authentic
 
   # Tworzy akcesory dla
   bool_accessors :privilege_types, :privileges
@@ -53,7 +51,7 @@ class User < ActiveRecord::Base
   #
   # @return [boolean] true, jeśli użytkownik jest adminem
   def admin?
-    self[:privileges] = 0 if self[:privileges].nil?
+    self[:privileges] |= 0
     self[:privileges] > 0
   end
 
@@ -113,7 +111,8 @@ end
 #  password_salt       :string(255)
 #  email               :string(255)
 #  name                :string(255)
-#  about_me            :string(255)
+#  surname             :string(255)
+#  about_me            :text
 #  privileges          :integer(4)
 #  persistence_token   :string(255)
 #  single_access_token :string(255)

@@ -31,6 +31,10 @@
     <td><%= ticket.priority %></td>
     <td><%= ticket.user ? link_to(ticket.user.url_name, user_path(ticket.user.url_name)) : "none" %></td>
     <td><%= ticket.deadline %></td>
+    <% if meet_team_requirements?(:manage_tickets) %>
+    <td><%= link_to 'Edit', edit_project_milestone_ticket_path(@project.url_name, @milestone.id, ticket.id) %></td>
+    <td><%= link_to 'Destroy', project_milestone_ticket_path(@project.url_name, @milestone.id, ticket.id), confirm: 'Are you sure?', method: :delete %></td>
+    <% end %>
   </tr>
   <% end %>
 </table>

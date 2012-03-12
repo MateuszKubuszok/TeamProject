@@ -31,8 +31,8 @@
 
 <table>
   <tr>
-    <th>user</th>
-    <th>e-mail</th>
+    <th>Username</th>
+    <th>E-mail</th>
     <% UserProjectRelationship.symbols(:privilege_types).each do |privilege| %>
     <% name = privilege.to_s; name["_"]=" " %>
     <th><%= name %></th>
@@ -45,7 +45,7 @@
   <% @project.users.each do |user| %>
   <% upr = @project.privileges_for user.id %>
   <tr>
-    <td><%= link_to user.name, user_path(user.url_name) %></td>
+    <td><%= link_to user.login, user_path(user.url_name) %></td>
     <td><%= mail_to user.email %></td>
     <% UserProjectRelationship.symbols(:privilege_types).each do |privilege| %>
     <% name = privilege.to_s; name["_"]=" " %>

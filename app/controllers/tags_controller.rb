@@ -24,13 +24,11 @@ class TagsController < ApplicationController
   private
 
   def load_tag
-    begin
-      @projects = Kaminari.paginate_array(Project.tagged_with params[:id]).page params[:page]
-    rescue ActiveRecord::RecordNotFound
-      respond_to do |format|
-        format.html { redirect_to(tags_path, :notice => "#{$!}") }
-        format.json { head :not_found }
-      end
+    @projects = Kaminari.paginate_array(Project.tagged_with params[:id]).page params[:page]
+  rescue ActiveRecord::RecordNotFound
+    respond_to do |format|
+      format.html { redirect_to(tags_path, :notice => "#{$!}") }
+      format.json { head :not_found }
     end
   end
 end

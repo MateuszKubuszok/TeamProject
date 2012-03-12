@@ -13,8 +13,8 @@
 
 <% @users.each do |user| %>
   <tr>
-    <td><%= link_to user.name, user_path(user.url_name) %></td>
-    <td><%= user.email %></td>
+    <td><%= link_to user.login, user_path(user.url_name) %></td>
+    <td><%= mail_to user.email %></td>
     <td><%= (current_user && current_user.id.equal?(user.id)) ? '' : link_to('Invite to team', invite_user_path(user.url_name)) %></td>
     <% if meet_requirements? :manage_users %>
     <td><%= link_to 'Edit', edit_user_path(user.url_name) %></td>

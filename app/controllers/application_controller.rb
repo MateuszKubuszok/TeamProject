@@ -53,13 +53,11 @@ class ApplicationController < ActionController::Base
   # @return [Project] bieżący projekt
   def current_project
     return @current_project if defined?(@current_project)
-    begin
-      @current_project = Project.find_by_url('projects'.eql?(params[:controller]) ? params[:id] : params[:project_id])
-    rescue ActiveRecord::RecordNotFound
-      respond_to do |format|
-        format.html { redirect_to(homepage_path, :notice => "#{$!}") }
-        format.json { head :not_found }
-      end
+    @current_project = Project.find_by_url('projects'.eql?(params[:controller]) ? params[:id] : params[:project_id])
+  rescue ActiveRecord::RecordNotFound
+    respond_to do |format|
+      format.html { redirect_to(homepage_path, :notice => "#{$!}") }
+      format.json { head :not_found }
     end
   end
 
@@ -129,15 +127,12 @@ class ApplicationController < ActionController::Base
   # @param [array]    requirements  tablica/hash zawierający uprawnienia
   # @param [Project]  project       projekt dla którego sprawdzamy uprawnienia
   def meet_team_requirements? requirements, project=current_project
-    puts "params:"+YAML.dump(params)
-    puts "requirements:"+YAML.dump(requirements)
     user = current_user
     if user.nil?
       false
     elsif user.admin?
       true
     else
-      puts "project:"+YAML.dump(project)
       return false if project.blank? or not (project.users).include?(user)
       privileges = UserProjectRelationship.find_by_user_id_and_project_id user.id, project.id
       if requirements.respond_to?(:has_key?) && (requirements.has_key?(:all) || requirements.has_key?(:any))
@@ -154,7 +149,7 @@ class ApplicationController < ActionController::Base
   def require_access
     unless meet_requirements?(@@requirements) || owner?
       respond_to do |format|
-        format.html { redirect_to(current_user ? homepage_path : login_path, :notice => "You must be either an owner or an administrator to access this page!")}
+        format.html { redirect_to(current_user ? homepage_path : login_path, :notice => "You must be either an owner or an administrator to access this page!") }
         format.json { head :unauthorized }
       end
     end

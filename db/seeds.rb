@@ -7,7 +7,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 root = User.new({
-  'name'                  => 'root',
+  'login'                 => 'root',
   'url_name'              => 'root',
   'password'              => 'pass',
   'password_confirmation' => 'pass',
@@ -17,7 +17,7 @@ root = User.new({
 root.save!
 
 user = User.new({
-  'name'                  => 'user',
+  'login'                 => 'user',
   'url_name'              => 'user',
   'password'              => 'pass',
   'password_confirmation' => 'pass',
@@ -26,7 +26,7 @@ user = User.new({
 user.save!
 
 tester = User.new({
-  'name'                  => 'tester',
+  'login'                 => 'tester',
   'url_name'              => 'tester',
   'password'              => 'pass',
   'password_confirmation' => 'pass',

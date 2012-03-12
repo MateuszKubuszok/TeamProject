@@ -13,14 +13,26 @@
 
   <% if @user.id.nil? || meet_requirements?(:manage_users) %>
   <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
+    <%= f.label :login %><br />
+    <%= f.text_field :login %>
   </div>
   <div class="field">
     <%= f.label :url_name %><br />
     <%= f.text_field :url_name %>
   </div>
   <% end %>
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :surname %><br />
+    <%= f.text_field :surname %>
+  </div>
+  <div class="field">
+    <%= f.label :about_me %><br />
+    <%= f.text_area :about_me %>
+  </div>
   <div class="field">
     <%= f.label :email %><br />
     <%= f.text_field :email %>
