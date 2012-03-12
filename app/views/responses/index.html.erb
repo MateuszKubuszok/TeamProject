@@ -1,0 +1,29 @@
+<h1>Listing responses</h1>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Content</th>
+    <th>User</th>
+    <% if meet_requirements? :manage_forums %>
+    <th></th>
+    <th></th>
+    <% end %>
+  </tr>
+
+<% @responses.each do |response| %>
+  <tr>
+    <td><%= link_to response.title, [@forum, @forum_thread, response] %></td>
+    <td><%= response.content %></td>
+    <td><%= link_to response.user.login, user_path(response.user.url_name) %></td>
+    <% if meet_requirements? :manage_forums %>
+    <td><%= link_to 'Edit', edit_forum_forum_thread_response_path(@forum, @forum_thread, response) %></td>
+    <td><%= link_to 'Destroy', [@forum, @forum_thread, response], confirm: 'Are you sure?', method: :delete %></td>
+    <% end %>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Response', new_forum_forum_thread_response_path(@forum, @forum_thread) %>

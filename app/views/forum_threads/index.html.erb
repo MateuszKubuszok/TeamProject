@@ -1,0 +1,28 @@
+ <h1>Listing threads</h1>
+
+<table>
+  <tr>
+    <th>Thread</th>
+    <th>Last post</th>
+    <% if meet_requirements? :manage_forums %>
+    <th></th>
+    <th></th>
+    <% end %>
+  </tr>
+
+<% @forum_threads.each do |forum_thread| %>
+  <tr>
+    <td><%= link_to forum_thread.title, [@forum, forum_thread] %></td>
+    <td>by <%= link_to(forum_thread.last_post_author.login, users_path(forum_thread.last_post_author.url_name)) %>
+            at <%= forum_thread.last_post_time %></td>
+    <% if meet_requirements? :manage_forums %>
+    <td><%= link_to 'Edit', edit_forum_forum_thread_path(@forum, forum_thread) %></td>
+    <td><%= link_to 'Destroy', [@forum, forum_thread], confirm: 'Are you sure?', method: :delete %></td>
+    <% end %>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Forum thread', new_forum_forum_thread_path(@forum) %>

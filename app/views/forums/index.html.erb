@@ -1,0 +1,33 @@
+<h1>Listing forums</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Forum</th>
+    <th>Private</th>
+    <% if meet_requirements? :manage_forums %>
+    <th></th>
+    <th></th>
+    <% end %>
+  </tr>
+
+<% @forums.each do |forum| %>
+  <tr>
+    <td><%= link_to forum.name, forum %></td>
+    <td><%= forum.description %></td>
+    <td><%= forum.forum_id %></td>
+    <td><%= forum.private %></td>
+    <% if meet_requirements? :manage_forums %>
+    <td><%= link_to 'Edit', edit_forum_path(forum) %></td>
+    <td><%= link_to 'Destroy', forum, confirm: 'Are you sure?', method: :delete %></td>
+    <% end %>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<% if meet_requirements? :manage_forums %>
+<%= link_to 'New Forum', new_forum_path %>
+<% end %>

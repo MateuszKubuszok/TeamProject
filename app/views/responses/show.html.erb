@@ -1,0 +1,12 @@
+<p>
+  <b>Title:</b>
+  <%= @response.title %>
+</p>
+
+<p>
+  <b>Content:</b>
+  <%= @response.content %>
+</p>
+
+<%= link_to 'Edit', edit_forum_forum_thread_response_path(@forum.id, @forum_thread.id, @response) %> |
+<%= link_to 'Back', forum_forum_thread_responses_path(@forum.id, @forum_thread.id) %>

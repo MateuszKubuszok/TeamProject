@@ -1,0 +1,48 @@
+<p>
+  <%= @forum_thread.title %>
+  by <%= link_to(@forum_thread.user.login, user_path(@forum_thread.user.url_name)) %>
+  at <%= @forum_thread.created_at %>
+</p>
+<p>
+  <%= @forum_thread.content %>
+</p>
+<% if @forum_thread.editor %>
+<p>Last edited
+  by <%= link_to(@forum_thread.user.login, user_path(@forum_thread.user.url_name)) %>
+  at <%= @forum_thread.updated_at %></p>
+<% end %>
+<p>Tags:
+<% @forum_thread.tags.each do |tag| %>
+  <%= link_to tag.name, tag_path(tag.name) %>
+<% end %>
+</p>
+
+<%= link_to "Reply", new_forum_forum_thread_response_path(@forum, @forum_thread) %>
+
+<br />
+
+Responses:
+<% @forum_thread.responses.order('created_at ASC').each do |response| %>
+<div>
+  <p>
+    <%= response.title %>
+    by <%= link_to(response.user.login, user_path(response.user.url_name)) %>
+    at <%= response.created_at %>
+  </p>
+  <p>
+    <%= response.content %>
+  </p>
+  <% if response.editor %>
+  <p>Last edited
+    by <%= link_to(response.user.login, user_path(response.user.url_name)) %>
+    at <%= response.updated_at %></p>
+  <% end %>
+</div>
+<% end %>
+
+<br />
+
+<%= link_to "Reply", new_forum_forum_thread_response_path(@forum, @forum_thread) %>
+
+<%= link_to 'Edit', edit_forum_forum_thread_path(@forum, @forum_thread) %> |
+<%= link_to 'Back', forum_forum_threads_path(@forum) %>
