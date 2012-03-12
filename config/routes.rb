@@ -18,6 +18,7 @@ TeamProject::Application.routes.draw do
     resources :milestones do
       resources :tickets
     end
+    resources :bugs
     get     'my',             on: :collection
     get     'my/:page',       on: :collection, action: :my
     get     'page/:page',     on: :collection, action: :index

@@ -8,6 +8,7 @@ class Project < ActiveRecord::Base
   has_many  :users,                       through:        :user_project_relationships,
                                           dependent:      :destroy
   has_many  :milestones,                  dependent:      :destroy
+  has_many  :bugs,                        dependent:      :destroy
 
   validates :name,                        presence:       true
   validates :url_name,                    presence:       true,

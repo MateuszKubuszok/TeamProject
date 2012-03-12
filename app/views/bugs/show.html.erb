@@ -1,0 +1,28 @@
+<p>
+  <b>Status:</b>
+  <%= @bug.status %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%= @bug.type %>
+</p>
+
+<p>
+  <b>Priority:</b>
+  <%= @bug.priority%>
+</p>
+
+<p>
+  <b>Short description:</b>
+  <%= @bug.short_description %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @bug.description %>
+</p>
+
+
+<%= link_to 'Edit', edit_project_bug_path(@project.url_name, @bug.id) %> |
+<%= link_to 'Back', project_bugs_path(@project.url_name) %>

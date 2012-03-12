@@ -11,7 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120308133432) do
+ActiveRecord::Schema.define(:version => 20120312004214) do
+
+  create_table "bugs", :force => true do |t|
+    t.integer  "project_id"
+    t.integer  "status_id"
+    t.integer  "type_id"
+    t.integer  "priority_id"
+    t.string   "short_description"
+    t.text     "description"
+    t.text     "commentary"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "milestones", :force => true do |t|
     t.string   "name"
