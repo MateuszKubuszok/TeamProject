@@ -1,7 +1,12 @@
-<h1>Sign in</h1>
+<div id="navigationBar">
+  Login | <%= link_to 'Register', register_path %>
+</div>
+<div id="content" class="clearfix">
+  <h3>Sign in</h3>
 
-<%= render 'form' %>
+  <%= render 'form' %>
 
-<p>Or <%= link_to 'register', register_path %></p>
+  <p>Don't have account yet? <%= link_to 'Register', register_path %>!</p>
 
-<%= link_to 'Back', user_sessions_path %>
+  <%= link_to content_tag(:span, "Scroll up"), "#mainFrame", id: "contentEnd" %>
+</div>

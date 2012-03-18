@@ -1,39 +1,49 @@
-<p>
-  <b>Username:</b>
+<div id="navigationBar">
+  <%= link_to "All users", users_path %> >
   <%= @user.login %>
-</p>
-
-<p>
-  <b>Email:</b>
-  <%= @user.email %>
-</p>
-
-<% if meet_requirements?(:manage_privileges) %>
-  <% User.symbols(:privilege_types).each do |privilege| %>
-      <% name = privilege.to_s; name["_"]=" " %>
-      <p>
-        <b><%= name %></b>
-        <%= @user.send(privilege) ? "granted" : "denied" %>
-      </p>
-   <% end %>
-<% end %>
-
-<p><%= @user.login %>'s projects</p>
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Short description</th>
-  </tr>
-  <% @user.projects.each do |project| %>
-  <tr>
-    <td><%= link_to project.name, project_path(project.url_name) %></td>
-    <td><%= project.short_description %></td>
-  </tr>
+  <% if meet_requirements? :manage_users || owner? %>
+  (<%= link_to 'edit', edit_user_path(@user.url_name) %>)
   <% end %>
-</table>
+</div>
+<div id="content" class="clearfix">
+  <h3><%= @user.login %>'s profile</h3>
+  
+  <p><b>Username:</b> <%= @user.login %></p>
+  <p><b>Name:</b> <%= @user.name ? @user.name : "---" %></p>
+  <p><b>Surname:</b> <%= @user.surname ? @user.surname : "---" %></p>
+  <p><b>About me:</b></p>
+  <p><%= @user.about_me ? @user.about_me : "---" %></p>
+
+  <% if meet_requirements?(:manage_privileges) && @user.admin? %>
+  <p><b>Privileges:</b></p>
+  <ul>
+  <% User.symbols(:privilege_types).each do |privilege| %>
+    <% if @user.send(privilege) %>
+    <li><%= privilege.to_s %></li>
+    <% end %>
+  <% end %>
+  </ul>
+  <% end %>
+
+  <% if @user.projects.blank? %>
+  <p><b>This user doesn't have any projects yet.</b></p>
+  <% else %>
+  <p><%= @user.login %>'s projects</p>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Short description</th>
+    </tr>
+    <% @user.projects.each do |project| %>
+    <tr>
+      <td><%= link_to project.name, project_path(project.url_name) %></td>
+      <td><%= project.short_description %></td>
+    </tr>
+    <% end %>
+  </table>
+  <% end %>
+
+  <%= link_to content_tag(:span, "Scroll up"), "#mainFrame", id: "contentEnd" %>
+</div>
 
 
-<% if meet_requirements? :manage_users || owner? %>
-<%= link_to 'Edit', edit_user_path(@user.url_name) %> |
-<% end %>
-<%= link_to 'Back', users_path %>

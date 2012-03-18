@@ -1,17 +1,29 @@
-<h1>Invite user <%= @user.name %> to project:</h1>
+<div id="navigationBar">
+  <%= link_to "All users", users_path %> >
+  <%= link_to @user.login, user_path(@user.url_name) %> >
+  Invite to project
+</div>
+<div id="content" class="clearfix">
+  <h3>Invite user <%= link_to @user.login, user_path(@user.url_name) %> to project</h3>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Short description</th>
-    <th></th>
-  </tr>
+  <% if @projects.blank? %>
+  <p>Currently you don't have any projects you could invite <b><%= @user.login %></b> into. It is either because you don't have permissions to invite in projects that you participate or because you already invited him into all of them.</p>
+  <% else %>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Short description</th>
+      <th></th>
+    </tr>
+    <% @projects.each do |project| %>
+    <tr>
+      <td><%= allowed_to_see?(project) ? project.name : link_to(project.name, project_path(project.url_name)) %></td>
+      <td><%= project.short_description %></td>
+      <td><%= link_to 'Invite', project_invitations_path(project.url_name, @user.url_name) %></td>
+    </tr>
+    <% end %>
+  </table>
+  <% end %>
 
-<% @projects.each do |project| %>
-  <tr>
-    <td><%= allowed_to_see?(project) ? project.name : link_to(project.name, project_path(project.url_name)) %></td>
-    <td><%= project.short_description %></td>
-    <td><%= link_to 'Invite', project_invitations_path(project.url_name, @user.url_name) %></td>
-  </tr>
-<% end %>
-</table>
+  <%= link_to content_tag(:span, "Scroll up"), "#mainFrame", id: "contentEnd" %>
+</div>

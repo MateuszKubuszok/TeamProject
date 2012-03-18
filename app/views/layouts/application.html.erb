@@ -1,33 +1,46 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
-<title>Team project</title>
-<%= stylesheet_link_tag    "application", params[:controller], cache: true %>
-<%= javascript_include_tag "application", params[:controller], cache: true %>
-<%= csrf_meta_tags %>
+  <title>Team project</title>
+  <%= stylesheet_link_tag    "frames", cache: true %>
+  <%= stylesheet_link_tag    "fullpage", cache: true %>
+  <%= stylesheet_link_tag    "colors", cache: true %>
+  <%= javascript_include_tag "application", params[:controller], cache: true %>
+  <%= csrf_meta_tags %>
 </head>
-<body>
-  <div id="nav">
-  <% if current_user %>
-    <%= link_to "Logged as #{current_user.login}", user_path(current_user.url_name) %> |
-    <%= link_to "Edit Profile", edit_user_path(current_user.url_name) %> |
-    <%= link_to 'My Projects', my_projects_path %> |
-    <%= link_to "Invitations (#{current_user.team_invitations.count})", invitations_path %> |
-    <%= link_to "Logout", :logout %>
-  <% else %>
-    <%= link_to "Register", :register %> |
-    <%= link_to "Login", :login %>
-  <% end %>
+<body class="fllPage"><div id="wrap">
+<div id="mainFrame">
+  <div id="headerFrame">
+	<div id="headerContent">
+	  <div id="userBar"><span>
+        <% if current_user %>
+        <p><%= link_to "Logged as #{current_user.login}", user_path(current_user.url_name) %> | <%= link_to "Edit Profile", edit_user_path(current_user.url_name) %> | <%= link_to "Logout", :logout %></p>
+        <p><%= link_to 'My Projects', my_projects_path %> | <%= link_to "Invitations (#{current_user.team_invitations.count})", invitations_path %></p>
+        <% else %>
+        <p><%= link_to "Register", :register %></p>
+        <p><%= link_to "Login", :login %></p>
+        <% end %>
+        <p><%= link_to "Fullpage width", "#" %></p>
+	  </span></div>
+      <div id="title">
+	    <h1><span style="color:#fff">Team</span><span style="color:#ea0">Project</span></h1>
+		<h2>Tools for team development</h2>
+	  </div>
+      <ul><li><%= link_to content_tag(:span, "Home"), "#", id: "home" %></li><li><%= link_to content_tag(:span, "Projects"), projects_path, id: "projects" %></li><li><%= link_to content_tag(:span, "Users"), users_path, id: "users" %></li><li><%= link_to content_tag(:span, "Forums"), forums_path, id: "forums" %></li></ul>
+	</div>
   </div>
-  <div>
-    <%= link_to "Home", homepage_path %> |
-    <%= link_to "Users", users_path %> |
-    <%= link_to "Projects", projects_path %> |
-    <%= link_to "Forums", forums_path %>
+  <div id="contentFrame">
+    <%= yield %>
   </div>
-  <p id="notice"><%= notice %></p>
-
-<%= yield %>
-
-</body>
+</div>
+</div>
+<div id="footerFrame">
+  <div id="footerContent">
+	<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dolor justo, eleifend in fermentum eu, mollis et nibh. Nam pharetra ipsum non neque elementum pretium.</div>
+	<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dolor justo, eleifend in fermentum eu, mollis et nibh. Nam pharetra ipsum non neque elementum pretium.</div>
+	<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dolor justo, eleifend in fermentum eu, mollis et nibh. Nam pharetra ipsum non neque elementum pretium.</div>
+	<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dolor justo, eleifend in fermentum eu, mollis et nibh. Nam pharetra ipsum non neque elementum pretium.</div>
+	<div><a href="#">Link 1</a><br /><a href="#">Link 2</a><br /><a href="#">Link 3</a><br /><a href="#">Link 4</a></div>
+  </div>
+</div></body>
 </html>

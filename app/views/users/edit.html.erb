@@ -1,6 +1,12 @@
-<h1>Editing user</h1>
+<div id="navigationBar">
+  <%= link_to "All users", users_path %> >
+  <%= link_to @user.login, user_path(@user.url_name) %> >
+  edit
+</div>
+<div id="content" class="clearfix">
+  <h3>Editing <%= @user.login %>'s profile</h3>
 
-<%= render 'form' %>
+  <%= render 'form' %>
 
-<%= link_to 'Show', user_path(@user.url_name) %> |
-<%= link_to 'Back', users_path %>
+  <%= link_to content_tag(:span, "Scroll up"), "#mainFrame", id: "contentEnd" %>
+</div>

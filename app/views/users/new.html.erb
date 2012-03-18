@@ -1,5 +1,11 @@
-<h1>>Register new user</h1>
+<div id="navigationBar">
+  <%= link_to "All users", users_path %> >
+  register new
+</div>
+<div id="content" class="clearfix">
+  <h3>Register new user</h3>
 
-<%= render 'form' %>
+  <%= render 'form' %>
 
-<%= link_to 'Back', users_path %>
+  <%= link_to content_tag(:span, "Scroll up"), "#mainFrame", id: "contentEnd" %>
+</div>
