@@ -22,7 +22,6 @@ TeamProject::Application.routes.draw do
     get     'my',             on: :collection
     get     'my/:page',       on: :collection, action: :my
     get     'page/:page',     on: :collection, action: :index
-    get     'new_ticket',     on: :member,     action: :new,            as: :new_ticket,     controller: :tickets
     put     ':user_id',       on: :member,     action: :update_member,  as: :update_member
     get     ':user_id/edit',  on: :member,     action: :edit_member,    as: :edit_member
     delete  ':user_id',       on: :member,     action: :remove_member,  as: :remove_member

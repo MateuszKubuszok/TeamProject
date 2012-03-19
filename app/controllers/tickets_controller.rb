@@ -32,7 +32,7 @@ class TicketsController < ApplicationController
   # GET /projects/1/milestones/1/tickets/new.json
   def new
     @ticket = Ticket.new
-    @ticket.milestone_id |= @milestone.id
+    @ticket.milestone_id |= @milestone.id if @milestone
 
     prepare_select
 
@@ -94,7 +94,7 @@ class TicketsController < ApplicationController
 
   # pobiera projekt
   def load_project
-    @project = Project.find_by_url params[:project_id]
+    @project = Project.find_by_url params[:project_id] ? params[:project_id] : params[:id]
   rescue ActiveRecord::RecordNotFound
     respond_to do |format|
       format.html { redirect_to(homepage_path, :notice => "#{$!}") }

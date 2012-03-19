@@ -1,95 +1,81 @@
-<p>
-  <b>Name:</b>
-  <%= @project.name %>
-</p>
+<div id="navigationBar">
+  <%= link_to "All projects", projects_path %> |
+  <%= link_to "My projects", my_projects_path %> >
+  <%= @project.name %><% if meet_team_requirements? :manage_project %> (<%= link_to "edit", edit_project_path(@project.url_name) %>)<% end %>
+</div>
+<div id="content" class="clearfix">
+  <h3>Project <%= @project.name %></h3>
 
-<p>
-  <b>Short description:</b>
-  <%= @project.short_description %>
-</p>
+  <p><b>Name:</b> <%= @project.name %></p>
+  <p><b>Short description:</b> <%= @project.short_description %></p>
+  <p><b>Full description:</b></p>
+  <p><%= @project.description %></p>
+  <p><b>Tags:</b> <% @project.tags.each do |tag| %><%= link_to tag.name, tag_path(tag.name) %><% end %></p>
 
-<p>
-  <b>Full description:</b>
-  <%= @project.description %>
-</p>
+  <p><b><%= link_to "Bugtracker", project_bugs_path(@project.url_name) %></b></p>
 
-<p>
-  <b>Tags:</b>
-  <% @project.tags.each do |tag| %>
-      <%= link_to tag.name, tag_path(tag.name) %>
-  <% end %>
-</p>
-
-<p>
-  <b><%= link_to "Bugtracker", project_bugs_path(@project.url_name) %></b>
-</p>
-
-<p>
-  <b>Invite new member:</b>
   <%= render 'search_form' %>
-</p>
 
-<p>
-  <b>Team members:</b>
-</p>
+  <p><b>Team members:</b></p>
 
-<table>
-  <tr>
-    <th>Username</th>
-    <th>E-mail</th>
-    <% UserProjectRelationship.symbols(:privilege_types).each do |privilege| %>
-    <% name = privilege.to_s; name["_"]=" " %>
-    <th><%= name %></th>
+  <table>
+    <tr>
+      <th>Username</th>
+      <th>E-mail</th>
+      <% UserProjectRelationship.symbols(:privilege_types).each do |privilege| %><% name = privilege.to_s; name["_"]=" " %>
+      <th><%= name %></th>
+      <% end %>
+      <% if meet_team_requirements?(:manage_team) %>
+      <th></th>
+      <th></th>
+      <% end %>
+    </tr>
+    <% @project.users.each do |user| %>
+    <% upr = @project.privileges_for user.id %>
+    <tr>
+        <td><%= link_to user.login, user_path(user.url_name) %></td>
+        <td><%= mail_to user.email %></td>
+        <% UserProjectRelationship.symbols(:privilege_types).each do |privilege| %><% name = privilege.to_s; name["_"]=" " %>
+        <td><%= upr.send(privilege) ? "granted" : "" %></td>
+        <% end %>
+        <% if meet_team_requirements?(:manage_team) %>
+        <td><%= link_to 'Change permissions', edit_member_project_path(@project.url_name, user.url_name) %></td>
+        <td><%= link_to 'Remove from project', remove_member_project_path(@project.url_name, user.url_name), confirm: "Are you sure?", method: :delete %></td>
+        <% end %>
+      </tr>
     <% end %>
-    <% if meet_team_requirements?(:manage_team) %>
-    <th></th>
-    <th></th>
+  </table>
+
+  <p><b>Milestones:</b></p>
+
+  <% if @project.milestones.blank? %>
+  <p>Your project don't have any milestones!</p>
+  <% else %>
+  <table>
+    <tr>
+      <th>Name:</th>
+      <th>Deadline:</th>
+      <% if meet_team_requirements?(:manage_milestones) %>
+      <th></th>
+      <th></th>
+      <% end %>
+    </tr>
+    <% @project.milestones.each do |milestone| %>
+    <tr>
+      <td><%= link_to milestone.name, project_milestone_path(@project.url_name, milestone.id) %></td>
+      <td><%= milestone.last_deadline ? milestone.last_deadline : "---" %></td>
+      <% if meet_team_requirements?(:manage_milestones) %>
+      <td><%= link_to "Edit", project_milestone_path(@project.url_name, milestone.id) %></td>
+      <td><%= link_to "Destroy", project_milestone_path(@project.url_name, milestone.id), confirm: "Are your sure?", method: :delete %></td>
+      <% end %>
+    </tr>
     <% end %>
-  </tr>
-  <% @project.users.each do |user| %>
-  <% upr = @project.privileges_for user.id %>
-  <tr>
-    <td><%= link_to user.login, user_path(user.url_name) %></td>
-    <td><%= mail_to user.email %></td>
-    <% UserProjectRelationship.symbols(:privilege_types).each do |privilege| %>
-    <% name = privilege.to_s; name["_"]=" " %>
-    <td><%= upr.send(privilege) ? "granted" : "denied" %></td>
-    <% end %>
-    <% if meet_team_requirements?(:manage_team) %>
-    <td><%= link_to 'Change permissions', edit_member_project_path(@project.url_name, user.url_name) %></td>
-    <td><%= link_to 'Remove from project', remove_member_project_path(@project.url_name, user.url_name), confirm: "Are you sure?", method: :delete %></td>
-    <% end %>
-  </tr>
+  </table>
   <% end %>
-</table>
 
-<p>
-  <b>Milestones:</b>
-</p>
-
-<table>
-  <tr>
-    <th>Name:</th>
-    <% if meet_team_requirements?(:manage_milestones) %>
-    <th></th>
-    <th></th>
-    <% end %>
-  </tr>
-  <% @project.milestones.each do |milestone| %>
-  <tr>
-    <td><%= link_to milestone.name, project_milestone_path(@project.url_name, milestone.id) %></td>
-    <% if meet_team_requirements?(:manage_milestones) %>
-    <td><%= link_to "Edit", project_milestone_path(@project.url_name, milestone.id) %></td>
-    <td><%= link_to "Destroy", project_milestone_path(@project.url_name, milestone.id), confirm: "Are your sure?", method: :delete %></td>
-    <% end %>
-  </tr>
+  <% if meet_team_requirements? :manage_milestones %>
+  <%= link_to "New milestone", new_project_milestone_path(@project.url_name) %>
   <% end %>
-</table>
 
-<%= link_to "New milestone", new_project_milestone_path(@project.url_name) %> |
-<%= link_to "New ticket", new_ticket_project_path(@project.url_name) %>
-
-<br />
-
-<%= link_to 'Edit', edit_project_path(@project.url_name) %> |
-<%= link_to 'Back', projects_path %>
+  <%= link_to content_tag(:span, "Scroll up"), "#mainFrame", id: "contentEnd" %>
+</div>

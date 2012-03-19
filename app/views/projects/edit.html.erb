@@ -1,6 +1,13 @@
-<h1>Editing project</h1>
+<div id="navigationBar">
+  <%= link_to "All projects", projects_path %> |
+  <%= link_to "My projects", my_projects_path %> >
+  <%= link_to @project.name, project_path(@project.url_name) %> >
+  edit
+</div>
+<div id="content" class="clearfix">
+  <h3>Editing project <%= @project.name %></h3>
 
-<%= render 'form' %>
+  <%= render 'form' %>
 
-<%= link_to 'Show', project_path(@project.url_name) %> |
-<%= link_to 'Back', projects_path %>
+  <%= link_to content_tag(:span, "Scroll up"), "#mainFrame", id: "contentEnd" %>
+</div>

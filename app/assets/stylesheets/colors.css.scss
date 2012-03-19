@@ -35,11 +35,13 @@ h2 {
 #headerContent a:active, #headerContent a:focus, #headerContent a:hover { color: #444; }
 #footerContent { color: #aaa; }
 
+#error_explanation { border: #f00 1px dashed; margin: 15px 5px; padding: 10px; }
 .field_with_errors { display: inline; }
 .field_with_errors label { border-bottom: #f00 1px dashed; color: #f00; position: absolute; }
 .field_with_errors input, .field_with_errors textarea, .field_with_errors select { background-color: #fdd; }
 #content label { float: left; width: 150px; }
-#content input, #content textarea, #content select { margin-left: 160px; position: relative; top: -15pt; }
+#content input, #content textarea, #content select { position: relative; top: -15pt; }
+#content input, #content textarea, #content select:first-of-type { margin-left: 160px; }
 
 /* controllers */
 #headerContent ul li a:active, #headerContent ul li a:focus, #headerContent ul li a:hover { color: #669 !important; }

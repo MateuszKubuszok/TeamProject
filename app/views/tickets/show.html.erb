@@ -1,38 +1,22 @@
-<p>
-  <b>Name:</b>
-  <%= @ticket.name %>
-</p>
+<div id="navigationBar">
+  <%= link_to "All projects", projects_path %> |
+  <%= link_to "My projects", my_projects_path %> >
+  <%= link_to @project.name, project_path(@project.url_name) %><% if meet_team_requirements? :manage_project %> (<%= link_to "edit", edit_project_path(@project.url_name) %>)<% end %> >
+  <%= link_to "Milestones", project_milestones_path(@project.url_name) %> >
+  <%= link_to @milestone.name, project_milestone_path(@project.url_name, @milestone.id) %><% if meet_team_requirements? :manage_milestones %> (<%= link_to "edit", edit_project_milestone_path(@project.url_name, @milestone.id) %>)<% end %> >
+  <%= link_to "Tickets", project_milestone_tickets_path(@project.url_name, @milestone.id) %> >
+  <%= @ticket.name %><% if meet_team_requirements? :manage_tickets %> (<%= link_to "edit", edit_project_milestone_ticket_path(@project.url_name, @milestone.id, @ticket.id) %>)<% end %>
+</div>
+<div id="content" class="clearfix">
+  <h3>Project <%= link_to @project.name, project_path(@project.url_name) %> ticket <%= @ticket.name %></h3>
 
-<p>
-  <b>Description:</b>
-  <%= @ticket.description %>
-</p>
+  <p><b>Milestone:</b> <%= link_to @ticket.milestone.name, project_milestone_path(@ticket.milestone.id) %></p>
+  <p><b>Name:</b> <%= @ticket.name %></p>
+  <p><b>Description:</b> <%= @ticket.description %></p>
+  <p><b>Status:</b> <%= @ticket.status %></p>
+  <p><b>Priority:</b> <%= @ticket.priority %></p>
+  <p><b>Responsible member:</b> <%= link_to @ticket.user.login, user_path(@ticket.user.url_name) %></p>
+  <p><b>Deadline:</b> <%= @ticket.deadline %></p>
 
-<p>
-  <b>Milestone:</b>
-  <%= link_to @ticket.milestone.name, project_milestone_path(@ticket.milestone.id) %>
-</p>
-
-<p>
-  <b>Status:</b>
-  <%= @ticket.status %>
-</p>
-
-<p>
-  <b>Priority:</b>
-  <%= @ticket.priority %>
-</p>
-
-<p>
-  <b>Responsible:</b>
-  <%= link_to @ticket.user.login, user_path(@ticket.user.url_name) %>
-</p>
-
-<p>
-  <b>Deadline:</b>
-  <%= @ticket.deadline %>
-</p>
-
-
-<%= link_to 'Edit', edit_project_milestone_ticket_path(@project.url_name, @milestone.id, @ticket.id) %> |
-<%= link_to 'Back', project_milestone_tickets_path(@project.url_name, @milestone.id) %>
+  <%= link_to content_tag(:span, "Scroll up"), "#mainFrame", id: "contentEnd" %>
+</div>

@@ -64,6 +64,41 @@ class Project < ActiveRecord::Base
       upr.save!
     end
   end
+
+  # Zwraca deadline.
+  #
+  # @return [datetime] ostatni deadline
+  def last_deadline
+    return @deadline if @deadline
+    last_ticket
+    @deadline
+  end
+
+  # Zwraca ostatni milestone.
+  #
+  # @return [Milestone] najpóźniejszy milestone
+  def last_milestone
+
+  end
+
+  # Zwraca najpóźniejszy ticket.
+  #
+  # @return [Ticket] najpóźniejszy ticket
+  def last_ticket
+    return @ticket if @ticket
+    @ticket = nil
+    @deadline = self.created_at
+    self.milestones.each do |milestone|
+      ticket = milestone.last_ticket
+      if ticket.deatline > @deadline
+        @ticket = ticket
+        @deadline = ticket.deadline
+      end
+    end
+    @deadline = nil if @ticket.nil?
+    @milestone = ticket.milestone if @ticket
+    @ticket
+  end
 end
 # == Schema Information
 #

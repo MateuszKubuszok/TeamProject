@@ -1,6 +1,17 @@
-<h1>Editing ticket</h1>
+<div id="navigationBar">
+  <%= link_to "All projects", projects_path %> |
+  <%= link_to "My projects", my_projects_path %> >
+  <%= link_to @project.name, project_path(@project.url_name) %><% if meet_team_requirements? :manage_project %> (<%= link_to "edit", edit_project_path(@project.url_name) %>)<% end %> >
+  <%= link_to "Milestones", project_milestones_path(@project.url_name) %> >
+  <%= link_to @milestone.name, project_milestone_path(@project.url_name, @milestone.id) %><% if meet_team_requirements? :manage_milestones %> (<%= link_to "edit", edit_project_milestone_path(@project.url_name, @milestone.id) %>)<% end %> >
+  <%= link_to "Tickets", project_milestone_tickets_path(@project.url_name, @milestone.id) %> >
+  <%= link_to @ticket.name, project_milestone_ticket_path(@project.url_name, @milestone.id, @ticket.id) %> >
+  edit
+</div>
+<div id="content" class="clearfix">
+  <h3>Editing project <%= link_to @project.name, project_path(@project.url_name) %> ticket <%= link_to @ticket.name, project_milestone_ticket_path(@project.url_name, @milestone.id, @ticket.id) %></h3>
 
-<%= render 'form' %>
+  <%= render 'form' %>
 
-<%= link_to 'Show', project_milestone_ticket_path(@project.url_name, @milestone.id, @ticket.id) %> |
-<%= link_to 'Back', project_milestone_tickets_path(@project.url_name, @milestone.id) %>
+  <%= link_to content_tag(:span, "Scroll up"), "#mainFrame", id: "contentEnd" %>
+</div>

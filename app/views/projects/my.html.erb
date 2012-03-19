@@ -1,34 +1,47 @@
-<h1>Listing my projects</h1>
+<div id="navigationBar">
+  <%= link_to "All projects", projects_path %> |
+  "My projects"
+  <%= paginate @projects, params: { action: 'index', controller: 'projects' } %>
+</div>
+<div id="content" class="clearfix">
+  <h3>Listing my projects</h3>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Short description</th>
-    <th>Tags</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+  <p>List of all projects you participate.</p>
 
-<% @projects.each do |project| %>
-  <tr>
-    <td><%= link_to(project.name, project_path(project.url_name)) %></td>
-    <td><%= project.short_description %></td>
-    <td><% project.tags.each do |tag| %>
-      <%= link_to tag.name, tag_path(tag.name) %>
-    <% end %></td>
-    <td><%= link_to("bugtracker", project_bugs_path(project.url_name))  %></td>
-    <td><% if meet_requirements?(:manage_projects) || meet_team_requirements?({any: [:manage_project, :manage_team ]}, project) %>
-    <%= link_to 'Edit', edit_project_path(project.url_name) %>
-    <% end %></td>
-    <td><% if meet_requirements?(:manage_projects) || meet_team_requirements?(:manage_project, project) %>
-    <%= link_to 'Destroy', project_path(project.url_name), confirm: 'Are you sure?', method: :delete %>
-    <% end %></td>
-  </tr>
-<% end %>
-</table>
+  <% if @projects.blank? %>
+  <p>You don't have any projects!</p>
+  <% else %>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Short description</th>
+      <th>Tags</th>
+      <th>Deadline</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+    <% @projects.each do |project| %>
+    <tr>
+      <td><%= link_to project.name, project_path(project.url_name) %></td>
+      <td><%= project.short_description %></td>
+      <td><% project.tags.each do |tag| %>
+          <%= link_to tag.name, tag_path(tag.name) %>
+          <% end %></td>
+      <td><%= project.last_deadline ? last_deadline : "---" %></td>
+      <td><%= link_to "bugtracker", project_bugs_path(project.url_name)  %></td>
+      <td><% if meet_requirements?(:manage_projects) || meet_team_requirements?({any: [:manage_project, :manage_team ]}, project) %>
+          <%= link_to 'Edit', edit_project_path(project.url_name) %>
+          <% end %></td>
+      <td><% if meet_requirements?(:manage_projects) || meet_team_requirements?(:manage_project, project) %>
+          <%= link_to 'Destroy', project_path(project.url_name), confirm: 'Are you sure?', method: :delete %>
+          <% end %></td>
+    </tr>
+    <% end %>
+  </table>
+  <% end %>
 
-<br />
+  <%= link_to 'New Project', new_project_path %>
 
-<%= link_to 'New Project', new_project_path %>
-<%= paginate @projects, params: { action: 'index', controller: 'projects' } %>
+  <%= link_to content_tag(:span, "Scroll up"), "#mainFrame", id: "contentEnd" %>
+</div>

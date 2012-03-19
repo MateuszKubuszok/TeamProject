@@ -25,10 +25,12 @@
   </ul>
   <% end %>
 
+  
+  <p><b><%= @user.login %>'s projects</b></p>
+  
   <% if @user.projects.blank? %>
   <p><b>This user doesn't have any projects yet.</b></p>
   <% else %>
-  <p><%= @user.login %>'s projects</p>
   <table>
     <tr>
       <th>Name</th>

@@ -1,26 +1,37 @@
-<h1>Listing milestones</h1>
+<div id="navigationBar">
+  <%= link_to "All projects", projects_path %> |
+  <%= link_to "My projects", my_projects_path %> >
+  <%= link_to @project.name, project_path(@project.url_name) %><% if meet_team_requirements? :manage_project %> (<%= link_to "edit", edit_project_path(@project.url_name) %>)<% end %> >
+  Milestones >
+  <%= paginate @milestones, params: { action: 'index', controller: 'projects' } %>
+</div>
+<div id="content" class="clearfix">
+  <h3>Listing project <%= link_to @project.name, project_path(@project.url_name) %> milestones</h3>
 
-<table>
-  <tr>
-    <th>Name:</th>
-    <% if meet_team_requirements?(:manage_milestones) %>
-    <th></th>
-    <th></th>
+  <p>Milestones associated with project.</p>
+  
+  <table>
+    <tr>
+      <th>Name:</th>
+      <th>Deadline:</th>
+      <% if meet_team_requirements?(:manage_milestones) %>
+      <th></th>
+      <th></th>
+      <% end %>
+    </tr>
+    <% @milestones.each do |milestone| %>
+    <tr>
+      <td><%= link_to milestone.name, project_milestone_path(@project.url_name, milestone.id) %></td>
+      <td><%= milestone.last_deadline ? milestone.last_deadline : "---" %></td>
+      <% if meet_team_requirements?(:manage_milestones) %>
+      <td><%= link_to "Edit", project_milestone_path(@project.url_name, milestone.id) %></td>
+      <td><%= link_to "Destroy", project_milestone_path(@project.url_name, milestone.id), confirm: "Are your sure?", method: :delete %></td>
+      <% end %>
+    </tr>
     <% end %>
-  </tr>
-  <% @milestones.each do |milestone| %>
-  <tr>
-    <td><%= link_to milestone.name, project_milestone_path(@project.url_name, milestone.id) %></td>
-    <% if meet_team_requirements?(:manage_milestones) %>
-    <td><%= link_to "Edit", project_milestone_path(@project.url_name, milestone.id) %></td>
-    <td><%= link_to "Destroy", project_milestone_path(@project.url_name, milestone.id), confirm: "Are your sure?", method: :delete %></td>
-    <% end %>
-  </tr>
-  <% end %>
-</table>
+  </table>
 
-<br />
-
-<%= paginate @milestones, params: { action: 'index', controller: 'projects' } %>
-<%= link_to 'New milestone', new_project_milestone_path(@project.url_name) %> | 
-<%= link_to 'Back', project_path(@project.url_name) %>
+  <%= link_to 'New milestone', new_project_milestone_path(@project.url_name) %>
+   
+  <%= link_to content_tag(:span, "Scroll up"), "#mainFrame", id: "contentEnd" %>
+</div>
