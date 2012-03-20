@@ -1,6 +1,15 @@
-<h1>Editing bug</h1>
+<div id="navigationBar">
+  <%= link_to "All projects", projects_path %> |
+  <%= link_to "My projects", my_projects_path %> >
+  <%= @project.name %><% if meet_team_requirements? :manage_project %> (<%= link_to "edit", edit_project_path(@project.url_name) %>)<% end %> >
+  <%= link_to "Bugtracker", project_bugs_path(@project.url_name) %> >
+  <%= link_to @bug.short_description, project_bug_path(@project.url_name, @bug.id) %> >
+  edit
+</div>
+<div id="content" class="clearfix">
+  <h3>Editing project <%= link_to @project.name, project_path(@project.url_name) %> bug <%= @bug.short_description %></h3>
 
-<%= render 'form' %>
+  <%= render 'form' %>
 
-<%= link_to 'Show', project_bug_(@project.url_name, @bug.id) %> |
-<%= link_to 'Back', project_bugs_path(@project.url_name) %>
+  <%= link_to content_tag(:span, "Scroll up"), "#mainFrame", id: "contentEnd" %>
+</div>

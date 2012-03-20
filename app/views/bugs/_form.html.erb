@@ -12,25 +12,31 @@
   <% end %>
 
   <div class="field">
+    <%= f.label :short_description %><br />
+    <%= f.text_field :short_description %>
+  </div>
+  <div class="field">
     <%= f.label :status, %><br />
     <%= f.select :status, Bug.symbols(:status_types) %>
   </div>
   <div class="field">
-    <%= f.label :type, %><br />
-    <%= f.select :type, Bug.symbols(:type_types) %>
+    <%= f.label :bug_type, %><br />
+    <%= f.select :bug_type, Bug.symbols(:type_types) %>
   </div>
   <div class="field">
     <%= f.label :priority %><br />
     <%= f.select :priority, Bug.symbols(:priority_types) %>
   </div>
   <div class="field">
-    <%= f.label :short_description %><br />
-    <%= f.text_field :short_description %>
-  </div>
-  <div class="field">
     <%= f.label :description %><br />
     <%= f.text_area :description %>
   </div>
+  <% if owner? %>
+  <div class="field">
+    <%= f.label :commentary %><br />
+    <%= f.text_area :commentary %>
+  </div>
+  <% end %>
   <div class="actions">
     <%= f.submit %>
   </div>

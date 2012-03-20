@@ -3,7 +3,7 @@
   <%= link_to "My projects", my_projects_path %> >
   <%= link_to @project.name, project_path(@project.url_name) %><% if meet_team_requirements? :manage_project %> (<%= link_to "edit", edit_project_path(@project.url_name) %>)<% end %> >
   Milestones >
-  <%= paginate @milestones, params: { action: 'index', controller: 'projects' } %>
+  <%= paginate @milestones, params: { action: 'index', controller: 'milestones' } %>
 </div>
 <div id="content" class="clearfix">
   <h3>Listing project <%= link_to @project.name, project_path(@project.url_name) %> milestones</h3>

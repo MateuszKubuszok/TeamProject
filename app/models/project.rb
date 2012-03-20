@@ -69,7 +69,7 @@ class Project < ActiveRecord::Base
   #
   # @return [datetime] ostatni deadline
   def last_deadline
-    return @deadline if @deadline
+    return @deadline if defined? @deadline
     last_ticket
     @deadline
   end
@@ -85,12 +85,12 @@ class Project < ActiveRecord::Base
   #
   # @return [Ticket] najpóźniejszy ticket
   def last_ticket
-    return @ticket if @ticket
+    return @ticket if defined? @ticket
     @ticket = nil
     @deadline = self.created_at
     self.milestones.each do |milestone|
       ticket = milestone.last_ticket
-      if ticket.deatline > @deadline
+      if ticket && ticket.deadline > @deadline
         @ticket = ticket
         @deadline = ticket.deadline
       end

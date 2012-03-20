@@ -1,17 +1,20 @@
-<h1>Listing tags</h1>
+<div id="navigationBar">
+  <%= link_to "All tags", tags_path %> >
+  <%= paginate @tags, params: { action: 'index', controller: 'tags' } %>
+</div>
+<div id="content" class="clearfix">
+  <h3>Listing tags</h3>
 
-<table>
-  <tr>
-    <th>Name</th>
-  </tr>
+  <table>
+    <tr>
+      <th>Name</th>
+    </tr>
+    <% @tags.each do |tag| %>
+    <tr>
+      <td><%= link_to tag.name, tag_path(tag.name) %></td>
+    </tr>
+    <% end %>
+  </table>
 
-<% @tags.each do |tag| %>
-  <tr>
-    <td><%= link_to(tag.name, tag_path(tag.name)) %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= paginate @tags, params: { action: 'index', controller: 'tags' } %>
+  <%= link_to content_tag(:span, "Scroll up"), "#mainFrame", id: "contentEnd" %>
+</div>

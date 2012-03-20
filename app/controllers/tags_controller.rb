@@ -24,7 +24,8 @@ class TagsController < ApplicationController
   private
 
   def load_tag
-    @projects = Kaminari.paginate_array(Project.tagged_with params[:id]).page params[:page]
+    @projects = Kaminari.paginate_array(Project.tagged_with params[:id]).page params[:project_page]
+    @threads = Kaminari.paginate_array(ForumThread.tagged_with params[:id]).page params[:forums_page]
   rescue ActiveRecord::RecordNotFound
     respond_to do |format|
       format.html { redirect_to(tags_path, :notice => "#{$!}") }

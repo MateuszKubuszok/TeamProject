@@ -10,7 +10,7 @@ class Milestone < ActiveRecord::Base
   #
   # @return [datetime] ostatni deadline
   def last_deadline
-    return @deadline if @deadline
+    return @deadline if defined? @deadline
     last_ticket
     @deadline
   end
@@ -19,7 +19,7 @@ class Milestone < ActiveRecord::Base
   #
   # @return [Ticket] najpóźniejszy ticket
   def last_ticket
-    return @ticket if @ticket
+    return @ticket if defined? @ticket
     @ticket = nil
     @deadline = self.created_at.to_date
     self.tickets.each do |ticket|

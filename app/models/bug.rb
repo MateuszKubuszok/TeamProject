@@ -18,7 +18,7 @@ class Bug < ActiveRecord::Base
     :enhancement,
     :feature
   ]
-  sym_accessor :type, :type_id, :type_types
+  sym_accessor :bug_type, :type_id, :type_types
 
   define_symbols :priority_types, {
      1 => :high,

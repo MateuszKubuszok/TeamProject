@@ -1,32 +1,40 @@
-<h1>Listing bugs</h1>
+<div id="navigationBar">
+  <%= link_to "All projects", projects_path %> |
+  <%= link_to "My projects", my_projects_path %> >
+  <%= link_to @project.name, project_path(@project.url_name) %><% if meet_team_requirements? :manage_project %> (<%= link_to "edit", edit_project_path(@project.url_name) %>)<% end %> >
+  Bugtracker >
+  <%= paginate @bugs, params: { action: 'index', controller: 'bugs' } %>
+</div>
+<div id="content" class="clearfix">
+  <h1>Project <%= link_to @project.name, project_path(@project.url_name) %> bugtracker</h1>
 
-<table>
-  <tr>
-    <th>Status</th>
-    <th>Type</th>
-    <th>Priority</th>
-    <th>Short description</th>
-    <% if owner? %>
-    <th></th>
-    <th></th>
-    <th></th>
+  <table>
+    <tr>
+      <th>Short description</th>
+      <th>Priority</th>
+      <th>Type</th>
+      <th>Status</th>
+      <% if owner? %>
+      <th></th>
+      <th></th>
+      <% end %>
+    </tr>
+
+    <% @bugs.each do |bug| %>
+    <tr>
+      <td><%= link_to bug.short_description, project_bug_path(@project.url_name, bug.id) %></td>
+      <td><%= bug.priority %></td>
+      <td><%= bug.bug_type %></td>
+      <td><%= bug.status %></td>
+      <% if owner? %>
+      <td><%= link_to 'Edit', edit_project_bug_path(@project.url_name, bug.id) %></td>
+      <td><%= link_to 'Destroy', project_bug_path(@project.url_name, bug.id), confirm: 'Are you sure?', method: :delete %></td>
+      <% end %>
+    </tr>
     <% end %>
-  </tr>
+  </table>
 
-<% @bugs.each do |bug| %>
-  <tr>
-    <td><%= bug.status %></td>
-    <td><%= bug.type %></td>
-    <td><%= bug.priority %></td>
-    <td><%= link_to bug.short_description, project_bug_path(@project.url_name, bug.id) %></td>
-    <% if owner? %>
-    <td><%= link_to 'Edit', edit_project_bug_path(@project.url_name, bug.id) %></td>
-    <td><%= link_to 'Destroy', project_bug_path(@project.url_name, bug.id), confirm: 'Are you sure?', method: :delete %></td>
-    <% end %>
-  </tr>
-<% end %>
-</table>
+  <%= link_to 'New Bug', new_project_bug_path(@project.url_name) %>
 
-<br />
-
-<%= link_to 'New Bug', new_project_bug_path(@project.url_name) %>
+  <%= link_to content_tag(:span, "Scroll up"), "#mainFrame", id: "contentEnd" %>
+</div>
