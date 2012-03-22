@@ -22,14 +22,25 @@ class Milestone < ActiveRecord::Base
     return @ticket if defined? @ticket
     @ticket = nil
     @deadline = self.created_at.to_date
+    @change = self.updated_at
     self.tickets.each do |ticket|
       if ticket.deadline > @deadline
         @ticket = ticket
         @deadline = ticket.deadline
       end
+      @change = @change > ticket.updated_at ? @change : ticket.updated_at
     end
     @deadline = nil if @ticket.nil?
     @ticket
+  end
+
+  # Ostatnia zmiana w milestonie/jego ticketach.
+  #
+  # @return [datetime] najpóźniejsza zmiana
+  def last_change
+    return @change if defined? @change
+    last_ticket
+    @change
   end
 end
 # == Schema Information

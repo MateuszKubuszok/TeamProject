@@ -12,7 +12,7 @@ class Forum < ActiveRecord::Base
     @last_thread = nil
     time = self.updated_at
     self.forum_threads.each do |thread|
-      thread_time = thread.last_post
+      thread_time = thread.last_post_time
       if time < thread_time
         @last_thread = thread
         time = thread_time

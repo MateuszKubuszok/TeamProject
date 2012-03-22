@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<% @projects.each do |project| %>
+  <url>
+    <loc><%= project_path(project.url_name, only_path: false) %></loc>
+    <lastmod><%= project.last_change.to_date %></lastmod>
+  </url>
+<% end %>
+<% @forums.each do |forum| %>
+  <url>
+    <loc><%= forum_path(forum.id, only_path: false) %></loc>
+    <lastmod><%= forum.last_thread.updated_at.to_date %></lastmod>
+  </url>
+<% end %>
+</urlset>

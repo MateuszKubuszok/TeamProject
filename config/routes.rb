@@ -1,4 +1,10 @@
 TeamProject::Application.routes.draw do
+  resources :home, only: [ :index ] do
+    get "faq",                on: :collection, action: :faq
+    get "about",              on: :collection, action: :about
+    get "sitemap",            on: :collection, action: :sitemap
+  end
+
   resources :users do
     get     'invite',         on: :member
     get     'page/:page',     on: :collection, action: :index
@@ -43,7 +49,7 @@ TeamProject::Application.routes.draw do
   match 'login'     => 'user_sessions#new',     as: :login
   match 'logout'    => 'user_sessions#destroy', as: :logout
 
-  root to: 'users#index', as: :homepage
+  root to: 'home#index', as: :homepage
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

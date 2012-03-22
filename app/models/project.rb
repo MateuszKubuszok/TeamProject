@@ -78,7 +78,9 @@ class Project < ActiveRecord::Base
   #
   # @return [Milestone] najpóźniejszy milestone
   def last_milestone
-
+    return @milestone if defined? @milestone
+    last_ticket
+    @milestone
   end
 
   # Zwraca najpóźniejszy ticket.
@@ -88,16 +90,27 @@ class Project < ActiveRecord::Base
     return @ticket if defined? @ticket
     @ticket = nil
     @deadline = self.created_at
+    @change = self.updated_at
     self.milestones.each do |milestone|
       ticket = milestone.last_ticket
       if ticket && ticket.deadline > @deadline
         @ticket = ticket
         @deadline = ticket.deadline
       end
+      @change = @change > milestone.last_change ? @change : milestone.last_change
     end
     @deadline = nil if @ticket.nil?
     @milestone = ticket.milestone if @ticket
     @ticket
+  end
+
+  # Ostatnia zmiana w projekcie/jego milestonach.
+  #
+  # @return [datetime] najpóźniejsza zmiana
+  def last_change
+    return @change if defined? @change
+    last_ticket
+    @change
   end
 end
 # == Schema Information
