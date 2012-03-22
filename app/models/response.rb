@@ -1,4 +1,7 @@
 class Response < ActiveRecord::Base
+  after_create :update_owner
+  after_update :update_owner
+
   belongs_to :forum_thread
   belongs_to :user
   belongs_to :editor,     class_name: 'User',
@@ -8,6 +11,13 @@ class Response < ActiveRecord::Base
   validates   :user,      presence: true
   validates   :title,     presence: true
   validates   :content,   presence: true
+
+  private
+
+  # Aktualizuje updated_at właściciela.
+  def update_owner
+    self.forum_thread.save unless forum_thread.blank?
+  end
 end
 # == Schema Information
 #

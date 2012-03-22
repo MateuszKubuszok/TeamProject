@@ -38,6 +38,10 @@
     <%= f.text_field :email %>
   </div>
   <div class="field">
+    <%= f.label :www %><br />
+    <%= f.text_field :www %>
+  </div>
+  <div class="field">
     <%= f.label :password %><br />
     <%= f.password_field :password %>
   </div>
@@ -46,12 +50,12 @@
     <%= f.password_field :password_confirmation %>
   </div>
   <% if current_user && meet_requirements?(:manage_privileges) %>
-      <% User.symbols(:privilege_types).each do |privilege| %>
-      <div class="field">
-        <%= f.label privilege %><br />
-        <%= f.check_box privilege %>
-      </div>
-      <% end %>
+  <% User.symbols(:privilege_types).each do |privilege| %>
+  <div class="field">
+    <%= f.label privilege %><br />
+    <%= f.check_box privilege %>
+  </div>
+  <% end %>
   <% end %>
   <div class="actions">
     <%= f.submit "Save" %>

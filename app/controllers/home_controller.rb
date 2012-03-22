@@ -24,4 +24,9 @@ class HomeController < ApplicationController
       format.xml
     end
   end
+
+  def widescreen_switch
+    widescreen_layout_switch
+    redirect_to request.referer
+  end
 end

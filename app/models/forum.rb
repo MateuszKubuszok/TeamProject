@@ -1,7 +1,10 @@
 class Forum < ActiveRecord::Base
+  after_create :update_owner
+  after_update :update_owner
+
   belongs_to  :project
   belongs_to  :forum
-  has_many    :forums,          dependent:   :destroy
+  has_many    :forums,          dependent:  :destroy
   has_many    :forum_threads,   dependent:  :destroy
 
   # Ostatni poruszony wątek.
@@ -54,6 +57,13 @@ class Forum < ActiveRecord::Base
       @subforums += forum.subforums
     end
     @subforums
+  end
+
+  private
+
+  # Aktualizuje updated_at właściciela.
+  def update_owner
+    self.forum.save unless forum.blank?
   end
 end
 # == Schema Information

@@ -3,10 +3,10 @@ class CreateBugs < ActiveRecord::Migration
     create_table :bugs do |t|
       t.integer :id
       t.integer :project_id
-      t.integer :status_id
-      t.integer :type_id
-      t.integer :priority_id
       t.string :short_description
+      t.integer :type_id
+      t.integer :status_id
+      t.integer :priority_id
       t.text :description
       t.text :commentary
 

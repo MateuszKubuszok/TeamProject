@@ -1,19 +1,16 @@
 <div id="navigationBar">
   <%= link_to "All users", users_path %> >
-  <%= @user.login %>
-  <% if meet_requirements? :manage_users || owner? %>
-  (<%= link_to 'edit', edit_user_path(@user.url_name) %>)
-  <% end %>
+  <%= @user.login %><% if meet_requirements?(:manage_users) || owner? %> (<%= link_to 'edit', edit_user_path(@user.url_name) %>)<% end %>
 </div>
 <div id="content" class="clearfix">
   <h3><%= @user.login %>'s profile</h3>
   
-  <p><b>Username:</b> <%= @user.login %></p>
+  <p><b>Username:</b> <%= @user.login %> (<%= mail_to @user.email %> | <%= @user.www %>)</p>
   <p><b>Name:</b> <%= @user.name ? @user.name : "---" %></p>
   <p><b>Surname:</b> <%= @user.surname ? @user.surname : "---" %></p>
   <p><b>About me:</b></p>
   <p><%= @user.about_me ? @user.about_me : "---" %></p>
-
+  
   <% if meet_requirements?(:manage_privileges) && @user.admin? %>
   <p><b>Privileges:</b></p>
   <ul>

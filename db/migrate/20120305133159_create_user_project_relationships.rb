@@ -5,8 +5,6 @@ class CreateUserProjectRelationships < ActiveRecord::Migration
       t.integer :user_id
       t.integer :project_id
       t.integer :privileges
-
-      t.timestamps
     end
   end
 end

@@ -3,14 +3,17 @@ class CreateUsers < ActiveRecord::Migration
     create_table :users do |t|
       t.integer :id
       t.string :login
-      t.string :url_name
-      t.string :crypted_password
-      t.string :password_salt
       t.string :email
+      t.string :url_name
       t.string :name
       t.string :surname
       t.text :about_me
+      t.string :www
       t.integer :privileges
+      t.integer :settings
+      t.integer :language
+      t.string :crypted_password
+      t.string :password_salt
       t.string :persistence_token
       t.string :single_access_token
       t.string :perishable_token

@@ -1,4 +1,6 @@
 class ForumThread < ActiveRecord::Base
+  after_create :update_owner
+  after_update :update_owner
   acts_as_taggable
 
   belongs_to  :forum
@@ -34,6 +36,13 @@ class ForumThread < ActiveRecord::Base
       end
     end
     @last_post_author
+  end
+
+  private
+
+  # Aktualizuje updated_at właściciela.
+  def update_owner
+    self.forum.save unless forum.blank?
   end
 end
 # == Schema Information

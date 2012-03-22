@@ -8,7 +8,7 @@
   <%= javascript_include_tag "application", params[:controller], cache: true %>
   <%= csrf_meta_tags %>
 </head>
-<body class="fllPage"><div id="wrap">
+<body<%= raw (widescreen_layout? ? " class=\"fullPage\"" : "") %>><div id="wrap">
 <div id="mainFrame"<%= tab.nil? ? "" : raw(' class="'+tab+'"') %>>
   <div id="headerFrame">
 	<div id="headerContent">
@@ -20,7 +20,7 @@
         <p><%= link_to "Register", :register %></p>
         <p><%= link_to "Login", :login %></p>
         <% end %>
-        <p><%= link_to "Fullpage width", "#" %></p>
+        <p><%= link_to (widescreen_layout? ? "Fixed width" : "Fullpage width"), widescreen_switch_path %></p>
 	  </span></div>
       <div id="title">
 	    <h1><span style="color:#fff">Team</span><span style="color:#ea0">Project</span></h1>

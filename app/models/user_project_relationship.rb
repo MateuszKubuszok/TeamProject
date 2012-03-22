@@ -6,7 +6,8 @@ class UserProjectRelationship < ActiveRecord::Base
     :manage_project,
     :manage_team,
     :manage_milestones,
-    :manage_tickets
+    :manage_tickets,
+    :manage_forums
   ]
 
   belongs_to :user
@@ -50,7 +51,5 @@ end
 #  user_id    :integer(4)
 #  project_id :integer(4)
 #  privileges :integer(4)
-#  created_at :datetime
-#  updated_at :datetime
 #
 

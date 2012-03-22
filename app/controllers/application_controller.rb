@@ -7,32 +7,9 @@ class ApplicationController < ActionController::Base
                 :current_user,
                 :meet_requirements?,
                 :meet_team_requirements?,
-                :owner?
-
-  # Specyfikuje, która zakładka jest otwarta.
-  #
-  # @return [string] nazwa zakładki
-  def tab
-    return @tab if defined? @tab
-
-    if %W(home projects users forums tags).include? controller_name
-      @tab = controller_name
-    elsif params.key? :project_id
-      @tab = "projects"
-    elsif params.key? :user_id
-      @tab = "users"
-    elsif params.key? :forum_id
-      @tab = "forums"
-    elsif params.key? :tag_id
-      @tab = "tags"
-    else
-      @tab = nil
-    end
-
-    puts YAML.dump(tab)
-
-    @tab
-  end
+                :owner?,
+                :widescreen_layout?,
+                :widescreen_layout_switch
 
   # Specyfikuje uprawnienia administratora, jeśli jakieś konkretne są wymagane.
   #
@@ -125,7 +102,7 @@ class ApplicationController < ActionController::Base
     user = current_user
     if user.nil? || !user.admin?
       false
-    elsif requirements.nil?
+    elsif requirements.blank?
       true
     elsif requirements.respond_to?(:has_key?) && (requirements.has_key?(:all) || requirements.has_key?(:any))
       access = true
@@ -248,5 +225,51 @@ class ApplicationController < ActionController::Base
     result = session[:return_to] || default
     session[:return_to] = nil
     result
+  end
+
+  # Specyfikuje, która zakładka jest otwarta.
+  #
+  # @return [string] nazwa zakładki
+  def tab
+    return @tab if defined? @tab
+
+    if %W(home projects users forums tags).include? controller_name
+      @tab = controller_name
+    elsif params.key? :project_id
+      @tab = "projects"
+    elsif params.key? :user_id
+      @tab = "users"
+    elsif params.key? :forum_id
+      @tab = "forums"
+    elsif params.key? :tag_id
+      @tab = "tags"
+    else
+      @tab = nil
+    end
+
+    @tab
+  end
+
+  # Czy layout ma być rozciągnięty czy o stałej szerokości.
+  def widescreen_layout?
+    if current_user
+      current_user.widescreen_layout
+    elsif defined? session[:widescreen_layout]
+      session[:widescreen_layout]
+    else
+      false
+    end
+  end
+
+  # Zmienia ustawienia layoutu na przeciwne.
+  def widescreen_layout_switch
+    if current_user
+      current_user.widescreen_layout ^= true
+      current_user.save
+    elsif session[:widescreen_layout]
+      session[:widescreen_layout] ^= true
+    else
+      session[:widescreen_layout] = true
+    end
   end
 end

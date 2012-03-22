@@ -6,6 +6,8 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+# użytkownicy
+
 root = User.new({
   'login'                 => 'root',
   'url_name'              => 'root',
@@ -34,6 +36,8 @@ tester = User.new({
 })
 tester.save!
 
+# projekty
+
 project = Project.new({
   'name'              => 'Test project',
   'url_name'          => 'test_project',
@@ -54,6 +58,8 @@ project2 = Project.new({
 project2.save_for! tester.id
 project2.users << user
 
+# zaproszenia
+
 invitation = TeamInvitation.new({
   'user_id'     => root.id,
   'project_id'  => project.id
@@ -65,3 +71,35 @@ invitation2 = TeamInvitation.new({
   'project_id'  => project2.id
 })
 invitation2.save!
+
+# fora
+
+forum = Forum.new({
+  'name'        => 'first forum',
+  'description' => 'some description about forum'
+})
+forum.save!
+
+subforum = Forum.new({
+  'name'        => 'subforum',
+  'description' => 'some subforum description',
+  'forum_id'    => forum.id
+})
+subforum.save!
+
+thread = ForumThread.new({
+  'title'       => 'first thread',
+  'content'     => 'first thread content',
+  'forum_id'    => subforum.id,
+  'user_id'     => root.id
+})
+thread.save!
+
+response = Response.new({
+  'title'   =>  'response to first',
+  'content' =>  'response content',
+  'forum_thread_id' =>
+                thread.id,
+  'user_id' =>  user.id
+})
+response.save!

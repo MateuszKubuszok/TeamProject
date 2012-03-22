@@ -48,6 +48,8 @@ TeamProject::Application.routes.draw do
   match 'register'  => 'users#new',             as: :register
   match 'login'     => 'user_sessions#new',     as: :login
   match 'logout'    => 'user_sessions#destroy', as: :logout
+  match 'widescreen_switch' => 'home#widescreen_switch',
+                                                as: :widescreen_switch, as: :widescreen_switch
 
   root to: 'home#index', as: :homepage
 

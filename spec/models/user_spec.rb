@@ -9,14 +9,17 @@ end
 #
 #  id                  :integer(4)      not null, primary key
 #  login               :string(255)
-#  url_name            :string(255)
-#  crypted_password    :string(255)
-#  password_salt       :string(255)
 #  email               :string(255)
+#  url_name            :string(255)
 #  name                :string(255)
 #  surname             :string(255)
 #  about_me            :text
+#  www                 :string(255)
 #  privileges          :integer(4)
+#  settings            :integer(4)
+#  language            :integer(4)
+#  crypted_password    :string(255)
+#  password_salt       :string(255)
 #  persistence_token   :string(255)
 #  single_access_token :string(255)
 #  perishable_token    :string(255)

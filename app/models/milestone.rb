@@ -1,4 +1,7 @@
 class Milestone < ActiveRecord::Base
+  after_create :update_owner
+  after_update :update_owner
+
   belongs_to  :project
   has_many    :tickets,     dependent:  :destroy
 
@@ -41,6 +44,13 @@ class Milestone < ActiveRecord::Base
     return @change if defined? @change
     last_ticket
     @change
+  end
+
+  private
+
+  # Aktualizuje updated_at właściciela.
+  def update_owner
+    self.project.save unless project.blank?
   end
 end
 # == Schema Information

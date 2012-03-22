@@ -8,6 +8,12 @@ class User < ActiveRecord::Base
     :manage_projects,
     :manage_forums
   ]
+  bool_accessors :privilege_types, :privileges
+
+  define_symbols :settings_types, [
+    :widescreen_layout
+  ]
+  bool_accessors :settings_types, :settings
 
   has_many  :team_invitations,            dependent:      :destroy
   has_many  :possible_projects,           source:         :project,
@@ -26,10 +32,6 @@ class User < ActiveRecord::Base
 
   # Łączy model User z modelem sesji UserSession.
   acts_as_authentic
-
-  # Tworzy akcesory dla
-  bool_accessors :privilege_types, :privileges
-
 
 
   # Zwraca użytkownika na podstawie ID podanego w adresie URL.
@@ -107,14 +109,17 @@ end
 #
 #  id                  :integer(4)      not null, primary key
 #  login               :string(255)
-#  url_name            :string(255)
-#  crypted_password    :string(255)
-#  password_salt       :string(255)
 #  email               :string(255)
+#  url_name            :string(255)
 #  name                :string(255)
 #  surname             :string(255)
 #  about_me            :text
+#  www                 :string(255)
 #  privileges          :integer(4)
+#  settings            :integer(4)
+#  language            :integer(4)
+#  crypted_password    :string(255)
+#  password_salt       :string(255)
 #  persistence_token   :string(255)
 #  single_access_token :string(255)
 #  perishable_token    :string(255)

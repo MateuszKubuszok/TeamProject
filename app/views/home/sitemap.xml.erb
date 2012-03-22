@@ -3,13 +3,13 @@
 <% @projects.each do |project| %>
   <url>
     <loc><%= project_path(project.url_name, only_path: false) %></loc>
-    <lastmod><%= project.last_change.to_date %></lastmod>
+    <lastmod><%= project.updated_at.to_date %></lastmod>
   </url>
 <% end %>
 <% @forums.each do |forum| %>
   <url>
     <loc><%= forum_path(forum.id, only_path: false) %></loc>
-    <lastmod><%= forum.last_thread.updated_at.to_date %></lastmod>
+    <lastmod><%= forum.updated_at.to_date %></lastmod>
   </url>
 <% end %>
 </urlset>

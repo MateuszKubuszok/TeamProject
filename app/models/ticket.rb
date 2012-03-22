@@ -1,4 +1,6 @@
 class Ticket < ActiveRecord::Base
+  after_create :update_owner
+  after_update :update_owner
   extend SymbolInteger
 
   # Tworzy akcesor status_types  przyjmujący symbol zamiast liczby
@@ -26,6 +28,13 @@ class Ticket < ActiveRecord::Base
   validates   :name,      presence:   true
   validates   :status,    presence:   true
   validates   :priority,  presence:   true
+
+  private
+
+  # Aktualizuje updated_at właściciela.
+  def update_owner
+    self.milestone.save unless milestone.blank?
+  end
 end
 # == Schema Information
 #

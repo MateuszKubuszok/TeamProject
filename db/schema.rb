@@ -11,14 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120312013853) do
+ActiveRecord::Schema.define(:version => 20120322164524) do
 
   create_table "bugs", :force => true do |t|
     t.integer  "project_id"
-    t.integer  "status_id"
-    t.integer  "type_id"
-    t.integer  "priority_id"
     t.string   "short_description"
+    t.integer  "type_id"
+    t.integer  "status_id"
+    t.integer  "priority_id"
     t.text     "description"
     t.text     "commentary"
     t.datetime "created_at"
@@ -36,9 +36,9 @@ ActiveRecord::Schema.define(:version => 20120312013853) do
   end
 
   create_table "forums", :force => true do |t|
+    t.integer  "forum_id"
     t.string   "name"
     t.string   "description"
-    t.integer  "forum_id"
     t.integer  "project_id"
     t.boolean  "private"
     t.datetime "created_at"
@@ -46,9 +46,9 @@ ActiveRecord::Schema.define(:version => 20120312013853) do
   end
 
   create_table "milestones", :force => true do |t|
+    t.integer  "project_id"
     t.string   "name"
     t.text     "description"
-    t.integer  "project_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -98,35 +98,42 @@ ActiveRecord::Schema.define(:version => 20120312013853) do
   end
 
   create_table "tickets", :force => true do |t|
+    t.integer  "milestone_id"
     t.string   "name"
     t.string   "description"
     t.integer  "status_id"
     t.integer  "priority_id"
-    t.integer  "milestone_id"
     t.integer  "user_id"
     t.date     "deadline"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  create_table "user_forum_relationships", :force => true do |t|
+    t.integer "user_id"
+    t.integer "forum_id"
+    t.integer "privileges"
+  end
+
   create_table "user_project_relationships", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "project_id"
-    t.integer  "privileges"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "user_id"
+    t.integer "project_id"
+    t.integer "privileges"
   end
 
   create_table "users", :force => true do |t|
     t.string   "login"
-    t.string   "url_name"
-    t.string   "crypted_password"
-    t.string   "password_salt"
     t.string   "email"
+    t.string   "url_name"
     t.string   "name"
     t.string   "surname"
     t.text     "about_me"
+    t.string   "www"
     t.integer  "privileges"
+    t.integer  "settings"
+    t.integer  "language"
+    t.string   "crypted_password"
+    t.string   "password_salt"
     t.string   "persistence_token"
     t.string   "single_access_token"
     t.string   "perishable_token"
