@@ -1,6 +1,15 @@
-<h1>Editing forum</h1>
+<div id="navigationBar">
+  <%= link_to "Forums", forums_path %> >
+  <% @forum.parents.each do |parent| %>
+      <%= link_to parent.name, forum_path(parent.id) %> (<%= link_to "edit", edit_forum_path(parent.id) %>) >
+  <% end %>
+  <%= link_to @forum.name, forum_path(@forum.id) %> >
+  edit
+</div>
+<div id="content" class="clearfix">
+  <h3>Editing forum <%= link_to @forum.name, forums_path(@forum.id) %></h3>
 
-<%= render 'form' %>
+  <%= render 'form' %>
 
-<%= link_to 'Show', @forum %> |
-<%= link_to 'Back', forums_path %>
+  <%= link_to content_tag(:span, "Scroll up"), "#mainFrame", id: "contentEnd" %>
+</div>

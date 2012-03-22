@@ -9,7 +9,7 @@
   <%= csrf_meta_tags %>
 </head>
 <body class="fllPage"><div id="wrap">
-<div id="mainFrame">
+<div id="mainFrame"<%= tab.nil? ? "" : raw(' class="'+tab+'"') %>>
   <div id="headerFrame">
 	<div id="headerContent">
 	  <div id="userBar"><span>

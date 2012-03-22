@@ -1,20 +1,30 @@
-<h1>Listing invitations to projects</h1>
+<div id="navigationBar">
+  All invitations
+</div>
+<div id="content" class="clearfix">
+  <h3>Invitations</h3>
 
-<table>
-  <tr>
-    <th>Project</th>
-    <th>Short description</th>
-    <th></th>
-    <th></th>
-  </tr>
+  <% if @invitations.blank? %>
+  <p>You don't have any invitations.</p>
+  <% else %>
+  <table>
+    <tr>
+      <th>Project</th>
+      <th>Short description</th>
+      <th></th>
+      <th></th>
+    </tr>
+    <% @invitations.each do |invitation| %>
+    <tr>
+      <td><%= allowed_to_see?(invitation.project) ? invitation.project.name : link_to(invitation.project.name, project_path(invitation.project.url_name)) %></td>
+      <td><%= invitation.project.short_description %></td>
+      <td><%= link_to 'Accept', accept_invitation_path(invitation) %></td>
+      <td><%= link_to 'Refuse', invitation_path(invitation),  method: :delete %></td>
+    </tr>
+    <% end %>
+  </table>
+  <% end %>
 
-<% @invitations.each do |invitation| %>
-  <tr>
-    <td><%= allowed_to_see?(invitation.project) ? invitation.project.name : link_to(invitation.project.name, project_path(invitation.project.url_name)) %></td>
-    <td><%= invitation.project.short_description %></td>
-    <td><%= link_to 'Accept', accept_invitation_path(invitation) %></td>
-    <td><%= link_to 'Refuse', invitation_path(invitation), confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
-</table>
+  <%= link_to content_tag(:span, "Scroll up"), "#mainFrame", id: "contentEnd" %>
+</div>
 

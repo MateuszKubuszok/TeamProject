@@ -1,12 +1,38 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  helper_method :allowed_to_see?,
+  helper_method :tab,
+                :allowed_to_see?,
                 :current_user_session,
                 :current_user,
                 :meet_requirements?,
                 :meet_team_requirements?,
                 :owner?
+
+  # Specyfikuje, która zakładka jest otwarta.
+  #
+  # @return [string] nazwa zakładki
+  def tab
+    return @tab if defined? @tab
+
+    if %W(home projects users forums tags).include? controller_name
+      @tab = controller_name
+    elsif params.key? :project_id
+      @tab = "projects"
+    elsif params.key? :user_id
+      @tab = "users"
+    elsif params.key? :forum_id
+      @tab = "forums"
+    elsif params.key? :tag_id
+      @tab = "tags"
+    else
+      @tab = nil
+    end
+
+    puts YAML.dump(tab)
+
+    @tab
+  end
 
   # Specyfikuje uprawnienia administratora, jeśli jakieś konkretne są wymagane.
   #

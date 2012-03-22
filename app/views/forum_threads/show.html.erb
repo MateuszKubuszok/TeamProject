@@ -1,48 +1,58 @@
-<p>
-  <%= @forum_thread.title %>
-  by <%= link_to(@forum_thread.user.login, user_path(@forum_thread.user.url_name)) %>
-  at <%= @forum_thread.created_at %>
-</p>
-<p>
-  <%= @forum_thread.content %>
-</p>
-<% if @forum_thread.editor %>
-<p>Last edited
-  by <%= link_to(@forum_thread.user.login, user_path(@forum_thread.user.url_name)) %>
-  at <%= @forum_thread.updated_at %></p>
-<% end %>
-<p>Tags:
-<% @forum_thread.tags.each do |tag| %>
-  <%= link_to tag.name, tag_path(tag.name) %>
-<% end %>
-</p>
-
-<%= link_to "Reply", new_forum_forum_thread_response_path(@forum, @forum_thread) %>
-
-<br />
-
-Responses:
-<% @forum_thread.responses.order('created_at ASC').each do |response| %>
-<div>
-  <p>
-    <%= response.title %>
-    by <%= link_to(response.user.login, user_path(response.user.url_name)) %>
-    at <%= response.created_at %>
-  </p>
-  <p>
-    <%= response.content %>
-  </p>
-  <% if response.editor %>
-  <p>Last edited
-    by <%= link_to(response.user.login, user_path(response.user.url_name)) %>
-    at <%= response.updated_at %></p>
+<div id="navigationBar">
+  <%= link_to "Forums", forums_path %> >
+  <% @forum.parents.each do |parent| %>
+      <%= link_to parent.name, forum_path(parent.id) %><% if meet_requirements? :manage_forums %> (<%= link_to "edit", edit_forum_path(parent.id) %>)<% end %> >
   <% end %>
+  <%= link_to @forum.name, forum_path(@forum) %><% if meet_requirements? :manage_forums %> (<%= link_to "edit", edit_forum_path(@forum.id) %>)<% end %> >
+  <%= link_to "threads" , forum_forum_threads_path(@forum.id) %> >
+  <%= @forum_thread.title %><% if meet_requirements? :manage_forums %> <%= link_to "edit", edit_forum_forum_thread(@forum.id, @forum_thread.id) %><% end %>
 </div>
-<% end %>
+<div id="content" class="clearfix">
+  <h3><%= @forum_thread.title %></h3>
 
-<br />
+  <p>
+    <%= @forum_thread.title %>
+    by <%= link_to(@forum_thread.user.login, user_path(@forum_thread.user.url_name)) %>
+    at <%= @forum_thread.created_at %>
+  </p>
+  <p>
+    <%= @forum_thread.content %>
+  </p>
+  <% if @forum_thread.editor %>
+  <p>Last edited
+     by <%= link_to(@forum_thread.user.login, user_path(@forum_thread.user.url_name)) %>
+     at <%= @forum_thread.updated_at %></p>
+  <% end %>
+  <p>Tags:
+    <% @forum_thread.tags.each do |tag| %>
+    <%= link_to tag.name, tag_path(tag.name) %>
+    <% end %>
+  </p>
 
-<%= link_to "Reply", new_forum_forum_thread_response_path(@forum, @forum_thread) %>
+  <%= link_to "Reply", new_forum_forum_thread_response_path(@forum, @forum_thread) %>
 
-<%= link_to 'Edit', edit_forum_forum_thread_path(@forum, @forum_thread) %> |
-<%= link_to 'Back', forum_forum_threads_path(@forum) %>
+  <br />
+
+  Responses:
+  <% @forum_thread.responses.order('created_at ASC').each do |response| %>
+  <div>
+    <p>
+      <%= response.title %>
+      by <%= link_to(response.user.login, user_path(response.user.url_name)) %>
+      at <%= response.created_at %>
+    </p>
+    <p><%= response.content %></p>
+    <% if response.editor %>
+    <p>Last edited
+       by <%= link_to(response.user.login, user_path(response.user.url_name)) %>
+       at <%= response.updated_at %></p>
+    <% end %>
+  </div>
+  <% end %>
+
+  <br />
+
+  <%= link_to "Reply", new_forum_forum_thread_response_path(@forum, @forum_thread) %>
+
+  <%= link_to content_tag(:span, "Scroll up"), "#mainFrame", id: "contentEnd" %>
+</div>

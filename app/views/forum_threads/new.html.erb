@@ -1,5 +1,17 @@
-<h1>New thread</h1>
+<div id="navigationBar">
+  <%= link_to "Forums", forums_path %> >
+  <% @forum.parents.each do |parent| %>
+      <%= link_to parent.name, forum_path(parent.id) %> (<%= link_to "edit", edit_forum_path(parent.id) %>) >
+  <% end %>
+  <%= link_to @forum.name, forum_path(@forum) %> (<%= link_to "edit", edit_forum_path(@forum.id) %>) >
+  <%= link_to "threads" , forum_forum_threads_path(@forum.id) %> >
+  new thread
+</div>
+<div id="content" class="clearfix">
+  <h3>New thread</h3>
 
-<%= render 'form' %>
+  <%= render 'form' %>
 
-<%= link_to 'Back', forum_forum_threads_path(@forum) %>
+  <%= link_to content_tag(:span, "Scroll up"), "#mainFrame", id: "contentEnd" %>
+</div>
+

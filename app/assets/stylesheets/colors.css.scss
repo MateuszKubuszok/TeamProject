@@ -48,7 +48,7 @@ h2 {
 #headerContent ul li a:active span, #headerContent ul li a:focus span, #headerContent ul li a:hover span { background-image: url('./../img/tab_active.png') !important; }
 #headerContent ul li a:active:before, #headerContent ul li a:focus:before, #headerContent ul li a:hover:before { content: url('./../img/tab_active_left.png') !important; }
 #headerContent ul li a:active:after, #headerContent ul li a:focus:after, #headerContent ul li a:hover:after { content: url('./../img/tab_active_right.png') !important; }
-.home #home, .projects #projects, .users #users, .forums #forums, .notifications #notifications { color: #444 !important; }
-.home #home span, .projects #projects span, .users #users span, .forums #forums span, .notifications #notifications span { background-image: url('./../img/tab_selected.png') !important; }
-.home #home:before, .projects #projects:before, .users #users:before, .forums #forums:before, .notifications #notifications :before { content: url('./../img/tab_selected_left.png') !important; }
-.home #home:after, .projects #projects:after, .users #users:after, .forums #forums:after, .notifications #notifications:after { content: url('./../img/tab_selected_right.png') !important; }
+.home #home, .projects #projects, .users #users, .forums #forums, .tags #tags { color: #444 !important; }
+.home #home span, .projects #projects span, .users #users span, .forums #forums span, .tags #tags span { background-image: url('./../img/tab_selected.png') !important; }
+.home #home:before, .projects #projects:before, .users #users:before, .forums #forums:before, .tags #tags:before { content: url('./../img/tab_selected_left.png') !important; }
+.home #home:after, .projects #projects:after, .users #users:after, .forums #forums:after, .tags #tags:after { content: url('./../img/tab_selected_right.png') !important; }

@@ -1,51 +1,61 @@
-<div>
+<div id="navigationBar">
+  <%= link_to "Forums", forums_path %> >
   <% @forum.parents.each do |parent| %>
-    <%= link_to parent.name, forum_path(parent.id) %> >
+      <%= link_to parent.name, forum_path(parent.id) %><% if meet_requirements? :manage_forums %> (<%= link_to "edit", edit_forum_path(parent.id) %>)<% end %> >
   <% end %>
-  <%= @forum.name %>
+  <%= link_to @forum.name, forum_path(@forum.id) %><% if meet_requirements? :manage_forums %> (<%= link_to "edit", edit_forum_path(@forum.id) %>)<% end %>
 </div>
+<div id="content" class="clearfix">
+  <h3><%= @forum.name %></h3>
 
-<p>
-  <b>Description:</b>
-  <%= @forum.description %>
-</p>
+  <p>
+    <b>Description:</b>
+    <%= @forum.description %>
+  </p>
 
-<table>
-  <tr>
-    <th>Forum</th>
-    <th>Last thread</th>
-  </tr>
-  <% @forum.forums.each do |forum| %>
-  <tr>
-    <td><%= link_to forum.name, forum_path(forum.id) %><br />
-        <%= forum.description %></td>
-    <td><% if forum.last_thread %>
-        <%= link_to forum.last_thread.name, forum_thread_path(forum.last_tread.id) %>
-         by <%= link_to(forum.last_thread.last_post_author.name user_path(forum.last_thread.last_post_author.id)) %>
+  <% unless @forums.blank? %>
+  <table>
+    <tr>
+      <th>Forum</th>
+      <th>Last thread</th>
+    </tr>
+    <% @forum.forums.each do |forum| %>
+    <tr>
+      <td><%= link_to forum.name, forum_path(forum.id) %><br />
+          <%= forum.description %></td>
+      <td><% if forum.last_thread %>
+            <%= link_to forum.last_thread.name, forum_thread_path(forum.last_tread.id) %>
+            by <%= link_to(forum.last_thread.last_post_author.name user_path(forum.last_thread.last_post_author.id)) %>
          <% end %></td>
-  </tr>
+    </tr>
+    <% end %>
+  </table>
   <% end %>
-</table>
 
-<table>
-  <tr>
-    <th>Thread</th>
-    <th>Last response</th>
-  </tr>
-  <% @forum.forum_threads.each do |thread| %>
-  <tr>
-    <td><%= link_to thread.title, [@forum, thread] %></td>
-    <td>by <%= link_to(thread.last_post_author.login, users_path(thread.last_post_author.url_name)) %>
-            at <%= thread.last_post_time %></td>
-  </tr>
+  <% if @forum.forum_threads.blank? %>
+  <p>This forum hasn't got any threads.</p>
+  <% else %>
+  <table>
+    <tr>
+      <th>Thread</th>
+      <th>Last response</th>
+    </tr>
+    <% @forum.forum_threads.each do |thread| %>
+    <tr>
+      <td><%= link_to thread.title, [@forum, thread] %></td>
+      <td>by <%= link_to(thread.last_post_author.login, users_path(thread.last_post_author.url_name)) %>
+          at <%= thread.last_post_time %></td>
+    </tr>
+    <% end %>
+  </table>
   <% end %>
-</table>
 
-<br />
+  <% if current_user %>
+  <%= link_to 'New thread', new_forum_forum_thread_path(@forum.id) %>
+  <% end %>
+  <% if meet_requirements? :manage_forums %> |
+  <%= link_to 'New subforum', new_for_forums_path(@forum.id) %> |
+  <% end %>
 
-<%= link_to 'New thread', new_forum_forum_thread_path(@forum.id) %>
-<% if meet_requirements? :manage_forums %> |
-<%= link_to 'New subforum', new_for_forums_path(@forum.id) %> |
-<%= link_to 'Edit', edit_forum_path(@forum) %> |
-<% end %>
-<%= link_to 'Back', forums_path %>
+  <%= link_to content_tag(:span, "Scroll up"), "#mainFrame", id: "contentEnd" %>
+</div>

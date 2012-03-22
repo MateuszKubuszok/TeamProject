@@ -1,5 +1,11 @@
-<h1>New forum</h1>
+<div id="navigationBar">
+  <%= link_to "Forums", forums_path %> >
+  new forum
+</div>
+<div id="content" class="clearfix">
+  <h3>New forum</h3>
 
-<%= render 'form' %>
+  <%= render 'form' %>
 
-<%= link_to 'Back', forums_path %>
+  <%= link_to content_tag(:span, "Scroll up"), "#mainFrame", id: "contentEnd" %>
+</div>
