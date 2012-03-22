@@ -1,0 +1,54 @@
+/* basic fonts and colors */
+.clearfix:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+html, body {
+  color: #444;
+  font-family: Helvetica;
+  font-size: 8pt;
+  text-align: justify;
+}
+a {
+  border-bottom: 1px dashed #ea0;
+  color: #ea0;
+  font-weight: bold;
+  text-decoration: none;
+}
+a:active, a:focus, a:hover { border-color: #000; color: #000; }
+h1, h2 { color: #888; }
+h1 {
+  font-weight: normal;
+  font-size: 24pt;
+  padding-top: 30px;
+}
+h2 {
+  font-size: 10pt;
+  position: relative;
+  top: -6pt;
+}
+#userBar p { font-size: 10px; margin: 5px; padding: 0; }
+#headerContent a { color: #ea0; }
+#headerContent a:active, #headerContent a:focus, #headerContent a:hover { color: #444; }
+#footerContent { color: #aaa; }
+
+#error_explanation { border: #f00 1px dashed; margin: 15px 5px; padding: 10px; }
+.field_with_errors { display: inline; }
+.field_with_errors label { border-bottom: #f00 1px dashed; color: #f00; position: absolute; }
+.field_with_errors input, .field_with_errors textarea, .field_with_errors select { background-color: #fdd; }
+#content label { float: left; width: 150px; }
+#content input, #content textarea, #content select { position: relative; top: -15pt; }
+#content input, #content textarea, #content select:first-of-type { margin-left: 160px; }
+
+/* controllers */
+#headerContent ul li a:active, #headerContent ul li a:focus, #headerContent ul li a:hover { color: #669 !important; }
+#headerContent ul li a:active span, #headerContent ul li a:focus span, #headerContent ul li a:hover span { background-image: url('./../img/tab_active.png') !important; }
+#headerContent ul li a:active:before, #headerContent ul li a:focus:before, #headerContent ul li a:hover:before { content: url('./../img/tab_active_left.png') !important; }
+#headerContent ul li a:active:after, #headerContent ul li a:focus:after, #headerContent ul li a:hover:after { content: url('./../img/tab_active_right.png') !important; }
+.home #home, .projects #projects, .users #users, .forums #forums, .tags #tags { color: #444 !important; }
+.home #home span, .projects #projects span, .users #users span, .forums #forums span, .tags #tags span { background-image: url('./../img/tab_selected.png') !important; }
+.home #home:before, .projects #projects:before, .users #users:before, .forums #forums:before, .tags #tags:before { content: url('./../img/tab_selected_left.png') !important; }
+.home #home:after, .projects #projects:after, .users #users:after, .forums #forums:after, .tags #tags:after { content: url('./../img/tab_selected_right.png') !important; }
