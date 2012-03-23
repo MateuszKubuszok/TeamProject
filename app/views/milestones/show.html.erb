@@ -9,7 +9,7 @@
   <h3>Project <%= link_to @project.name, project_path(@project.url_name) %> milestone <%= @milestone.name %></h3>
 
   <p><b>Description:</b></p>
-  <p><%= @milestone.description ? @milestone.description : "---" %></p>
+  <p><%= bb_code (@milestone.description ? @milestone.description : "---") %></p>
 
   <p><b>Tickets:</b></p>
 
@@ -32,7 +32,7 @@
     <% @milestone.tickets.each do |ticket| %>
     <tr>
       <td><%= link_to ticket.name, project_milestone_ticket(@project.url_name, @milestone.id, ticket.id) %></td>
-      <td><%= ticket.description ? ticket.description : "---" %></td>
+      <td><%= bb_code (ticket.description ? ticket.description : "---") %></td>
       <td><%= ticket.status %></td>
       <td><%= ticket.priority %></td>
       <td><%= ticket.user ? link_to(ticket.user.url_name, user_path(ticket.user.url_name)) : "none" %></td>

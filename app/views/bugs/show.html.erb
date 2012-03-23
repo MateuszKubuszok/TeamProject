@@ -11,9 +11,9 @@
   <p><b>Priority:</b> <%= @bug.priority %></p>
   <p><b>Type:</b> <%= @bug.bug_type %></p>
   <p><b>Status:</b> <%= @bug.status %></p>
-  <p><b>Description:</b> <%= @bug.description %></p>
+  <p><b>Description:</b> <%= bb_code @bug.description %></p>
   <% unless @bug.commentary.blank? %>
-  <p><b>Team commentary:</b> <%= @bug.commentary %></p>
+  <p><b>Team commentary:</b> <%= bb_code @bug.commentary %></p>
   <% end %>
 
   <%= link_to content_tag(:span, "Scroll up"), "#mainFrame", id: "contentEnd" %>

@@ -9,7 +9,7 @@
   <p><b>Name:</b> <%= @project.name %></p>
   <p><b>Short description:</b> <%= @project.short_description %></p>
   <p><b>Full description:</b></p>
-  <p><%= @project.description %></p>
+  <p><%= bb_code @project.description %></p>
   <p><b>Tags:</b><% @project.tags.each do |tag| %> <%= link_to tag.name, tag_path(tag.name) %><% end %></p>
 
   <p><b><%= link_to "Bugtracker", project_bugs_path(@project.url_name) %></b></p>

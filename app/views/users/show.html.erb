@@ -9,7 +9,7 @@
   <p><b>Name:</b> <%= @user.name ? @user.name : "---" %></p>
   <p><b>Surname:</b> <%= @user.surname ? @user.surname : "---" %></p>
   <p><b>About me:</b></p>
-  <p><%= @user.about_me ? @user.about_me : "---" %></p>
+  <p><%= bb_code (@user.about_me ? @user.about_me : "---") %></p>
   
   <% if meet_requirements?(:manage_privileges) && @user.admin? %>
   <p><b>Privileges:</b></p>

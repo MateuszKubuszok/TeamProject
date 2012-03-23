@@ -14,6 +14,7 @@ root = User.new({
   'password'              => 'pass',
   'password_confirmation' => 'pass',
   'email'                 => 'root@email.net',
+  'www'                   => 'www.google.pl',
   'privileges'            => (2**(User.symbols_quantity :privilege_types)-1).to_s # allow user to access privileges
 })
 root.save!
@@ -43,7 +44,8 @@ project = Project.new({
   'url_name'          => 'test_project',
   'short_description' => 'A project for tests',
   'description'       => 'here we can have some description',
-  'private'           => 1
+  'private'           => 1,
+  'tags_list'         => 'some tag, some other tag'
 })
 project.save_for! user.id
 project.users << tester
@@ -53,7 +55,8 @@ project2 = Project.new({
   'url_name'          => 'test_project_2',
   'short_description' => 'Another project for tests',
   'description'       => 'here we can have some other description',
-  'private'           => 0
+  'private'           => 0,
+  'tags_list'         => 'nice tag, other nice tag'
 })
 project2.save_for! tester.id
 project2.users << user
@@ -76,14 +79,16 @@ invitation2.save!
 
 forum = Forum.new({
   'name'        => 'first forum',
-  'description' => 'some description about forum'
+  'description' => 'some description about forum',
+  'tags_list'   => 'some tag'
 })
 forum.save!
 
 subforum = Forum.new({
   'name'        => 'subforum',
   'description' => 'some subforum description',
-  'forum_id'    => forum.id
+  'forum_id'    => forum.id,
+  'tags_list'   => 'nice tag'
 })
 subforum.save!
 

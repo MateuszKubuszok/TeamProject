@@ -16,7 +16,7 @@
     at <%= @forum_thread.created_at %>
   </p>
   <p>
-    <%= @forum_thread.content %>
+    <%= bb_code @forum_thread.content %>
   </p>
   <% if @forum_thread.editor %>
   <p>Last edited
@@ -41,7 +41,7 @@
       by <%= link_to(response.user.login, user_path(response.user.url_name)) %>
       at <%= response.created_at %>
     </p>
-    <p><%= response.content %></p>
+    <p><%= bb_code response.content %></p>
     <% if response.editor %>
     <p>Last edited
        by <%= link_to(response.user.login, user_path(response.user.url_name)) %>

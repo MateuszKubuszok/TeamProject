@@ -5,7 +5,7 @@
 
 <p>
   <b>Content:</b>
-  <%= @response.content %>
+  <%= bb_code @response.content %>
 </p>
 
 <%= link_to 'Edit', edit_forum_forum_thread_response_path(@forum.id, @forum_thread.id, @response) %> |

@@ -9,7 +9,8 @@ class ApplicationController < ActionController::Base
                 :meet_team_requirements?,
                 :owner?,
                 :widescreen_layout?,
-                :widescreen_layout_switch
+                :widescreen_layout_switch,
+                :bb_code
 
   # Specyfikuje uprawnienia administratora, jeśli jakieś konkretne są wymagane.
   #
@@ -244,7 +245,7 @@ class ApplicationController < ActionController::Base
     elsif params.key? :tag_id
       @tab = "tags"
     else
-      @tab = nil
+      @tab = onil
     end
 
     @tab
@@ -271,5 +272,14 @@ class ApplicationController < ActionController::Base
     else
       session[:widescreen_layout] = true
     end
+  end
+
+  # Zamienia BBCode z wejscia na HTML.
+  #
+  # @param [string] content BBCode
+  # @return [string] HTML
+  def bb_code content
+    @bb_code_parser = RbbCode::Parser.new unless defined? @bb_code_parser
+    @bb_code_parser.parse(ERB::Util.h content).html_safe
   end
 end
