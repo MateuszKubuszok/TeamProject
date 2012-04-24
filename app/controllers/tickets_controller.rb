@@ -1,10 +1,9 @@
-class TicketsController < ApplicationController
+class TicketsController < ProjectElementController
   admin_requirements      :manage_projects
   team_requirements       :manage_tickets
   before_filter           :require_project_admin, only: [ :new, :create, :edit, :update, :destroy ]
   before_filter           :require_public,        only: [ :index, :show ]
 
-  before_filter           :load_project
   before_filter           :load_milestone
   before_filter           :load_ticket,           only: [ :show, :edit, :update, :destroy ]
 
@@ -32,6 +31,7 @@ class TicketsController < ApplicationController
   # GET /projects/1/milestones/1/tickets/new.json
   def new
     @ticket = Ticket.new
+    @ticket.priority = :normal
     @ticket.milestone_id |= @milestone.id if @milestone
 
     prepare_select
@@ -54,8 +54,8 @@ class TicketsController < ApplicationController
 
     respond_to do |format|
       if @ticket.save
-        format.html { redirect_to project_milestone_ticket_path(@project.url_name, @milestone.id, @ticket.id), notice: 'Ticket was successfully created.' }
-        format.json { render json: @ticket, status: :created, location: project_milestone_ticket_path(@project.url_name, @milestone.id, @ticket.id) }
+        format.html { redirect_to project_milestone_ticket_path(current_project.url_name, @milestone.id, @ticket.id), notice: 'Ticket was successfully created.' }
+        format.json { render json: @ticket, status: :created, location: project_milestone_ticket_path(current_project.url_name, @milestone.id, @ticket.id) }
       else
         prepare_select
         format.html { render action: "new" }
@@ -69,7 +69,7 @@ class TicketsController < ApplicationController
   def update
     respond_to do |format|
       if @ticket.update_attributes(params[:ticket])
-        format.html { redirect_to project_milestone_ticket_path(@project.url_name, @milestone.id, @ticket.id), notice: 'Ticket was successfully updated.' }
+        format.html { redirect_to project_milestone_ticket_path(current_project.url_name, @milestone.id, @ticket.id), notice: 'Ticket was successfully updated.' }
         format.json { head :ok }
       else
         prepare_select
@@ -85,48 +85,38 @@ class TicketsController < ApplicationController
     @ticket.destroy
 
     respond_to do |format|
-      format.html { redirect_to project_milestone_tickets_path(@project.url_name, @milestone.id) }
+      format.html { redirect_to project_milestone_tickets_path(current_project.url_name, @milestone.id) }
       format.json { head :ok }
     end
   end
 
   private
 
-  # pobiera projekt
-  def load_project
-    @project = Project.find_by_url params[:project_id] ? params[:project_id] : params[:id]
-  rescue ActiveRecord::RecordNotFound
-    respond_to do |format|
-      format.html { redirect_to(homepage_path, :notice => "#{$!}") }
-      format.json { head :not_found }
-    end
-  end
-
   # pobiera milestone
   def load_milestone
-    @milestone = Milestone.find_by_id_and_project_id params[:milestone_id], @project.id
+    defined?(@milestone) ? @milestone : (@milestone = Milestone.find_by_id_and_project_id params[:milestone_id], current_project.id)
   rescue ActiveRecord::RecordNotFound
     respond_to do |format|
-      format.html { redirect_to(project_path(@project.url_name), :notice => "#{$!}") }
+      format.html { redirect_to(project_path(current_project.url_name), notice: "#{$!}") }
       format.json { head :not_found }
     end
   end
 
   # pobiera ticket
   def load_ticket
-    @ticket = Ticket.find_by_id_and_milestone_id params[:id], params[:milestone_id]
+    defined?(@ticket) ? @ticket : (@ticket = Ticket.find_by_id_and_milestone_id params[:id], params[:milestone_id])
   rescue ActiveRecord::RecordNotFound
     respond_to do |format|
-      format.html { redirect_to(project_milestone_path(@project.url_name, @milestone.id), :notice => "#{$!}") }
+      format.html { redirect_to(project_milestone_path(current_project.url_name, @milestone.id), notice: "#{$!}") }
       format.json { head :not_found }
     end
   end
 
   def prepare_select
     @select_user = []
-    @project.users.each { |user| @select_user << [user.login+(user.id.eql?(current_user.id) ? " (me)" : ""), user.id] }
+    current_project.users.each { |user| @select_user << [user.login+(user.id.eql?(current_user.id) ? " (me)" : ""), user.id] }
 
     @select_milestone = []
-    @project.milestones.each { |milestone| @select_milestone << [milestone.name, milestone.id] }
+    current_project.milestones.each { |milestone| @select_milestone << [milestone.name, milestone.id] }
   end
 end

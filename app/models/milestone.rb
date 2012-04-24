@@ -9,6 +9,18 @@ class Milestone < ActiveRecord::Base
   validates   :project_id,  presence:   true
   validates   :project,     presence:   true
 
+  # Zwraca procent w jakim jest ukończony dany milestone (% zamkniętych ticketów)).
+  #
+  # @return [float]
+  def completion
+    return @completion if defined? @completion
+    result = ActiveRecord::Base.connection.execute("SELECT closed, all_tickets FROM
+                                                    (SELECT COUNT(*) AS 'all_tickets' FROM tickets t WHERE t.milestone_id = #{self.id}) AS s1,
+                                                    (SELECT COUNT(*) AS 'closed' FROM tickets t2 WHERE t2.milestone_id = #{self.id} AND t2.status_id = #{Ticket.symbol2int :status_types, :closed}) AS s2")
+    result.each { |closed, all| @completion = (all == 0 ? 100.0 : closed.to_f/all.to_f*100.0) }
+    @completion
+  end
+
   # Zwraca deadline.
   #
   # @return [datetime] ostatni deadline
@@ -23,17 +35,12 @@ class Milestone < ActiveRecord::Base
   # @return [Ticket] najpóźniejszy ticket
   def last_ticket
     return @ticket if defined? @ticket
-    @ticket = nil
-    @deadline = self.created_at.to_date
-    @change = self.updated_at
-    self.tickets.each do |ticket|
-      if ticket.deadline > @deadline
-        @ticket = ticket
-        @deadline = ticket.deadline
-      end
-      @change = @change > ticket.updated_at ? @change : ticket.updated_at
+    @ticket = @deadline = nil
+    result = ActiveRecord::Base.connection.execute("SELECT t.id as last_ticket, MAX(t.deadline) as deadline FROM tickets t WHERE t.milestone_id = #{self.id} LIMIT 1")
+    result.each do |id,deadline|
+      @ticket = Ticket.find_by_id id
+      @deadline = deadline
     end
-    @deadline = nil if @ticket.nil?
     @ticket
   end
 

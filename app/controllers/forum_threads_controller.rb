@@ -1,4 +1,4 @@
-class ForumThreadsController < ApplicationController
+class ForumThreadsController < ForumElementController
   admin_requirements              :manage_forums
   before_filter :require_user,    only: [ :new, :create ]
   before_filter :require_access,  only: [ :edit, :update ]

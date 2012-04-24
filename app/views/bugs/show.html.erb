@@ -1,12 +1,12 @@
 <div id="navigationBar">
   <%= link_to "All projects", projects_path %> |
   <%= link_to "My projects", my_projects_path %> >
-  <%= @project.name %><% if meet_team_requirements? :manage_project %> (<%= link_to "edit", edit_project_path(@project.url_name) %>)<% end %> >
-  <%= link_to "Bugtracker", project_bugs_path(@project.url_name) %> >
-  <%= @bug.short_description %><% if owner? %> (<%= link_to "edit", edit_project_bug_path(@project.url_name, @bug.id) %>)<% end %>
+  <%= current_project.name %><% if meet_team_requirements? :manage_project %> (<%= link_to "edit", edit_project_path(current_project.url_name) %>)<% end %> >
+  <%= link_to "Bugtracker", project_bugs_path(current_project.url_name) %> >
+  <%= @bug.short_description %><% if owner? %> (<%= link_to "edit", edit_project_bug_path(current_project.url_name, @bug.id) %>)<% end %>
 </div>
 <div id="content" class="clearfix">
-  <h3>Project <%= link_to @project.name, project_path(@project.url_name) %> bug <%= @bug.short_description %></h3>
+  <h3>Project <%= link_to current_project.name, project_path(current_project.url_name) %> bug <%= @bug.short_description %></h3>
 
   <p><b>Priority:</b> <%= @bug.priority %></p>
   <p><b>Type:</b> <%= @bug.bug_type %></p>

@@ -1,0 +1,2 @@
+class ForumElementController < ApplicationController
+end

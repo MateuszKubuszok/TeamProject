@@ -11,6 +11,8 @@
   <p><b>Full description:</b></p>
   <p><%= bb_code @project.description %></p>
   <p><b>Tags:</b><% @project.tags.each do |tag| %> <%= link_to tag.name, tag_path(tag.name) %><% end %></p>
+  <p>Completion: <%= @project.completion %></p>
+
 
   <p><b><%= link_to "Bugtracker", project_bugs_path(@project.url_name) %></b></p>
 
@@ -54,6 +56,7 @@
   <table>
     <tr>
       <th>Name:</th>
+      <th>Completion:</th>
       <th>Deadline:</th>
       <% if meet_team_requirements?(:manage_milestones) %>
       <th></th>
@@ -63,6 +66,7 @@
     <% @project.milestones.each do |milestone| %>
     <tr>
       <td><%= link_to milestone.name, project_milestone_path(@project.url_name, milestone.id) %></td>
+      <td><%= milestone.completion %></td>
       <td><%= milestone.last_deadline ? milestone.last_deadline : "---" %></td>
       <% if meet_team_requirements?(:manage_milestones) %>
       <td><%= link_to "Edit", project_milestone_path(@project.url_name, milestone.id) %></td>

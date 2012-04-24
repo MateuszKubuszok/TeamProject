@@ -1,4 +1,4 @@
-class ForumsController < ApplicationController
+class ForumsController < ForumElementController
   admin_requirements                      :manage_forums
   before_filter   :require_admin,         only: [ :new, :edit, :create, :update, :destroy ]
   before_filter   :load_forum,            only: [ :show, :edit, :update, :destroy ]

@@ -1,11 +1,11 @@
-class ProjectsController < ApplicationController
+class ProjectsController < ProjectElementController
   admin_requirements                    any:  [ :manage_projects ]
   team_requirements                     any:  [ :manage_project , :manage_team ]
   before_filter :require_user,          only: [ :my, :new, :create ]
   before_filter :require_public,        only: [ :show ]
   before_filter :require_project_admin, only: [ :edit, :update, :destroy ]
 
-  before_filter :load_project,          only: [ :show, :edit, :update, :destroy, :edit_member, :update_member, :remove_member ]
+  before_filter :current_project,       only: [ :show, :edit, :update, :destroy, :edit_member, :update_member, :remove_member ]
   before_filter :load_user,             only: [ :edit_member, :update_member, :remove_member ]
   before_filter :secure_received,       only: [ :update_member ]
 
@@ -129,8 +129,13 @@ class ProjectsController < ApplicationController
   private
 
   # Pobiera projekty.
-  def load_project
-    @project = current_project
+  def current_project
+    defined?(@project) ? @project : (@project = Project.find_by_url params[:id])
+  rescue ActiveRecord::RecordNotFound
+    respond_to do |format|
+      format.html { redirect_to(homepage_path, notice: "#{$!}") }
+      format.json { head :not_found }
+    end
   end
 
   # Pobiera użytkownika.
@@ -139,13 +144,13 @@ class ProjectsController < ApplicationController
     @upr = UserProjectRelationship.find_by_project_id_and_user_id @project.id, @user.id
     if @upr.blank?
       respond_to do |format|
-        format.html { redirect_to(project_path(@project.url_name), :notice => "You cannot remove user from project if he isn't part of it!'") }
+        format.html { redirect_to(project_path(@project.url_name), notice: "You cannot remove user from project if he isn't part of it!'") }
         format.json { head :unprocessable_entity }
       end
     end
   rescue ActiveRecord::RecordNotFound
     respond_to do |format|
-      format.html { redirect_to(project_path(@project.url_name), :notice => "#{$!}") }
+      format.html { redirect_to(project_path(@project.url_name), notice: "#{$!}") }
       format.json { head :not_found }
     end
   end

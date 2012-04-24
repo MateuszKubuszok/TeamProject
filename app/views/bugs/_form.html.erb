@@ -1,4 +1,4 @@
-<%= form_for([@project, @bug]) do |f| %>
+<%= form_for([current_project, @bug]) do |f| %>
   <% if @bug.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@bug.errors.count, "error") %> prohibited this bug from being saved:</h2>
@@ -15,10 +15,12 @@
     <%= f.label :short_description %><br />
     <%= f.text_field :short_description %>
   </div>
+  <% if owner? %>
   <div class="field">
     <%= f.label :status, %><br />
     <%= f.select :status, Bug.symbols(:status_types) %>
   </div>
+  <% end %>
   <div class="field">
     <%= f.label :bug_type, %><br />
     <%= f.select :bug_type, Bug.symbols(:type_types) %>

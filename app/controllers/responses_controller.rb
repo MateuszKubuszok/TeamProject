@@ -1,4 +1,4 @@
-class ResponsesController < ApplicationController
+class ResponsesController < ForumElementController
   admin_requirements :manage_forums
   before_filter :require_user,  only: [ :new, :create ]
   before_filter :require_admin, only: [ :edit, :update, :destroy ]

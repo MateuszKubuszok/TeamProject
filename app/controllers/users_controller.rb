@@ -106,6 +106,12 @@ class UsersController < ApplicationController
     end
   end
 
+  #
+  def owner?
+    user = current_user
+    user && (user_id.to_i.zero? ? user.url_name.eql?(user_id) : user.id.to_s.eql?(user_id))
+  end
+
   # Usuwa z params[:user] uprawnienia administratora, jeśli wysyłający je użytkownik nie jest administratorem.
   def secure_received
     unless meet_requirements? :manage_privileges
