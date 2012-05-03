@@ -10,8 +10,6 @@ class CreateUsers < ActiveRecord::Migration
       t.text :about_me
       t.string :www
       t.integer :privileges
-      t.integer :settings
-      t.integer :language
       t.string :crypted_password
       t.string :password_salt
       t.string :persistence_token

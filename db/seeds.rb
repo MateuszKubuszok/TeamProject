@@ -8,103 +8,165 @@
 
 # użytkownicy
 
-root = User.new({
+require 'faker'
+require 'populator'
+
+
+# Czyczczenie bazy danych
+puts "\n"+'Clearing current DB'
+[
+  Article,
+  ArticleComment,
+  Bug,
+  Forum,
+  ForumThread,
+  Milestone,
+  Project,
+  Response,
+  TeamInvitation,
+  Ticket,
+  User,
+  UserConfiguration,
+  UserForumRelationship,
+  UserProjectRelationship
+].each(&:delete_all)
+puts 'Success!'
+
+
+# Tworzenie konta roota
+puts "\n"+'Creating root account'
+User.new({
   'login'                 => 'root',
   'url_name'              => 'root',
   'password'              => 'pass',
   'password_confirmation' => 'pass',
   'email'                 => 'root@email.net',
   'www'                   => 'www.google.pl',
-  'privileges'            => (2**(User.symbols_quantity :privilege_types)-1).to_s # allow user to access privileges
-})
-root.save!
+  'privileges'            => (2**(User.symbols_quantity :privilege_types)-1) # allow user to access privileges
+}).save!
+puts 'Success!'
 
-user = User.new({
-  'login'                 => 'user',
-  'url_name'              => 'user',
-  'password'              => 'pass',
-  'password_confirmation' => 'pass',
-  'email'                 => 'user@email.net'
-})
-user.save!
 
-tester = User.new({
-  'login'                 => 'tester',
-  'url_name'              => 'tester',
-  'password'              => 'pass',
-  'password_confirmation' => 'pass',
-  'email'                 => 'tester@email.net'
-})
-tester.save!
+# Populuje tablicę użytkowników
+puts "\n"+'Populating Users'
+User.populate 30 do |user|
+  user.login                  = Faker::Internet.user_name
+  user.name                   = Faker::Name.first_name
+  user.surname                = Faker::Name.last_name
+  user.about_me               = Faker::Lorem.paragraphs
+  user.email                  = Faker::Internet.free_email
+  user.www                    = Faker::Internet.url
 
-# projekty
+  url_name = user.login
+  begin
+    url_name['.'] = '_'
+  rescue IndexError
+    true
+  end
+  user.url_name = url_name
 
-project = Project.new({
-  'name'              => 'Test project',
-  'url_name'          => 'test_project',
-  'short_description' => 'A project for tests',
-  'description'       => 'here we can have some description',
-  'private'           => 1,
-  'tags_list'         => 'some tag, some other tag'
-})
-project.save_for! user.id
-project.users << tester
+  salt = Authlogic::Random.hex_token
+  user.password_salt       = salt
+  user.crypted_password    = Authlogic::CryptoProviders::Sha512.encrypt('pass' + salt)
+  user.persistence_token   = Authlogic::Random.friendly_token
+  user.single_access_token = Authlogic::Random.friendly_token
+  user.perishable_token    = Authlogic::Random.friendly_token
+end
+all_users = User.all
+puts 'Success!'
 
-project2 = Project.new({
-  'name'              => 'Test project 2',
-  'url_name'          => 'test_project_2',
-  'short_description' => 'Another project for tests',
-  'description'       => 'here we can have some other description',
-  'private'           => 0,
-  'tags_list'         => 'nice tag, other nice tag'
-})
-project2.save_for! tester.id
-project2.users << user
 
-# zaproszenia
+# Populuje projekty/milestonsy/tickety
+puts "\n"+'Populating projects'
+Project.populate 50 do |project|
+  project.name              = Faker::Company.bs
+  project.short_description = Faker::Lorem.paragraph
+  project.description       = Faker::Lorem.paragraphs
+  project.private           = Random.rand(2)
 
-invitation = TeamInvitation.new({
-  'user_id'     => root.id,
-  'project_id'  => project.id
-})
-invitation.save!
+  url_name = Faker::Internet.user_name
+  begin
+    url_name['.'] = '_'
+  rescue IndexError
+    true
+  end
+  project.url_name = url_name
 
-invitation2 = TeamInvitation.new({
-  'user_id'     => root.id,
-  'project_id'  => project2.id
-})
-invitation2.save!
+  # Łączy projekt z jego członkami
+  users = all_users
+  members = []
+  UserProjectRelationship.populate 10 do |upr|
+    user    =  users.sample
+    users   -= [user]
+    members += [user]
 
-# fora
+    upr.project_id = project.id
+    upr.user_id    = user.id
+    upr.privileges = Random.rand(2**(UserProjectRelationship.symbols_quantity :privilege_types))
+  end
 
-forum = Forum.new({
-  'name'        => 'first forum',
-  'description' => 'some description about forum',
-  'tags_list'   => 'some tag'
-})
-forum.save!
+  # Zaprasza ludzi do projektu
+  TeamInvitation.populate 5 do |invitation|
+    user    =  users.sample
+    users   -= [user]
 
-subforum = Forum.new({
-  'name'        => 'subforum',
-  'description' => 'some subforum description',
-  'forum_id'    => forum.id,
-  'tags_list'   => 'nice tag'
-})
-subforum.save!
+    invitation.project_id = project.id
+    invitation.user_id    = user.id
+  end
 
-thread = ForumThread.new({
-  'title'       => 'first thread',
-  'content'     => 'first thread content',
-  'forum_id'    => subforum.id,
-  'user_id'     => root.id
-})
-thread.save!
+  # Generuje milestonesy
+  Milestone.populate 10 do |milestone|
+    milestone.project_id  = project.id
+    milestone.name        = Faker::Company.bs
+    milestone.description = Faker::Company.bs
 
-response = Response.new({
-  'title'   =>  'response to first',
-  'content' =>  'response content',
-  'forum_thread_id' =>
-                thread.id,
-  'user_id' =>  user.id
-})
-response.save!
+    Ticket.populate 20 do |ticket|
+      ticket.milestone_id = milestone.id
+      ticket.user_id      = members.sample.id
+      ticket.name         = Faker::Company.bs
+      ticket.description  = Faker::Company.bs
+      ticket.priority_id  = [-1,0,1].sample
+      ticket.status_id    = Random.rand(Ticket.symbols_quantity :status_types)+1
+      ticket.deadline     = (Random.rand(100)-200).days.ago
+    end
+  end
+end
+puts 'Success!'
+
+
+# Populuje fora
+puts "\n"+'Populating foras'
+Forum.populate 5 do |forum|
+  forum.name        = Faker::Company.bs
+  forum.description = Faker::Lorem.paragraph
+
+  Forum.populate 5 do |subforum|
+    subforum.forum_id = forum.id
+    subforum.name        = Faker::Company.bs
+    subforum.description = Faker::Lorem.paragraph
+  end
+end
+foras = Forum.all
+puts 'Success!'
+
+
+# Populuje wątki
+puts "\n"+'Populating threads'
+ForumThread.populate 50 do |thread|
+  thread.forum_id   = foras.sample.id
+  thread.title      = Faker::Company.bs
+  thread.content    = Faker::Lorem.paragraphs
+  thread.user_id    = all_users.sample.id
+  thread.created_at = (Random.rand(100)-200).days.ago
+
+  previous_time = thread.created_at
+  Response.populate 5 do |response|
+    response.forum_thread_id = thread.id
+    response.title   = Faker::Company.bs
+    response.content = Faker::Lorem.paragraphs
+    response.user_id = all_users.sample.id
+    response.created_at = Random.rand(24*60*60).seconds.since previous_time
+    previous_time = response.created_at
+  end
+end
+puts 'Success!'

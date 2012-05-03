@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
   ]
   bool_accessors :settings_types, :settings
 
+  has_one   :user_configuration,          dependent:      :destroy
   has_many  :team_invitations,            dependent:      :destroy
   has_many  :possible_projects,           source:         :project,
                                           through:        :team_invitations
@@ -116,8 +117,6 @@ end
 #  about_me            :text
 #  www                 :string(255)
 #  privileges          :integer(4)
-#  settings            :integer(4)
-#  language            :integer(4)
 #  crypted_password    :string(255)
 #  password_salt       :string(255)
 #  persistence_token   :string(255)

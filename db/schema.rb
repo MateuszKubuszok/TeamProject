@@ -11,7 +11,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120322164524) do
+ActiveRecord::Schema.define(:version => 20120424234527) do
+
+  create_table "article_comments", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "article_id"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "articles", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "title"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "bugs", :force => true do |t|
     t.integer  "project_id"
@@ -109,6 +125,17 @@ ActiveRecord::Schema.define(:version => 20120322164524) do
     t.datetime "updated_at"
   end
 
+  create_table "user_configurations", :force => true do |t|
+    t.integer "user_id"
+    t.integer "language"
+    t.integer "contact_privacy_level"
+    t.integer "personal_data_privacy_level"
+    t.integer "projects_privacy_level"
+    t.integer "privileges_privacy_level"
+    t.integer "blog_privacy_level"
+    t.boolean "widescreen"
+  end
+
   create_table "user_forum_relationships", :force => true do |t|
     t.integer "user_id"
     t.integer "forum_id"
@@ -130,8 +157,6 @@ ActiveRecord::Schema.define(:version => 20120322164524) do
     t.text     "about_me"
     t.string   "www"
     t.integer  "privileges"
-    t.integer  "settings"
-    t.integer  "language"
     t.string   "crypted_password"
     t.string   "password_salt"
     t.string   "persistence_token"

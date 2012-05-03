@@ -7,6 +7,8 @@ gem 'rails', '3.1.0'
 
 gem 'mysql2'
 
+gem 'activewarehouse'
+gem 'activewarehouse-etl'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -34,6 +36,8 @@ gem 'rbbcode'
 group :development, :test do
   gem "annotate", "~> 2.4.1beta1"               # Automatycznie opsiuje pola bazy danych w modelach
   gem 'autotest'                                # Testy ednostkowe (używany przez RSpeca)
+  gem 'faker'                                   # Pomaga generować obiekty
+  gem 'populator'                               # Populuje bazę danych
   gem 'rspec'                                   # Testy jednostkowe
   gem "rspec-rails", "~> 2.4"                   # Wsparcie dla RSpeca w Railsach
   gem 'ruby-debug19', :require => 'ruby-debug'  # Tryb debugowania w Rubym

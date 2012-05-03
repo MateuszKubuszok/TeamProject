@@ -106,10 +106,12 @@ class UsersController < ApplicationController
     end
   end
 
+  # Określa, czy użytkownik sesji jest właścicielem zasobów.
   #
+  # @return [boolean] true, jeśli użytkowink jest właścicielem
   def owner?
     user = current_user
-    user && (user_id.to_i.zero? ? user.url_name.eql?(user_id) : user.id.to_s.eql?(user_id))
+    user && (params[:id].to_i.zero? ? user.url_name.eql?(params[:id]) : user.id.to_s.eql?(params[:id]))
   end
 
   # Usuwa z params[:user] uprawnienia administratora, jeśli wysyłający je użytkownik nie jest administratorem.

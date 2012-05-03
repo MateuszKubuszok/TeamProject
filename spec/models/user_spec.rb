@@ -16,8 +16,6 @@ end
 #  about_me            :text
 #  www                 :string(255)
 #  privileges          :integer(4)
-#  settings            :integer(4)
-#  language            :integer(4)
 #  crypted_password    :string(255)
 #  password_salt       :string(255)
 #  persistence_token   :string(255)
