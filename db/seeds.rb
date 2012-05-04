@@ -83,6 +83,7 @@ Project.populate 50 do |project|
   project.short_description = Faker::Lorem.paragraph
   project.description       = Faker::Lorem.paragraphs
   project.private           = Random.rand(2)
+  project.views             = Random.rand(1000000)
 
   url_name = Faker::Internet.user_name
   begin
@@ -112,6 +113,17 @@ Project.populate 50 do |project|
 
     invitation.project_id = project.id
     invitation.user_id    = user.id
+  end
+
+  # Generuje bugi
+  Bug.populate 10 do |bug|
+    bug.project_id        = project.id
+    bug.status_id         = Random.rand(Bug.symbols_quantity :status_types)+1
+    bug.type_id           = Random.rand(Bug.symbols_quantity :type_types)+1
+    bug.priority_id       = [-1,0,1].sample
+    bug.short_description = Faker::Lorem.paragraph
+    bug.description       = Faker::Lorem.paragraphs
+    bug.commentary        = Faker::Lorem.paragraphs
   end
 
   # Generuje milestonesy

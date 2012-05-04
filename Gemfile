@@ -7,8 +7,8 @@ gem 'rails', '3.1.0'
 
 gem 'mysql2'
 
-gem 'activewarehouse'
-gem 'activewarehouse-etl'
+gem 'activewarehouse'      # Hurtownia danych
+gem 'activewarehouse-etl'  # Proces ETL hurtowni danych
 
 # Gems used only for assets and not required
 # in production environments by default.

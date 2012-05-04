@@ -4,11 +4,11 @@ class CreateBugs < ActiveRecord::Migration
       t.integer :id
       t.integer :project_id
       t.string :short_description
+      t.text :description
+      t.text :commentary
       t.integer :type_id
       t.integer :status_id
       t.integer :priority_id
-      t.text :description
-      t.text :commentary
 
       t.timestamps
     end
