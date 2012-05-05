@@ -1,4 +1,8 @@
 class CreateBugFacts < ActiveRecord::Migration
+  def connection
+    ActiveRecord::Base.establish_connection("#{Rails.env}_warehouse").connection
+  end
+
   def change
     create_table :bug_facts do |t|
       t.integer :id

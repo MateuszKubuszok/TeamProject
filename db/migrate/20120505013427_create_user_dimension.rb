@@ -1,4 +1,8 @@
 class CreateUserDimension < ActiveRecord::Migration
+  def connection
+    ActiveRecord::Base.establish_connection("#{Rails.env}_warehouse").connection
+  end
+
   def change
     create_table :user_dimension do |t|
       t.integer :id

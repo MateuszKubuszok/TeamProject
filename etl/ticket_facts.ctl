@@ -1,6 +1,6 @@
 require 'config/environment'
 
-case ENV["RAILS_ENV"]
+case Rails.env
   when :development
     outfile = 'data/development_ticket_facts.txt'
   when :test
@@ -9,10 +9,10 @@ case ENV["RAILS_ENV"]
     outfile = 'data/production_ticket_facts.txt'
 end
 
-in_db     = ENV["RAILS_ENV"]
+in_db     = Rails.env
 in_table  = :tickets
 
-out_db    = (ENV["RAILS_ENV"].to_s+"_warehouse").to_sym
+out_db    = "#{Rails.env}_warehouse"
 out_table = :ticket_facts
 
 columns   = [ :time_id, :ticket_id, :user_id, :status, :priority, :deadline ]
@@ -35,16 +35,10 @@ source :in, {
 ]
 
 
-=begin
-  # TODO: jeśli nie ma bieżącej daty, wywołaj generator dla wymiaru daty
-  DataDimension.
-=end
-
-
 # miejsce na transformacje
 transform :time_id, :foreign_key_lookup, {
   resolver: ActiveRecordResolver.new(
-    DataDimension, :find_by_sql_date_stamp
+    DateDimension, :find_by_sql_date_stamp
   )
 }
 
