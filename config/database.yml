@@ -1,6 +1,6 @@
 # bazy danych
 
-development: &default_db
+development:
   adapter: mysql2
   database: db/development.mysql2
   pool: 5
@@ -9,8 +9,12 @@ development: &default_db
   password: pass
 
 test:
+  adapter: mysql2
   database: db/test.mysql2
-  <<: *default_db
+  pool: 5
+  timeout: 5000
+  username: root
+  password: pass
 
 production:
   adapter: mysql2
@@ -32,21 +36,25 @@ etl_execution:
 
 # hurtownie danych
 
-development_warehouse: &default_wh
-  database: db/development_warehouse.mysql2
+development_warehouse:
   adapter: mysql2
+  database: db/development_warehouse.mysql2
   pool: 5
   timeout: 5000
   username: root
   password: pass
 
 test_warehouse:
+  adapter: mysql2
   database: db/test_warehouse.mysql2
-  <<: *default
+  pool: 5
+  timeout: 5000
+  username: root
+  password: pass
 
 production_warehouse:
-  database: db/production_warehouse.mysql2
   adapter: mysql2
+  database: db/production_warehouse.mysql2
   pool: 5
   timeout: 5000
   username: root

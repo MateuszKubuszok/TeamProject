@@ -4,7 +4,7 @@ class CreateTickets < ActiveRecord::Migration
       t.integer :id
       t.integer :milestone_id
       t.string :name
-      t.string :description
+      t.text :description
       t.integer :status_id
       t.integer :priority_id
       t.integer :user_id

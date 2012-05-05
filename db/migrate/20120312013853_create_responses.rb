@@ -4,8 +4,8 @@ class CreateResponses < ActiveRecord::Migration
       t.integer :forum_thread_id
       t.integer :user_id
       t.integer :edited_by
-      t.string :title
-      t.text :content
+      t.string  :title
+      t.text    :content
 
       t.timestamps
     end

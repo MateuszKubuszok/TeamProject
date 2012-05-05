@@ -40,6 +40,8 @@ group :development, :test do
   gem 'populator'                               # Populuje bazę danych
   gem 'rspec'                                   # Testy jednostkowe
   gem "rspec-rails", "~> 2.4"                   # Wsparcie dla RSpeca w Railsach
+  gem 'linecache19', :git => 'git://github.com/mark-moseley/linecache'
+  gem 'ruby-debug-base19x', '~> 0.11.30.pre4'
   gem 'ruby-debug19', :require => 'ruby-debug'  # Tryb debugowania w Rubym
   gem 'spork', '~> 0.9.0rc'                     # Preloaduje aplikację, aby można było np. wykonać testy bez przeładowywania całego systemu.
   gem 'turn', :require => false                 # Wyświetla wyniki testów jednostkowych

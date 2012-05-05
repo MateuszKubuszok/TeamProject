@@ -9,11 +9,11 @@ case ENV["RAILS_ENV"]
     outfile = 'data/production_ticket_facts.txt'
 end
 
-indb      = ENV["RAILS_ENV"]
-intable   = :tickets
+in_db     = ENV["RAILS_ENV"]
+in_table  = :tickets
 
-outdb     = (ENV["RAILS_ENV"].to_s+"_warehouse").to_sym
-outtable  = :ticket_facts
+out_db    = (ENV["RAILS_ENV"].to_s+"_warehouse").to_sym
+out_table = :ticket_facts
 
 columns   = [ :time_id, :ticket_id, :user_id, :status, :priority, :deadline ]
 separator = "\t"
@@ -22,8 +22,8 @@ separator = "\t"
 # ekstrakcja
 source :in, {
   type:   :database,
-  target: indb,
-  table:  intable,
+  target: in_db,
+  table:  in_table,
   select: 'tickets.id AS `ticket_id`, ticket.user_id, tickets.status_id AS `status`, ticket.priority_id AS `priority`, ticket.deadline'
 }, [
   :time_id,
@@ -36,6 +36,7 @@ source :in, {
 
 
 =begin
+  # TODO: jeśli nie ma bieżącej daty, wywołaj generator dla wymiaru daty
   DataDimension.
 =end
 
@@ -68,7 +69,6 @@ post_process :bulk_import, {
   columns:          columns,
   truncate:         false,
   field_separator:  separator,
-  target:           outdb,
-  table:            outtable
+  target:           out_db,
+  table:            out_table
 }
-
