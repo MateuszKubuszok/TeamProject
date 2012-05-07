@@ -1,6 +1,6 @@
 class CreateProjectFacts < ActiveRecord::Migration
   def connection
-    ActiveRecord::Base.establish_connection("#{Rails.env}_warehouse").connection
+    ProjectFacts.connection
   end
 
   def change

@@ -85,7 +85,7 @@ if settings[:populate]
 
 
   # Populuje projekty/milestonsy/tickety
-  puts "\n"+'Populating projects'
+  puts "\n"+'Populating Projects'
   Project.populate 50 do |project|
     project.name              = Faker::Company.bs
     project.short_description = Faker::Lorem.paragraph
@@ -155,7 +155,7 @@ if settings[:populate]
 
 
   # Populuje fora
-  puts "\n"+'Populating foras'
+  puts "\n"+'Populating Foras'
   Forum.populate 5 do |forum|
     forum.name        = Faker::Company.bs
     forum.description = Faker::Lorem.paragraph
@@ -171,7 +171,7 @@ if settings[:populate]
 
 
   # Populuje wątki
-  puts "\n"+'Populating threads'
+  puts "\n"+'Populating Threads'
   ForumThread.populate 50 do |thread|
     thread.forum_id   = foras.sample.id
     thread.title      = Faker::Company.bs
@@ -195,8 +195,21 @@ end
 
 # modyfikuje istniejącą baze danych
 if settings[:modify]
-  # TODO: inkrementować odwiedziny w projektach
-  # TODO: zmieniać statusy na późniejsze
+  # aktualizuje wyświetlenia strony
+  puts "\n"+'Updating Projects'
+  Project.all.each do |project|
+    project.views += Random.rand 10000
+    project.save!
+  end
+  puts 'Success!'
+
+  # aktualizuje statusy
+  puts "\n"+'Updating Tickets'
+  Ticket.all.each do |ticket|
+    ticket.status_id += Random.rand(Ticket.symbol_quantity(:status_types)-ticket.status_id+1)
+    ticket.save!
+  end
+  puts 'Success!'
 end
 
 

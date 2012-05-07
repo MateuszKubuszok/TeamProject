@@ -1,14 +1,12 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.0'
+gem 'rails', '3.1.0' # Railsy
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
 gem 'mysql2'
-
-gem 'activewarehouse'      # Hurtownia danych
-gem 'activewarehouse-etl'  # Proces ETL hurtowni danych
+gem 'pg'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -32,6 +30,10 @@ gem 'rbbcode'
 
 # Deploy with Capistrano
 # gem 'capistrano'
+
+gem 'adapter_extensions'                        # Wymagane przez ActiveWarehouse
+gem 'fastercsv'                                 # Wymagane przez ActiveWarehouse
+gem 'activewarehouse-etl', "~> 1.0.0.rc1"
 
 group :development, :test do
   gem "annotate", "~> 2.4.1beta1"               # Automatycznie opsiuje pola bazy danych w modelach

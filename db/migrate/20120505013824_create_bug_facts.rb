@@ -1,6 +1,6 @@
 class CreateBugFacts < ActiveRecord::Migration
   def connection
-    ActiveRecord::Base.establish_connection("#{Rails.env}_warehouse").connection
+    BugFacts.connection
   end
 
   def change

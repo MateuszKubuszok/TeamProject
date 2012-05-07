@@ -1,6 +1,6 @@
 class CreateBugDimension < ActiveRecord::Migration
   def connection
-    ActiveRecord::Base.establish_connection("#{Rails.env}_warehouse").connection
+    BugDimension.connection
   end
 
   def change

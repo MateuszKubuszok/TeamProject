@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120424234527) do
+ActiveRecord::Schema.define(:version => 20120505013849) do
 
   create_table "article_comments", :force => true do |t|
     t.integer  "user_id"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(:version => 20120424234527) do
     t.integer  "user_id"
     t.string   "title"
     t.text     "content"
+    t.integer  "comments_level_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -32,30 +33,30 @@ ActiveRecord::Schema.define(:version => 20120424234527) do
   create_table "bugs", :force => true do |t|
     t.integer  "project_id"
     t.string   "short_description"
+    t.text     "description"
+    t.text     "commentary"
     t.integer  "type_id"
     t.integer  "status_id"
     t.integer  "priority_id"
-    t.text     "description"
-    t.text     "commentary"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "forum_threads", :force => true do |t|
     t.integer  "forum_id"
-    t.string   "title"
-    t.text     "content"
     t.integer  "user_id"
     t.integer  "edited_by"
+    t.string   "title"
+    t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "forums", :force => true do |t|
     t.integer  "forum_id"
+    t.integer  "project_id"
     t.string   "name"
     t.string   "description"
-    t.integer  "project_id"
     t.boolean  "private"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -74,6 +75,7 @@ ActiveRecord::Schema.define(:version => 20120424234527) do
     t.string   "name"
     t.string   "short_description"
     t.text     "description"
+    t.integer  "views"
     t.boolean  "private"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -81,10 +83,10 @@ ActiveRecord::Schema.define(:version => 20120424234527) do
 
   create_table "responses", :force => true do |t|
     t.integer  "forum_thread_id"
-    t.string   "title"
-    t.text     "content"
     t.integer  "user_id"
     t.integer  "edited_by"
+    t.string   "title"
+    t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -107,16 +109,14 @@ ActiveRecord::Schema.define(:version => 20120424234527) do
   end
 
   create_table "team_invitations", :force => true do |t|
-    t.integer  "project_id"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "project_id"
+    t.integer "user_id"
   end
 
   create_table "tickets", :force => true do |t|
     t.integer  "milestone_id"
     t.string   "name"
-    t.string   "description"
+    t.text     "description"
     t.integer  "status_id"
     t.integer  "priority_id"
     t.integer  "user_id"
@@ -150,11 +150,11 @@ ActiveRecord::Schema.define(:version => 20120424234527) do
 
   create_table "users", :force => true do |t|
     t.string   "login"
-    t.string   "email"
     t.string   "url_name"
     t.string   "name"
     t.string   "surname"
     t.text     "about_me"
+    t.string   "email"
     t.string   "www"
     t.integer  "privileges"
     t.string   "crypted_password"

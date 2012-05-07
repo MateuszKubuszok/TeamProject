@@ -1,6 +1,6 @@
 class CreateTicketFacts < ActiveRecord::Migration
   def connection
-    ActiveRecord::Base.establish_connection("#{Rails.env}_warehouse").connection
+    TicketFacts.connection
   end
 
   def change

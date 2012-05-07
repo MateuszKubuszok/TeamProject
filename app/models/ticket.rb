@@ -41,11 +41,11 @@ end
 # Table name: tickets
 #
 #  id           :integer(4)      not null, primary key
+#  milestone_id :integer(4)
 #  name         :string(255)
-#  description  :string(255)
+#  description  :text
 #  status_id    :integer(4)
 #  priority_id  :integer(4)
-#  milestone_id :integer(4)
 #  user_id      :integer(4)
 #  deadline     :date
 #  created_at   :datetime

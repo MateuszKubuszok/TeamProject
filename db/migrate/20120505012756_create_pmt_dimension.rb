@@ -1,11 +1,15 @@
 class CreatePmtDimension < ActiveRecord::Migration
+  def connection
+    PmtDimension.connection
+  end
+
   def change
-    create_table :bug_dimension do |t|
+    create_table :pmt_dimension do |t|
       t.integer :id
       t.integer :date_id
-      t.integer :project_id
-      t.integer :milestone_id
-      t.integer :ticket_id
+      t.integer :project
+      t.integer :milestone
+      t.integer :ticket
       t.string  :project_name
       t.string  :milestone_name
       t.string  :ticket_name

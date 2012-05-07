@@ -1,6 +1,6 @@
 class CreateUserDimension < ActiveRecord::Migration
   def connection
-    ActiveRecord::Base.establish_connection("#{Rails.env}_warehouse").connection
+    UserDimension.connection
   end
 
   def change

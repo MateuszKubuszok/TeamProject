@@ -12,6 +12,7 @@ end
 #  name              :string(255)
 #  short_description :string(255)
 #  description       :text
+#  views             :integer(4)
 #  private           :boolean(1)
 #  created_at        :datetime
 #  updated_at        :datetime

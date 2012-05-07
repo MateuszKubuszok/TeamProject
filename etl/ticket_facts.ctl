@@ -1,20 +1,12 @@
 require 'config/environment'
 
-case Rails.env
-  when :development
-    outfile = 'data/development_ticket_facts.txt'
-  when :test
-    outfile = 'data/test_ticket_facts.txt'
-  else
-    outfile = 'data/production_ticket_facts.txt'
-end
-
 in_db     = Rails.env
-in_table  = :tickets
+in_table  = Tickets.table_name
 
 out_db    = "#{Rails.env}_warehouse"
-out_table = :ticket_facts
+out_table = TicketFacts.table_name
 
+bulk_load_file = "data/#{out_table}.csv"
 columns   = [ :time_id, :ticket_id, :user_id, :status, :priority, :deadline ]
 separator = "\t"
 
@@ -45,7 +37,7 @@ transform :time_id, :foreign_key_lookup, {
 
 # zapis do pliku
 destination :out, {
-  file:       outfile,
+  file:       bulk_load_file,
   separator:  separator
 }, {
   order: columns,
@@ -59,7 +51,7 @@ destination :out, {
 
 # zapis z pliku do bazy
 post_process :bulk_import, {
-  file:             outfile,
+  file:             bulk_load_file,
   columns:          columns,
   truncate:         false,
   field_separator:  separator,
