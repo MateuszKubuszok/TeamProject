@@ -1,13 +1,13 @@
-require 'config/environment'
+require File.expand_path(File.dirname(__FILE__) + '/../config/environment')
 
 in_db     = Rails.env
-in_table  = Tickets.table_name
+in_table  = Ticket.table_name
 
 out_db    = "#{Rails.env}_warehouse"
 out_table = TicketFacts.table_name
 
 bulk_load_file = "data/#{out_table}.csv"
-columns   = [ :time_id, :ticket_id, :user_id, :status, :priority, :deadline ]
+columns   = [ :date_id, :ticket_id, :user_id, :status_id, :priority_id, :deadline ]
 separator = "\t"
 
 
@@ -16,23 +16,22 @@ source :in, {
   type:   :database,
   target: in_db,
   table:  in_table,
-  select: 'tickets.id AS `ticket_id`, ticket.user_id, tickets.status_id AS `status`, ticket.priority_id AS `priority`, ticket.deadline'
+  select: 'CURDATE() as `date_id`, tickets.id AS `ticket_id`, tickets.user_id, tickets.status_id, tickets.priority_id, tickets.deadline'
 }, [
-  :time_id,
+  :date_id,
   :ticket_id,
   :user_id,
-  :status,
-  :priority,
+  :status_id,
+  :priority_id,
   :deadline
 ]
 
 
-# miejsce na transformacje
-transform :time_id, :foreign_key_lookup, {
-  resolver: ActiveRecordResolver.new(
-    DateDimension, :find_by_sql_date_stamp
-  )
-}
+# zamienia datę w date_id na odpowiadający jej id w wymiarze daty
+date_id = DateDimension.find_by_sql_date_stamp(Date.today.to_s).id
+transform(:date_id) do
+  date_id
+end
 
 
 # zapis do pliku
@@ -40,12 +39,7 @@ destination :out, {
   file:       bulk_load_file,
   separator:  separator
 }, {
-  order: columns,
-  virtual: {
-    time_id: ETL::Generator::SurrogateKeyGenerator.new(
-      :query => 'SELECT MAX(id) FROM time_dimension'
-    )
-  }
+  order: columns
 }
 
 

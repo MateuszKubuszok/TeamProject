@@ -14,4 +14,5 @@ Przy dokonaniu zmian w bazie:
 - restartować bazę najlepiej jest przez: rake db:drop:all ; rake db:create:all ; rake db:migrate ; rake db:seed.
 
 Aktualizowanie hurtowni danych:
+// najpierw uruchomić rake db:seed
 etl ./etl/date_dimension.ctl
