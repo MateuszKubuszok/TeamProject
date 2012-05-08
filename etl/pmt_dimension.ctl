@@ -4,7 +4,7 @@ in_db     = Rails.env
 in_table  = Ticket.table_name
 
 out_db    = "#{Rails.env}_warehouse"
-out_table = PmtDimension.table_name
+out_table = 'pmt_dimension'
 
 bulk_load_file = "data/#{out_table}.csv"
 columns   = [ :date_id, :project, :milestone, :ticket, :project_name, :milestone_name, :ticket_name, :ticket_description, :private ]

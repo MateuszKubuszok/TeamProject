@@ -4,7 +4,7 @@ in_db     = Rails.env
 in_table  = User.table_name
 
 out_db    = "#{Rails.env}_warehouse"
-out_table = UserDimension.table_name
+out_table = 'user_dimension'
 
 bulk_load_file = "data/#{out_table}.csv"
 columns   = [ :date_id, :user_id, :login, :name, :surname, :about_me, :www, :email ]

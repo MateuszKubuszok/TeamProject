@@ -4,7 +4,7 @@ in_db     = Rails.env
 in_table  = Ticket.table_name
 
 out_db    = "#{Rails.env}_warehouse"
-out_table = TicketFacts.table_name
+out_table = 'ticket_facts'
 
 bulk_load_file = "data/#{out_table}.csv"
 columns   = [ :date_id, :ticket_id, :user_id, :status_id, :priority_id, :deadline ]

@@ -4,7 +4,7 @@ in_db     = Rails.env
 in_table  = Bug.table_name
 
 out_db    = "#{Rails.env}_warehouse"
-out_table = BugFacts.table_name
+out_table = 'bug_facts'
 
 bulk_load_file = "data/#{out_table}.csv"
 columns   = [ :date_id, :bug_id, :status_id, :type_id ]

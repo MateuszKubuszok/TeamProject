@@ -4,7 +4,7 @@ in_db     = Rails.env
 in_table  = Project.table_name
 
 out_db    = "#{Rails.env}_warehouse"
-out_table = ProjectFacts.table_name
+out_table = 'project_facts'
 
 bulk_load_file = "data/#{out_table}.csv"
 columns   = [ :date_id, :project_id, :visits ]

@@ -1,7 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../config/environment')
 
 out_db          = "#{Rails.env}_warehouse"
-out_table       = DateDimension.table_name
+out_table       = 'date_dimension'
 
 bulk_load_file  = "data/#{out_table}.csv"
 
