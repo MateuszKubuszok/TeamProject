@@ -1,0 +1,12 @@
+# buduje wymiar czasu
+run 'date_dimension.ctl'
+
+# buduje pozostałe wymiary
+run 'bug_dimension.ctl'
+run 'pmt_dimension.ctl'
+run 'user_dimension.ctl'
+
+# buduje tabele faktów
+run 'bug_facts.ctl'
+run 'project_facts.ctl'
+run 'ticket_facts.ctl'

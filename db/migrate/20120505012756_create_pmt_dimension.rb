@@ -14,7 +14,7 @@ class CreatePmtDimension < ActiveRecord::Migration
       t.string  :milestone_name
       t.string  :ticket_name
       t.text    :ticket_description
-      t.string  :private
+      t.boolean :private
     end
   end
 end

@@ -8,13 +8,14 @@ bulk_load_file  = "data/#{out_table}.csv"
 start_date      = Date.parse('2000-01-01')
 end_date        = Date.parse('2020-01-01')
 
+# czyści tablicę dat
 pre_process :truncate, {
   target: out_db,
-  table: out_table
+  table:  out_table
 }
 
+# ekstrakcja
 records = ETL::Builder::DateDimensionBuilder.new(start_date, end_date).build
-
 source :in, {
   type:           :enumerable,
   enumerable:     records,

@@ -16,22 +16,13 @@ source :in, {
   type:   :database,
   target: in_db,
   table:  in_table,
-  select: 'CURDATE() as `date_id`, tickets.id AS `ticket_id`, tickets.user_id, tickets.status_id, tickets.priority_id, tickets.deadline'
-}, [
-  :date_id,
-  :ticket_id,
-  :user_id,
-  :status_id,
-  :priority_id,
-  :deadline
-]
+  select: 'tickets.id AS `ticket_id`, tickets.user_id, tickets.status_id, tickets.priority_id, tickets.deadline'
+}, columns
 
 
-# zamienia datę w date_id na odpowiadający jej id w wymiarze daty
+# ustawia date_id na datę w tabeli czasu określająca dzień dokonania zrzutu do hurtowni danych
 date_id = DateDimension.find_by_sql_date_stamp(Date.today.to_s).id
-transform(:date_id) do
-  date_id
-end
+transform(:date_id) { date_id }
 
 
 # zapis do pliku

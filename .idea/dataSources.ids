@@ -2434,6 +2434,10 @@
       <column name="chunk_id" sqlType="oid" length="10" precision="0" nullable="true" jdbcType="-5" />
       <column name="chunk_seq" sqlType="int4" length="10" precision="0" nullable="true" jdbcType="4" />
     </table>
+    <table name="pg_toast_16547_index" schema="pg_toast" catalog="" type="SYSTEM TOAST INDEX" />
+    <table name="pg_toast_16595_index" schema="pg_toast" catalog="" type="SYSTEM TOAST INDEX" />
+    <table name="pg_toast_16606_index" schema="pg_toast" catalog="" type="SYSTEM TOAST INDEX" />
+    <table name="pg_toast_16617_index" schema="pg_toast" catalog="" type="SYSTEM TOAST INDEX" />
     <table name="pg_toast_2396_index" schema="pg_toast" catalog="" type="SYSTEM TOAST INDEX">
       <column name="chunk_id" sqlType="oid" length="10" precision="0" nullable="true" jdbcType="-5" />
       <column name="chunk_seq" sqlType="int4" length="10" precision="0" nullable="true" jdbcType="4" />
@@ -2591,18 +2595,22 @@
     <table name="index_date_dimension_on_calendar_month_name" schema="public" catalog="" type="INDEX">
       <column name="calendar_month_name" sqlType="varchar" length="255" precision="0" nullable="true" jdbcType="12" />
     </table>
+    <table name="index_date_dimension_on_calendar_month_number" schema="public" catalog="" type="INDEX" />
     <table name="index_date_dimension_on_calendar_month_number_in_year" schema="public" catalog="" type="INDEX">
       <column name="calendar_month_number_in_year" sqlType="int4" length="10" precision="0" nullable="true" jdbcType="4" />
     </table>
     <table name="index_date_dimension_on_calendar_quarter" schema="public" catalog="" type="INDEX">
       <column name="calendar_quarter" sqlType="varchar" length="255" precision="0" nullable="true" jdbcType="12" />
     </table>
+    <table name="index_date_dimension_on_calendar_quarter_number" schema="public" catalog="" type="INDEX" />
+    <table name="index_date_dimension_on_calendar_quarter_number_in_year" schema="public" catalog="" type="INDEX" />
     <table name="index_date_dimension_on_calendar_week" schema="public" catalog="" type="INDEX">
       <column name="calendar_week" sqlType="varchar" length="255" precision="0" nullable="true" jdbcType="12" />
     </table>
     <table name="index_date_dimension_on_calendar_week_number_in_year" schema="public" catalog="" type="INDEX">
       <column name="calendar_week_number_in_year" sqlType="int4" length="10" precision="0" nullable="true" jdbcType="4" />
     </table>
+    <table name="index_date_dimension_on_calendar_weel_number" schema="public" catalog="" type="INDEX" />
     <table name="index_date_dimension_on_calendar_year" schema="public" catalog="" type="INDEX">
       <column name="calendar_year" sqlType="varchar" length="255" precision="0" nullable="true" jdbcType="12" />
     </table>
@@ -2615,6 +2623,7 @@
     <table name="index_date_dimension_on_date" schema="public" catalog="" type="INDEX">
       <column name="date" sqlType="varchar" length="255" precision="0" nullable="true" jdbcType="12" />
     </table>
+    <table name="index_date_dimension_on_day_in_week" schema="public" catalog="" type="INDEX" />
     <table name="index_date_dimension_on_day_number_in_calendar_month" schema="public" catalog="" type="INDEX">
       <column name="day_number_in_calendar_month" sqlType="int4" length="10" precision="0" nullable="true" jdbcType="4" />
     </table>
@@ -2630,12 +2639,17 @@
     <table name="index_date_dimension_on_day_of_week" schema="public" catalog="" type="INDEX">
       <column name="day_of_week" sqlType="varchar" length="255" precision="0" nullable="true" jdbcType="12" />
     </table>
+    <table name="index_date_dimension_on_fiscal_month" schema="public" catalog="" type="INDEX" />
+    <table name="index_date_dimension_on_fiscal_month_number" schema="public" catalog="" type="INDEX" />
+    <table name="index_date_dimension_on_fiscal_month_number_in_year" schema="public" catalog="" type="INDEX" />
     <table name="index_date_dimension_on_fiscal_quarter" schema="public" catalog="" type="INDEX">
       <column name="fiscal_quarter" sqlType="varchar" length="255" precision="0" nullable="true" jdbcType="12" />
     </table>
+    <table name="index_date_dimension_on_fiscal_quarter_number" schema="public" catalog="" type="INDEX" />
     <table name="index_date_dimension_on_fiscal_week" schema="public" catalog="" type="INDEX">
       <column name="fiscal_week" sqlType="varchar" length="255" precision="0" nullable="true" jdbcType="12" />
     </table>
+    <table name="index_date_dimension_on_fiscal_week_number" schema="public" catalog="" type="INDEX" />
     <table name="index_date_dimension_on_fiscal_week_number_in_year" schema="public" catalog="" type="INDEX">
       <column name="fiscal_week_number_in_year" sqlType="int4" length="10" precision="0" nullable="true" jdbcType="4" />
     </table>
@@ -2645,9 +2659,11 @@
     <table name="index_date_dimension_on_fiscal_year_month" schema="public" catalog="" type="INDEX">
       <column name="fiscal_year_month" sqlType="varchar" length="255" precision="0" nullable="true" jdbcType="12" />
     </table>
+    <table name="index_date_dimension_on_fiscal_year_number" schema="public" catalog="" type="INDEX" />
     <table name="index_date_dimension_on_fiscal_year_quarter" schema="public" catalog="" type="INDEX">
       <column name="fiscal_year_quarter" sqlType="varchar" length="255" precision="0" nullable="true" jdbcType="12" />
     </table>
+    <table name="index_date_dimension_on_fiscal_year_quarter_number" schema="public" catalog="" type="INDEX" />
     <table name="index_date_dimension_on_holiday_indicator" schema="public" catalog="" type="INDEX">
       <column name="holiday_indicator" sqlType="varchar" length="255" precision="0" nullable="true" jdbcType="12" />
     </table>
@@ -2673,7 +2689,7 @@
       <column name="milestone_name" sqlType="varchar" length="255" precision="0" nullable="true" jdbcType="12" />
       <column name="ticket_name" sqlType="varchar" length="255" precision="0" nullable="true" jdbcType="12" />
       <column name="ticket_description" sqlType="text" length="2147483647" precision="0" nullable="true" jdbcType="12" />
-      <column name="private" sqlType="varchar" length="255" precision="0" nullable="true" jdbcType="12" />
+      <column name="private" sqlType="bool" length="1" precision="0" nullable="true" jdbcType="-7" />
       <primary-key name="pmt_dimension_pkey" columns="id" />
     </table>
     <table name="pmt_dimension_id_seq" schema="public" catalog="" type="SEQUENCE">
