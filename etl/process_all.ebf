@@ -4,6 +4,7 @@ run 'date_dimension.ctl'
 # buduje pozostałe wymiary
 run 'bug_dimension.ctl'
 run 'pmt_dimension.ctl'
+run 'project_dimension.ctl'
 run 'user_dimension.ctl'
 
 # buduje tabele faktów

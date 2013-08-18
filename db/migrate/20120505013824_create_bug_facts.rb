@@ -1,6 +1,6 @@
 class CreateBugFacts < ActiveRecord::Migration
   def connection
-    BugFacts.connection
+    BugFact.connection
   end
 
   def change
@@ -8,8 +8,7 @@ class CreateBugFacts < ActiveRecord::Migration
       t.integer :id
       t.integer :date_id
       t.integer :bug_id
-      t.integer :type_id
-      t.integer :status_id
+      t.string  :date_bug
     end
   end
 end

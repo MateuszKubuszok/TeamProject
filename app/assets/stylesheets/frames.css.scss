@@ -123,13 +123,20 @@ body:before {
 #contentEnd:before { content: url('./../img/tab_inactive_left.png'); }
 #contentEnd:after { content: url('./../img/tab_inactive_right.png'); }
 
+.project { margin-bottom: 50px; clear: both; }
+.project h3 a { border: 0; }
+.project ul { list-style: none; margin: 5px; padding: 0; }
+.project .menu { float: right; background-color: #eee; border: 1px #aaa solid; margin-left: 5px; width: 100px; }
+.project .tags { text-align: right; } 
+
 /* footer design */
-#footerContent { padding: 5px 5px 5px 0; }
+#footerContent { padding: 5px 0px 5px 0; }
 #footerContent div {
   display: inline-block;
   float: left;
-  width: 145px;
+  width: 140px;
   margin-left: 5px;
+  margin-right: 5px;
 }
 
 /* details positioning */

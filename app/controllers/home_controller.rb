@@ -21,7 +21,7 @@ class HomeController < ApplicationController
     # set last modified header to the date of the latest entry.
     headers["Last-Modified"] = date.httpdate
     respond_to do |format|
-      format.xml
+      format.xml { render xml: @forums }
     end
   end
 

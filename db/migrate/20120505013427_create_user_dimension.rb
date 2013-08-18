@@ -12,8 +12,9 @@ class CreateUserDimension < ActiveRecord::Migration
       t.string  :name
       t.string  :surname
       t.text    :about_me
-      t.string  :email
       t.string  :www
+      t.string  :email
+      t.string  :date_user
     end
   end
 end

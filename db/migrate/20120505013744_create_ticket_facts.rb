@@ -1,6 +1,6 @@
 class CreateTicketFacts < ActiveRecord::Migration
   def connection
-    TicketFacts.connection
+    TicketFact.connection
   end
 
   def change
@@ -9,9 +9,9 @@ class CreateTicketFacts < ActiveRecord::Migration
       t.integer :date_id
       t.integer :ticket_id
       t.integer :user_id
-      t.integer :status_id
-      t.integer :priority_id
-      t.date    :deadline
+      t.integer :till_deadline
+      t.string  :date_pmt
+      t.string  :date_user
     end
   end
 end

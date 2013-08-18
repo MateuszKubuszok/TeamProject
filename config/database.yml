@@ -41,6 +41,7 @@ development_warehouse:
   database: tp_dev_wh
   pool: 5
   timeout: 5000
+  host: localhost
   username: postgres
   password: pass
 
@@ -49,6 +50,7 @@ test_warehouse:
   database: tp_test_wh
   pool: 5
   timeout: 5000
+  host: localhost
   username: postgres
   password: pass
 
@@ -57,5 +59,6 @@ production_warehouse:
   database: tp_wh
   pool: 5
   timeout: 5000
+  host: localhost
   username: postgres
   password: pass

@@ -1,5 +1,4 @@
-class PmtDimension < ActiveWarehouse::Dimension
-  establish_connection "#{Rails.env}_warehouse"
-
-  define_hierarchy :pmt, [ :project, :milestone, :ticket ]
+class PmtDimension < ActiveRecord::Base
+  establish_connection  "#{Rails.env}_warehouse"
+  set_table_name        'pmt_dimension'
 end

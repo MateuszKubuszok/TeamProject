@@ -1,13 +1,15 @@
-require File.expand_path(File.dirname(__FILE__) + '/../config/environment')
+require File.expand_path(File.absolute_path(File.dirname __FILE__) + '/../config/environment')
+require 'fileutils'
 
 in_db     = Rails.env
 in_table  = Project.table_name
 
 out_db    = "#{Rails.env}_warehouse"
-out_table = 'project_facts'
+out_table = ProjectFact.table_name
 
-bulk_load_file = "data/#{out_table}.csv"
-columns   = [ :date_id, :project_id, :visits ]
+bulk_load_dir   = File.absolute_path(File.dirname __FILE__) + '/data'
+bulk_load_file  = "#{bulk_load_dir}/#{out_table}.csv"
+columns   = [ :date_id, :project_id, :visits, :date_project ]
 separator = "\t"
 
 
@@ -25,7 +27,13 @@ date_id = DateDimension.find_by_sql_date_stamp(Date.today.to_s).id
 transform(:date_id) { date_id }
 
 
+# id do złączeń
+transform(:date_project) { |name, value, row| "#{row[:date_id]}_#{row[:project_id]}" }
+
+
 # zapis do pliku
+FileUtils.makedirs bulk_load_dir
+FileUtils.touch bulk_load_file
 destination :out, {
   file:       bulk_load_file,
   separator:  separator

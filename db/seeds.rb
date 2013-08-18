@@ -1,13 +1,13 @@
 # ustawienia dla bazy użytkowej
 settings = {
-  reset:    true, # czy ma usunąć wszystko z bazy danych i wgrać na nowo
-  populate: true, # czy ma dodać nowe losowe alementy do bazy
-  modify:   false # czy ma zmodyfikować istniejące elementy
+  reset:    true,  # czy ma usunąć wszystko z bazy danych i wgrać na nowo
+  populate: true,  # czy ma dodać nowe losowe alementy do bazy
+  modify:   false  # czy ma zmodyfikować istniejące elementy
 }
 
 # ustawienia dla hurtowni danych
 wh_settings = {
-  reset:    false, # czy ma usunąć wszystko z bazy danych i wgrać na nowo
+  reset:    false # czy ma usunąć wszystko z bazy danych i wgrać na nowo
 }
 
 
@@ -155,7 +155,7 @@ if settings[:populate]
 
 
   # Populuje fora
-  puts "\n"+'Populating Foras'
+  puts "\n"+'Populating Forums'
   Forum.populate 5 do |forum|
     forum.name        = Faker::Company.bs
     forum.description = Faker::Lorem.paragraph
@@ -195,6 +195,7 @@ end
 
 # modyfikuje istniejącą baze danych
 if settings[:modify]
+ActiveRecord::Base.transaction do
   # aktualizuje wyświetlenia strony
   puts "\n"+'Updating Projects'
   Project.all.each do |project|
@@ -206,10 +207,19 @@ if settings[:modify]
   # aktualizuje statusy
   puts "\n"+'Updating Tickets'
   Ticket.all.each do |ticket|
-    ticket.status_id += Random.rand(Ticket.symbol_quantity(:status_types)-ticket.status_id+1)
+    ticket.status_id += Random.rand(Ticket.symbols_quantity(:status_types)-ticket.status_id+1)
     ticket.save!
   end
   puts 'Success!'
+
+  # aktualizuje statusy
+  puts "\n"+'Updating Bugs'
+  Bug.all.each do |bug|
+    bug.status_id += Random.rand(Bug.symbols_quantity(:status_types)-bug.status_id+1)
+    bug.save!
+  end
+  puts 'Success!'
+end
 end
 
 
@@ -218,10 +228,10 @@ if wh_settings[:reset]
   puts "\n"+'Clearing current WH'
   [
     BugDimension,
-    BugFacts,
+    BugFact,
     PmtDimension,
-    ProjectFacts,
-    TicketFacts,
+    ProjectFact,
+    TicketFact,
     UserDimension
   ].each(&:delete_all)
   puts 'Success!'

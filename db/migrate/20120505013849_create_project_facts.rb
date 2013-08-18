@@ -1,6 +1,6 @@
 class CreateProjectFacts < ActiveRecord::Migration
   def connection
-    ProjectFacts.connection
+    ProjectFact.connection
   end
 
   def change
@@ -9,6 +9,7 @@ class CreateProjectFacts < ActiveRecord::Migration
       t.integer :date_id
       t.integer :project_id
       t.integer :visits
+      t.string  :date_project
     end
   end
 end

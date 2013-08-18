@@ -14,7 +14,13 @@ class CreatePmtDimension < ActiveRecord::Migration
       t.string  :milestone_name
       t.string  :ticket_name
       t.text    :ticket_description
+      t.integer :ticket_priority_id
+      t.string  :ticket_priority
       t.boolean :private
+      t.boolean :completed
+      t.date    :ticket_deadline
+      t.boolean :deadline
+      t.string  :date_pmt
     end
   end
 end
